@@ -40,6 +40,8 @@ bool Escribir(std::ostream& os, const Punto& p) {
 
   os << "(" << p.x << "," << p.y << ")";
 
+  return os.fail();
+
 }
 
 void InicializarPunto (Punto &p, double cx, double cy)

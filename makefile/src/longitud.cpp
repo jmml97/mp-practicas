@@ -12,12 +12,12 @@ void Avanzar(std::istream& is) {
 }
 
 double Longitud(istream &is) {
-  double l = 0, dato;
+  double l = 0;
   Punto p1, p2;
 
   Avanzar(is);
   Leer(is, p1);
-  Avanzar(is)
+  Avanzar(is);
 
   while (Leer(is, p2)) { // Mientras tenga éxito la lectura
     l += Distancia(p1, p2);
@@ -25,14 +25,14 @@ double Longitud(istream &is) {
     p1 = p2;
   }
 
-  return s;
+  return l;
 }
 
 int main(int argc, char* argv[]) {
   double longitud = 0;
   bool fin_entrada;
   if (argc == 1) { // Si no hemos dado parámetros en la línea de órdenes
-    sumatoria = Longitud(cin);
+    longitud = Longitud(cin);
     fin_entrada = cin.eof();
   }
   else {
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
       cerr << "Error: no se abre " << argv[1] << endl;
       return 1;
     }
-    sumatoria = Longitud(f);
+    longitud = Longitud(f);
     fin_entrada = f.eof();
   }
 

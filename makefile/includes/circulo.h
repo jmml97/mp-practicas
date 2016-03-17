@@ -17,9 +17,9 @@ Circulo LeerCirculo();
 // OBSOLETO
 void EscribirCirculo(Circulo c);
 
-bool Leer(istream& is, Circulo& c);
+bool Leer(std::istream& is, Circulo& c);
 
-bool Escribir(ostream& os, const Circulo& c);
+bool Escribir(std::ostream& os, const Circulo& c);
 
 void InicializarCirculo (Circulo& c, Punto centro, double radio);
 

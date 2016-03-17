@@ -31,7 +31,7 @@ bool Leer(istream& is, Circulo& c) {
 
   is >> c.radio;
   is.ignore();
-  c.centro = Leer(is, c.centro)
+  Leer(is, c.centro);
 
   return is;
 
