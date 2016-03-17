@@ -1,0 +1,53 @@
+#include <fstream>
+#include <iostream>
+#include "punto.h"
+using namespace std;
+
+void Avanzar(std::istream& is) {
+  while (isspace(is.peek()) || is.peek()=='#') {
+    if (is.peek()=='#')
+      is.ignore(1024,'\n'); // Suponemos una línea tiene menos de 1024
+    else is.ignore();
+  }
+}
+
+double Longitud(istream &is) {
+  double l = 0, dato;
+  Punto p1, p2;
+
+  Avanzar(is);
+  Leer(is, p1);
+  Avanzar(is)
+
+  while (Leer(is, p2)) { // Mientras tenga éxito la lectura
+    l += Distancia(p1, p2);
+    Avanzar(is); // Descarta comentarios y para en siguiente dato
+    p1 = p2;
+  }
+
+  return s;
+}
+
+int main(int argc, char* argv[]) {
+  double longitud = 0;
+  bool fin_entrada;
+  if (argc == 1) { // Si no hemos dado parámetros en la línea de órdenes
+    sumatoria = Longitud(cin);
+    fin_entrada = cin.eof();
+  }
+  else {
+    ifstream f(argv[1]); // Como parámetro, el nombre del archivo
+    if (!f) {
+      cerr << "Error: no se abre " << argv[1] << endl;
+      return 1;
+    }
+    sumatoria = Longitud(f);
+    fin_entrada = f.eof();
+  }
+
+  if (!fin_entrada) {
+     cerr << "Error inesperado. No se ha leído toda la entrada" << endl;
+     return 1;
+  }
+  cout << "Longitud de los puntos: " << longitud << endl;
+}
