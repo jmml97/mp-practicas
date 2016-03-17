@@ -19,6 +19,9 @@ void Avanzar(std::istream& is){
   }
 }
 
+
+Punto Calc
+
 double Sumatoria(istream& is)     // Le añadimos por referencia un punto y su siguiente para ir
                                   // sumando la distancia entre ellos ??
 {
