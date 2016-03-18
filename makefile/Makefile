@@ -44,4 +44,4 @@ clean :
 	rm $(OBJ)/*.o $(LIB)/*.a
 
 mrpropper : clean
-	rm $(BIN)/central $(BIN)/area $(BIN)/longitud
+	rm $(BIN)/central $(BIN)/area $(BIN)/longitud $(BIN)/delimitar
