@@ -16,6 +16,8 @@ $(OBJ)/punto.o : $(INC)/punto.h $(SRC)/punto.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/punto.o $(SRC)/punto.cpp
 $(OBJ)/circulo.o : $(INC)/punto.h $(INC)/circulo.h $(SRC)/circulo.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/circulo.o $(SRC)/circulo.cpp
+$(OBJ)/rectangulo.o : $(INC)/punto.h $(INC)/rectangulo.h $(SRC)/rectangulo.cpp
+	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/rectangulo.o $(SRC)/rectangulo.cpp
 $(OBJ)/central.o : $(INC)/punto.h $(INC)/circulo.h $(SRC)/central.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/central.o $(SRC)/central.cpp
 $(OBJ)/area.o : $(INC)/punto.h $(INC)/circulo.h $(SRC)/area.cpp
@@ -23,8 +25,8 @@ $(OBJ)/area.o : $(INC)/punto.h $(INC)/circulo.h $(SRC)/area.cpp
 $(OBJ)/longitud.o : $(INC)/punto.h $(SRC)/longitud.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/longitud.o $(SRC)/longitud.cpp
 
-$(LIB)/libformas.a : $(OBJ)/punto.o $(OBJ)/circulo.o
-	$(AR) rvs $(LIB)/libformas.a $(OBJ)/punto.o $(OBJ)/circulo.o
+$(LIB)/libformas.a : $(OBJ)/punto.o $(OBJ)/circulo.o $(OBJ)/rectangulo.o
+	$(AR) rvs $(LIB)/libformas.a $(OBJ)/punto.o $(OBJ)/circulo.o $(OBJ)/rectangulo.o
 
 central : $(OBJ)/central.o $(LIB)/libformas.a
 	$(CXX) -o $(BIN)/central $(OBJ)/central.o $(LDFGLAGS) $(LDLIBS)

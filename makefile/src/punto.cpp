@@ -1,6 +1,7 @@
-#include "punto.h"
 #include <iostream>
 #include <cmath>
+
+#include "punto.h"
 
 using namespace std;
 
