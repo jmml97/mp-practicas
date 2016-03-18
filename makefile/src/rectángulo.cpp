@@ -11,15 +11,15 @@ bool Leer(std::istream& is, Rectangulo& r) {    // Le pasamos un réctángulo pa
   is.ignore();
   is >> r.esq_inf_izq.y;
   is.ignore();
-  is >> r.esq_inf_der.x;
+  is >> r.esq_sup_der.x;
   is.ignore();
-  is >> r.esq_inf_der.y;
+  is >> r.esq_sup_der.y;
 
   return is;
 
 }
 
-bool Escribir(ostream& os, const Rectangulo& r);
+bool Escribir(ostream& os, const Rectangulo& r);      // Muestra un rectángulo como dos puntos unidos por un guión
 
   os << "(" << r.esq_inf_izq.x << "," << r.esq_inf_izq.y << ")-(" << r.esq_sup_der.x << "," << r.esq_sup_der.y;
 
@@ -59,4 +59,26 @@ void InicializarRectangulo (Rectangulo& r, const Punto& p1, const Punto& p2) {
 
 }
 
-  
+Punto InferiorIzquierda (const Rectangulo& r){    // Devuelve esq_inf_izq
+
+  return r.esq_inf_izq;
+}
+Punto SuperiorDerecha (const Rectangulo& r){    // Devuelve esq_sup_der
+
+  return r.esq_sup_der;
+}
+
+double Area(const Rectangulo& r){
+
+  double area;
+
+  area = (r.esq_sup_der.x - r.esq_inf_izq.x) * (r.esq_sup_der.y - r.esq_inf_izq.y);   // Base por altura
+
+  return area;
+}
+
+bool Interior (const Punto& p, const Rectangulo& r) {     // Si esto falla igual sería buena idea hacer booleanos intermedios
+                                                          // Si esq_inf.coord <= p1.coord <= esq_sup.coord entonces está dentro
+
+  return (p.x <= r.esq_sup_der.x && p.x >= r.esq_inf_izq.x ) && (p.y <= r.esq_sup_der.y && p.y >= r.esq_inf_izq.y)
+}
