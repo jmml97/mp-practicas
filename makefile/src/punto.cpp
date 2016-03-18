@@ -18,7 +18,7 @@ Punto LeerPunto()
 
 }
 
-void EscribirPunto (Punto p)
+void EscribirPunto (const Punto& p)
 {
 
   cout << "(" << p.x <<"," << p.y << ")" << endl;
@@ -53,33 +53,33 @@ void InicializarPunto (Punto &p, double cx, double cy)
 
 }
 
-double GetX (Punto p)
+double GetX (const Punto& p)
 {
 
   return p.x;
 
 }
 
-double GetY (Punto p)
+double GetY (const Punto& p)
 {
 
   return p.y;
 
 }
 
-double Distancia (Punto p1, Punto p2)
+double Distancia (const Punto& p1, const Punto& p2)
 {
 
-  double modulo1, modulo2;
+  double a = (p2.x - p1.x) * (p2.x - p1.x);
+  double b = (p2.y - p1.y) * (p2.y - p1.y);
 
-  modulo1 = sqrt(p1.x * p1.x + p1.y * p1.y);
-  modulo2 = sqrt(p2.x * p2.x + p2.y * p2.y);
+  double modulo = sqrt(a + b);
 
-  return abs(modulo1 - modulo2);
+  return modulo;
 
 }
 
-Punto PuntoMedio (Punto p1, Punto p2)
+Punto PuntoMedio (const Punto& p1, const Punto& p2)
 {
 
   Punto medio;

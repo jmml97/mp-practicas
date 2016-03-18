@@ -17,36 +17,35 @@ void Avanzar(std::istream& is) {
 Rectangulo RectanguloDelimitador(istream &is) {
 
   Rectangulo r;
-  Punto p1, p2;
+  Punto p1, p2, p;
 
   Avanzar(is);
   Leer(is, p1);
   Avanzar(is);
 
-  while (Leer(is, p2)) { // Mientras tenga éxito la lectura
+  // Guardamos nuestras esquinas como el primer punto que introducimos.
+  p1 = p; // Nuestra esquina inferior izquierda
+  p2 = p; // Nuestra esquina superior derecha
 
-    // Si el punto está en el cuadrante inferior respecto de la esquina inferior
-    // izquierda, se cambia la esquina a ese punto.
-    // Si el punto está en el cuadrante superior respecto de la esquina superior
-    // derecha, se cambia la esquina a ese punto
+  while (Leer(is, p)) { // Mientras tenga éxito la lectura
 
-    if (p2.x < r.esq_inf_izq.x) {
-      r.esq_inf_izq.x = p2.x;
-    } else if (p2.x > r.esq_sup_der.x) {
-      r.esq_sup_der.x = p2.x;
+    if (p.x < p1.x) {
+      p1.x = p.x;
+    } else if (p.x > p2.x) {
+      p2.x = p.x;
     }
 
-    if (p2.y < r.esq_inf_izq.y) {
-      r.esq_inf_izq.y = p2.y;
-    } else if (p2.y > r.esq_sup_der.y) {
-      r.esq_sup_der.y = p2.y;
+    if (p.y < p1.y) {
+      p1.y = p.y;
+    } else if (p.y > p2.y) {
+      p2.y = p.y;
     }
 
-    InicializarRectangulo(r, p1, p2);
     Avanzar(is); // Descarta comentarios y para en siguiente dato
 
   }
 
+  InicializarRectangulo(r, p1, p2);
   return r;
 }
 
@@ -75,6 +74,7 @@ int main(int argc, char* argv[]) {
   }
 
   Escribir(cout, mi_rectangulo.esq_inf_izq);
+  cout <<  "-";
   Escribir(cout, mi_rectangulo.esq_sup_der);
   cout << endl;
 

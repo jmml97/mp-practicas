@@ -21,8 +21,8 @@ double Longitud(istream &is) {
 
   while (Leer(is, p2)) { // Mientras tenga éxito la lectura
     l += Distancia(p1, p2);
-    Avanzar(is); // Descarta comentarios y para en siguiente dato
     p1 = p2;
+    Avanzar(is); // Descarta comentarios y para en siguiente dato
   }
 
   return l;

@@ -80,11 +80,10 @@ Punto SuperiorDerecha (const Rectangulo& r) {    // Devuelve esq_sup_der
 
 double Area(const Rectangulo& r) {
 
-  double area;
+  double b = r.esq_sup_der.x - r.esq_inf_izq.x;
+  double h = r.esq_sup_der.y - r.esq_inf_izq.y;
 
-  area = (r.esq_sup_der.x - r.esq_inf_izq.x) * (r.esq_sup_der.y - r.esq_inf_izq.y);   // Base por altura
-
-  return area;
+  return b * h; // Área del rectángulo
 }
 
 bool Interior (const Punto& p, const Rectangulo& r) {

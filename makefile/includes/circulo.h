@@ -15,22 +15,22 @@ struct Circulo {
 Circulo LeerCirculo();
 
 // OBSOLETO
-void EscribirCirculo(Circulo c);
+void EscribirCirculo(const Circulo& c);
 
 bool Leer(std::istream& is, Circulo& c);
 
 bool Escribir(std::ostream& os, const Circulo& c);
 
-void InicializarCirculo (Circulo& c, Punto centro, double radio);
+void InicializarCirculo (Circulo& c, const Punto& centro, double radio);
 
-Punto Centro (Circulo c);
+Punto Centro (const Circulo& c);
 
-double Radio (Circulo c);
+double Radio (const Circulo& c);
 
-double Area (Circulo c);
+double Area (const Circulo& c);
 
-bool Interior (Punto p, Circulo c);
+bool Interior (const Punto& p, const Circulo& c);
 
-double Distancia (Circulo c1, Circulo c2);
+double Distancia (const Circulo& c1, const Circulo& c2);
 
 #endif

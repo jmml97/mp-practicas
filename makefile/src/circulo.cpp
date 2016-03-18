@@ -19,7 +19,7 @@ Circulo LeerCirculo()
 }
 
 // OBSOLETO
-void EscribirCirculo(Circulo c)
+void EscribirCirculo(const Circulo& c)
 {
 
   cout << c.radio << "-";
@@ -37,7 +37,7 @@ bool Leer(istream& is, Circulo& c) {
 
 }
 
-void InicializarCirculo (Circulo& c, Punto centro, double radio)
+void InicializarCirculo (Circulo& c, const Punto& centro, double radio)
 {
 
   c.centro = centro;
@@ -45,35 +45,35 @@ void InicializarCirculo (Circulo& c, Punto centro, double radio)
 
 }
 
-Punto Centro (Circulo c)
+Punto Centro (const Circulo& c)
 {
 
   return c.centro;
 
 }
 
-double Radio (Circulo c)
+double Radio (const Circulo& c)
 {
 
   return c.radio;
 
 }
 
-double Area (Circulo c)
+double Area (const Circulo& c)
 {
 
   return M_PI * c.radio * c.radio;
 
 }
 
-bool Interior (Punto p, Circulo c)
+bool Interior (const Punto& p, const Circulo& c)
 {
 
   return Distancia(p, c.centro) < c.radio;
 
 }
 
-double Distancia (Circulo c1, Circulo c2)
+double Distancia (const Circulo& c1, const Circulo& c2)
 {
 
   return Distancia(c1.centro, c2.centro) - c1.radio - c2.radio;
