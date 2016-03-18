@@ -10,7 +10,7 @@ OBJ = obj
 LIB = lib
 BIN = bin
 
-all : central area longitud
+all : central area longitud delimitar
 
 $(OBJ)/punto.o : $(INC)/punto.h $(SRC)/punto.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/punto.o $(SRC)/punto.cpp
@@ -24,6 +24,8 @@ $(OBJ)/area.o : $(INC)/punto.h $(INC)/circulo.h $(SRC)/area.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/area.o $(SRC)/area.cpp
 $(OBJ)/longitud.o : $(INC)/punto.h $(SRC)/longitud.cpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/longitud.o $(SRC)/longitud.cpp
+$(OBJ)/delimitar.o : $(INC)/rectangulo.h $(SRC)/delimitar.cpp
+	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/delimitar.o $(SRC)/delimitar.cpp
 
 $(LIB)/libformas.a : $(OBJ)/punto.o $(OBJ)/circulo.o $(OBJ)/rectangulo.o
 	$(AR) rvs $(LIB)/libformas.a $(OBJ)/punto.o $(OBJ)/circulo.o $(OBJ)/rectangulo.o
@@ -34,6 +36,8 @@ area : $(OBJ)/area.o $(LIB)/libformas.a
 	$(CXX) -o $(BIN)/area $(OBJ)/area.o $(LDFGLAGS) $(LDLIBS)
 longitud: $(OBJ)/longitud.o $(LIB)/libformas.a
 	$(CXX) -o $(BIN)/longitud $(OBJ)/longitud.o $(LDFGLAGS) $(LDLIBS)
+delimitar: $(OBJ)/delimitar.o $(LIB)/libformas.a
+	$(CXX) -o $(BIN)/delimitar $(OBJ)/delimitar.o $(LDFGLAGS) $(LDLIBS)
 
 clean :
 	echo "Limpiando..."
