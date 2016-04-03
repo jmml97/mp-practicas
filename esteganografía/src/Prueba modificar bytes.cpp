@@ -30,10 +30,18 @@ int main () {
       *
       */
 
+  unsigned char uno, a_cifrar, bit_pos_j, aux;
 
   for (int i = 0; i < 4; i++ ){
 
-    for (int j = 0; i < 7)
+    a_cifrar = mensaje[i];                    //                                      XYYYYYYY
+                                              // uno << 7-0   --->                  & 10000000
+                                              //                                      _________ uno >> 7-0
+      for (int j = 0; i < 7; j++) {           // 00000001     --->   10000000 --->  = X0000000 -----> 0000000X = 1 ó 0 
+                                              //                                                      segun el valor de X
+      uno = 1;
+      bit_pos_j =  (uno << (7-j))
+    }
 
 
   }
