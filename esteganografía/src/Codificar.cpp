@@ -69,7 +69,7 @@ int main () {
   if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PGM) {
     LeerImagenPGM(im_entrada, filas, columnas, buffer);
   } else if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PPM) {
-    LeerImagenPPM(im_entrada, filas, columnas, buffer);
+    LeerImagenPPM(im_entrada, filas, columnas, buffe);
   } else {
     cout << "No ha introducido un archivo de imagen correcto." << endl;
   }
