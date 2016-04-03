@@ -4,7 +4,7 @@
     */
 
 #include <iostream>
-#include "../include/imagenES.h"
+#include "imagenES.h"
 
 using namespace std;
 
