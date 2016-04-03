@@ -4,7 +4,9 @@
     */
 
 #include <iostream>
-#include "imagenEs.h"
+#include "../include/imagenES.h"
+
+using namespace std;
 
   /**
     * La primera función ocultar recibe dos parámetros, el vector que contiene la información de la imagen, el cual lo
@@ -24,9 +26,11 @@
     */
 
 
-void Ocultar (unsigned char& imagen[], unsigned char mensaje[]) {
+void Ocultar (unsigned char imagen[], unsigned char mensaje[]) {
 
-  for(int i = 0, mensaje[i] != "\0", i++)
+  for(int i = 0; mensaje[i] == '\0'; i++) {
+
+  }
 }
 
 
@@ -34,8 +38,6 @@ void Revelar (unsigned char im_cifrada, unsigned char& revelacion){
 
 
 }
-
-
 
 // IGNORAR DE AQUÍ EN ADELANTE
 int main () {
@@ -46,12 +48,14 @@ int main () {
   */
 
 
-  const int MAX_BUFFER =
-  const int MAX_N_IMAGEN =
+  const int MAX_BUFFER = 2048; // ¿?
+  const int MAX_N_IMAGEN = 2048; // ¿?
   const int MAX_MENSAJE = MAX_BUFFER / 8;
 
-  unsigned char mensaje[MAX_MENSAJE];
-  char im_entrada[MAX_N_IMAGEN], im_salida[MAX_N_IMAGEN];
+  int filas, columnas;
+
+  unsigned char buffer[MAX_BUFFER];
+  char im_entrada[MAX_N_IMAGEN], im_salida[MAX_N_IMAGEN], mensaje[MAX_MENSAJE];
 
 
   /*
@@ -60,7 +64,15 @@ int main () {
 
 
   cout << "Indique la imagen de entrada: ";
-  cin.getline(im_entrada,MAX_N_IMAGEN);
+  cin.getline(im_entrada, MAX_N_IMAGEN);
+
+  if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PGM) {
+    LeerImagenPGM(im_entrada, filas, columnas, buffer);
+  } else if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PPM) {
+    LeerImagenPPM(im_entrada, filas, columnas, buffer);
+  } else {
+    cout << "No ha introducido un archivo de imagen correcto." << endl;
+  }
 
   /*
       La idea aquí es hacer una condicional que según el nombre del archivo introducido compruebe si es un tipo de archivo
@@ -72,6 +84,9 @@ int main () {
 
 
   cout << "Introduzca el nombre de la imagen de salida: ";
+  cin.getline(im_salida, MAX_N_IMAGEN);
 
   cout << "Introduzca el mensaje a cifrar: ";
+  cin.getline(mensaje, MAX_MENSAJE);
+
 }
