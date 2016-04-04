@@ -50,8 +50,9 @@ int main() {
     cout << "No ha introducido un archivo de imagen correcto." << endl;
   }
 
-  Revelar(buffer, filas*columnas, mensaje);
+  Revelar(buffer, MAX_MENSAJE, mensaje);
   cout << "El mensaje oculto es: " << endl;
+  ImprimirCadena(mensaje, MAX_MENSAJE);
 
 
 }

@@ -42,33 +42,32 @@ int main() {
   cout << "Introduzca el mensaje a cifrar: ";
   cin.getline(mensaje, MAX_MENSAJE);
 
-  TipoImagen tipo = LeerTipoImagen(im_entrada, filas, columnas);    
+  TipoImagen tipo = LeerTipoImagen(im_entrada, filas, columnas);
 
   if (tipo == IMG_PGM) {
 
     LeerImagenPGM(im_entrada, filas, columnas, buffer);
     cout << "Se va a ocultar el mensaje..." << endl;
 
-    Ocultar(buffer, filas, columnas, mensaje);
+    Ocultar(buffer, filas*columnas, mensaje);
     EscribirImagenPGM(im_salida, buffer, filas, columnas);
 
     cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
     ImprimirCadena(im_salida, MAX_N_IMAGEN);
-
 
   } else if (tipo == IMG_PPM) {
 
     LeerImagenPPM(im_entrada, filas, columnas, buffer);
     cout << "Se va a ocultar el mensaje..." << endl;
 
-    Ocultar(buffer, filas, columnas, mensaje);
+    Ocultar(buffer, filas*columnas*3, mensaje);
     EscribirImagenPPM(im_salida, buffer, filas, columnas);
 
     cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
     ImprimirCadena(im_salida, MAX_N_IMAGEN);
 
   } else {
-    cout << "No ha introducido un archivo de imagen correcto." << endl;
+    cout << "No ha introducido un archivo de imagen correcto o la imagen no se ha encontrado." << endl;
   }
 
 
