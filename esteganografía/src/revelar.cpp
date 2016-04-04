@@ -52,6 +52,6 @@ int main() {
 
   Revelar(buffer, filas*columnas, mensaje);
   cout << "El mensaje oculto es: " << endl;
-  ImprimirCadena(mensaje, MAX_MENSAJE);
+
 
 }

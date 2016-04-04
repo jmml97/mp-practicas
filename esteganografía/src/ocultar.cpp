@@ -42,7 +42,7 @@ int main() {
   cout << "Introduzca el mensaje a cifrar: ";
   cin.getline(mensaje, MAX_MENSAJE);
 
-  TipoImagen tipo = LeerTipoImagen(im_entrada, filas, columnas);
+  TipoImagen tipo = LeerTipoImagen(im_entrada, filas, columnas);    
 
   if (tipo == IMG_PGM) {
 

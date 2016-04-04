@@ -5,7 +5,9 @@ int main () {
 
   unsigned char vectorcillo[50] = {'P'};
   char mensaje[4];
-  cin.getline(mensaje,4);
+
+  for (int i = 0; i < 3 && mensaje[i-1] != '\n'; i++)
+  mensaje[i] = cin.get();
 
   cout << "Mostramos el vector \"Imagen\": ";
 
@@ -40,7 +42,7 @@ int main () {
     a_cifrar = mensaje[i];                    //                                      XYYYYYYY
                                               //                                    & 10000000
                                               //         uno << 7-0          --->    _________ uno >> 7-0
-      for (int j = 0; i < 7; j++) {           // 00000001     --->   10000000       = X0000000 -----> 0000000X = 1 ó 0
+      for (int j = 0; i <= 7; j++) {           // 00000001     --->   10000000       = X0000000 -----> 0000000X = 1 ó 0
                                               //                                                      segun el valor de X
 
       bit_pos_j =  ((uno << (7-j)) & mensaje[i]) >> (7-j);
