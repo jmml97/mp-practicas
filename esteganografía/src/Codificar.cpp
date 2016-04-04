@@ -26,67 +26,76 @@ using namespace std;
     */
 
 
-void Ocultar (unsigned char imagen[], unsigned char mensaje[]) {
+void Ocultar (unsigned char imagen[], int filas, int columnas, char mensaje[]) {
 
+  // Vamos iterando por los valores de la cadena char.
   for(int i = 0; mensaje[i] == '\0'; i++) {
 
+    // Cada caracter está formado por 8 bits. Tenemos que ir insertando cada bit
+    // del carácter en el bit menos significativo de cada byte de la imagen.
+    // Empezamos en el último bit porque así es como lo indica el ejercicio
+    // (de izquierda a derecha).
+    for(int j = 7; j >= 0; j--) {
+
+      // Con esta fórmula, podemos calcular en qué byte de la imgen Tenemos
+      // que guardar el bit correspondiente.
+      int byte_imagen = i*8 + (7 - j);
+
+      // Consultamos el valor del bit del carácter i en la posición j-ésima.
+      // Si ese bit es 0, mensaje[i] & 0<<j nos devuelve 0. Si es 1, nos
+      // devolverá otro valor.
+      if ((mensaje[i] & 1<<j) == 0) { // el bit es 0
+
+        // Como el bit es 0, tenemos que desactivar el bit menos significativo.
+        imagen[byte_imagen] = imagen[byte_imagen]&(~1);
+
+      } else { // el bit es 1
+
+        // Como el bit es 1, tenemos que activar el bit menos significativo.
+        imagen[byte_imagen] = imagen[byte_imagen]|1;
+
+      }
+
+    }
+
   }
+
 }
 
 
-void Revelar (unsigned char im_cifrada, unsigned char& revelacion){
+void Revelar (unsigned char im_cifrada[], int longitud_imagen, char revelacion[]){
 
+  char caracter = 0; // el caracter que está oculto con el que trabajamos.
+  int num_caracter = 1; // numero del caracter en la cadena (empezamos por 1)
+  int pos_bit; // posicion del bit del caracter que estamos insertando en cada
+               // iteración.
 
-}
+  for(int i = 0; i < longitud_imagen; i++) {
 
-// IGNORAR DE AQUÍ EN ADELANTE
-int main () {
+    // Comprobamos el valor del bit menos significativo del byte de la imagen
+    // de la iteración actual
+    int bit_menos_significativo = (im_cifrada[i]&1) == 0 ? 0 : 1;
 
-  /*
-      Creamos vectores para almacenar el nombre de las imágenes y el mensaje a cifrar,
-      antes habiendo definido unas cuantas constantes para su tamaño máximo (El cual desconozco a ciencia cierta)
-  */
+    // Si es 0, tenemos que poner un 0 en el bit que corresponda del caracter
+    // empezando de izquierda a derecha.
+    // Si es distinto de 0, es 1 y por tanto, tenemos que poner un 1 de la misma
+    // forma.
+    if (bit_menos_significativo == 0) {
+      pos_bit = 7*(num_caracter) - i;
+      caracter = caracter&(~(1<<pos_bit));
+    } else {
+      caracter = caracter|1<<pos_bit;
+    }
 
+    // Si llegamos a un byte múltiplo de 7, ya tenemos los 8 bits del carácter
+    // por tanto, pasamos al siguiente carácter y guardamos el carácter que
+    // hemos descubierto en nuestra cadena char.
+    if (i%7 == 0) {
+      num_caracter++;
+      revelacion[i/7 - 1] = caracter;
+      caracter = 0;
+    }
 
-  const int MAX_BUFFER = 2048; // ¿?
-  const int MAX_N_IMAGEN = 2048; // ¿?
-  const int MAX_MENSAJE = MAX_BUFFER / 8;
-
-  int filas, columnas;
-
-  unsigned char buffer[MAX_BUFFER];
-  char im_entrada[MAX_N_IMAGEN], im_salida[MAX_N_IMAGEN], mensaje[MAX_MENSAJE];
-
-
-  /*
-      Usamos cin.getline para almacenar en los vectores los nombres que les iremos asignando
-  */
-
-
-  cout << "Indique la imagen de entrada: ";
-  cin.getline(im_entrada, MAX_N_IMAGEN);
-
-  if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PGM) {
-    LeerImagenPGM(im_entrada, filas, columnas, buffer);
-  } else if (LeerTipoImagen(im_entrada, filas, columnas) == IMG_PPM) {
-    LeerImagenPPM(im_entrada, filas, columnas, buffe);
-  } else {
-    cout << "No ha introducido un archivo de imagen correcto." << endl;
   }
-
-  /*
-      La idea aquí es hacer una condicional que según el nombre del archivo introducido compruebe si es un tipo de archivo
-      válido y actúe según corresponda o devolver un error si es un tipo desconocido
-
-      Posteriormente hay que seguir con "ocultar", descubrir como meter en el buffer la imagen para ir modificandola y
-      guardandolo
-  */
-
-
-  cout << "Introduzca el nombre de la imagen de salida: ";
-  cin.getline(im_salida, MAX_N_IMAGEN);
-
-  cout << "Introduzca el mensaje a cifrar: ";
-  cin.getline(mensaje, MAX_MENSAJE);
 
 }
