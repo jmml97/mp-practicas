@@ -19,7 +19,7 @@ void Ocultar (unsigned char imagen[], int longitud_imagen, char mensaje[]) {
 
     // Cada caracter está formado por 8 bits. Tenemos que ir insertando cada bit
     // del carácter en el bit menos significativo de cada byte de la imagen.
-    // Empezamos en el último bit porque así es como lo indica el ejercicio
+    // Empezamos en el último bit (el 7) porque así es como lo indica el ejercicio
     // (de izquierda a derecha).
     for(int j = 7; j >= 0; j--) {
 
