@@ -28,6 +28,7 @@ int main() {
 
   unsigned char buffer[MAX_BUFFER];
   char im_entrada[MAX_N_IMAGEN] = {0}, im_salida[MAX_N_IMAGEN] = {0}, mensaje[MAX_MENSAJE] = {0};
+  TipoError error = NO_ERROR;
 
   /*
       Usamos cin.getline para almacenar en los vectores los nombres que les iremos asignando
@@ -51,30 +52,33 @@ if (filas * columnas < MAX_MENSAJE)
 
     if (tipo == IMG_PGM) {
 
-      LeerImagenPGM(im_entra da, filas, columnas, buffer);
+      LeerImagenPGM(im_entrada, filas, columnas, buffer);
       cout << "Se va a ocultar el mensaje..." << endl;
 
-      Ocultar(buffer, filas*columnas, mensaje);
+      Ocultar(buffer, filas*columnas, mensaje, error);
       EscribirImagenPGM(im_salida, buffer, filas, columnas);
 
-      cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
-      ImprimirCadena(im_salida, MAX_N_IMAGEN);
 
     } else if (tipo == IMG_PPM) {
 
       LeerImagenPPM(im_entrada, filas, columnas, buffer);
       cout << "Se va a ocultar el mensaje..." << endl;
 
-      Ocultar(buffer, filas*columnas*3, mensaje);
+      Ocultar(buffer, filas*columnas*3, mensaje, error);
       EscribirImagenPPM(im_salida, buffer, filas, columnas);
-
-      cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
-      ImprimirCadena(im_salida, MAX_N_IMAGEN);
 
     } else {
       cout << "No ha introducido un archivo de imagen correcto o la imagen no se ha encontrado." << endl;
     }
   }
+
+  ImprimirError(error);
+
+  if (error == NO_ERROR) {
+    cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
+    ImprimirCadena(im_salida, MAX_N_IMAGEN);
+  }
+
 
 
 }

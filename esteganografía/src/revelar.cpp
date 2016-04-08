@@ -25,6 +25,7 @@ int main() {
   */
 
   int filas, columnas;
+  TipoError error = NO_ERROR;
 
   unsigned char buffer[MAX_BUFFER];
   char im_entrada[MAX_N_IMAGEN] = {0}, mensaje[MAX_MENSAJE] = {0};
@@ -50,9 +51,16 @@ int main() {
     cout << "No ha introducido un archivo de imagen correcto." << endl;
   }
 
-  Revelar(buffer, MAX_MENSAJE, mensaje);
-  cout << "El mensaje oculto es: " << endl;
-  ImprimirCadena(mensaje, MAX_MENSAJE);
+  Revelar(buffer, MAX_MENSAJE, mensaje, error);
+
+  ImprimirError(error);
+
+  if (error == NO_ERROR) {
+    cout << "El mensaje oculto es: " << endl;
+    ImprimirCadena(mensaje, MAX_MENSAJE);
+  }
+
+
 
 
 }
