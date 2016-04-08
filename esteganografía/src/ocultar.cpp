@@ -44,30 +44,36 @@ int main() {
 
   TipoImagen tipo = LeerTipoImagen(im_entrada, filas, columnas);
 
-  if (tipo == IMG_PGM) {
+if (filas * columnas < MAX_MENSAJE)
+  cout << "La imagen no es capaz de almacenar un mensaje tan grande.";
 
-    LeerImagenPGM(im_entrada, filas, columnas, buffer);
-    cout << "Se va a ocultar el mensaje..." << endl;
+  else {
 
-    Ocultar(buffer, filas*columnas, mensaje);
-    EscribirImagenPGM(im_salida, buffer, filas, columnas);
+    if (tipo == IMG_PGM) {
 
-    cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
-    ImprimirCadena(im_salida, MAX_N_IMAGEN);
+      LeerImagenPGM(im_entra da, filas, columnas, buffer);
+      cout << "Se va a ocultar el mensaje..." << endl;
 
-  } else if (tipo == IMG_PPM) {
+      Ocultar(buffer, filas*columnas, mensaje);
+      EscribirImagenPGM(im_salida, buffer, filas, columnas);
 
-    LeerImagenPPM(im_entrada, filas, columnas, buffer);
-    cout << "Se va a ocultar el mensaje..." << endl;
+      cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
+      ImprimirCadena(im_salida, MAX_N_IMAGEN);
 
-    Ocultar(buffer, filas*columnas*3, mensaje);
-    EscribirImagenPPM(im_salida, buffer, filas, columnas);
+    } else if (tipo == IMG_PPM) {
 
-    cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
-    ImprimirCadena(im_salida, MAX_N_IMAGEN);
+      LeerImagenPPM(im_entrada, filas, columnas, buffer);
+      cout << "Se va a ocultar el mensaje..." << endl;
 
-  } else {
-    cout << "No ha introducido un archivo de imagen correcto o la imagen no se ha encontrado." << endl;
+      Ocultar(buffer, filas*columnas*3, mensaje);
+      EscribirImagenPPM(im_salida, buffer, filas, columnas);
+
+      cout << "¡Mensaje oculto! La imagen de salida es: " << endl;
+      ImprimirCadena(im_salida, MAX_N_IMAGEN);
+
+    } else {
+      cout << "No ha introducido un archivo de imagen correcto o la imagen no se ha encontrado." << endl;
+    }
   }
 
 

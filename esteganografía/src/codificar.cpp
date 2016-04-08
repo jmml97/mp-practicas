@@ -83,7 +83,7 @@ void Revelar (unsigned char im_cifrada[], int longitud_mensaje, char revelacion[
     // Si hemos llegado al final del bit (y ya hemos obtenido el caracter)
     if (pos_bit == 0) {
 
-      if (caracter == '\0') {
+      if (caracter == '\0' || i >= longitud_mensaje) {
         // Si el carácter que hemos obtenido es el '\0', hemos acabado.
         finalizado = true;
       } else {
