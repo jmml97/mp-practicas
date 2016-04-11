@@ -11,17 +11,20 @@ bool Leer(std::istream& is, MatrizBit& m) {
   is >> cols;
   is >> fils;
 
-  bool init = Inicializar(m, fils, cols);
+  bool init =  is && Inicializar(m, fils, cols);
 
-  for (int i = 0; i < m.Filas(); i++) {
-    for (int j = 0; j < m.Columnas(); j++) {
-      char v
-      is >> v;
-      if (v == '1')
-        Set(m, i, j, true);
-      else
-        Set(m, i, j, false);
+  if (init) {
+    for (int i = 0; i < m.Filas() && init; i++) {
+      for (int j = 0; j < m.Columnas(); j++) {
+        char v
+        is >> v;
+        if (v == '1')
+          Set(m, i, j, true);
+        else
+          Set(m, i, j, false);
 
+      }
+      init = is;
     }
   }
 
@@ -43,13 +46,13 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
     }
   }
 
-  return os.fail(); // ?¿?¿?¿
+  return os;
 
 }
 
 bool Leer(const char nombre[], MatrizBit& m) {
 
-  ofstream archivo_matriz(nombre[]);
+
 
 }
 
