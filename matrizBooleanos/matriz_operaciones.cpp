@@ -14,8 +14,8 @@ bool Leer(std::istream& is, MatrizBit& m) {
   bool init =  is && Inicializar(m, fils, cols);
 
   if (init) {
-    for (int i = 0; i < m.Filas() && init; i++) {
-      for (int j = 0; j < m.Columnas(); j++) {
+    for (int i = 0; i < Filas() && init; i++) {
+      for (int j = 0; j < Columnas(); j++) {
         char v
         is >> v;
         if (v == '1')
@@ -26,6 +26,7 @@ bool Leer(std::istream& is, MatrizBit& m) {
       }
       init = is;
     }
+    return true;
   }
 
   return init;
@@ -36,10 +37,10 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
 
   os << Filas(m) << " " << Columnas(m) << endl;
 
-  for (int i = 0; i < m.Filas(); i++) {
-    for (int j = 0; j < m.Columnas(); j++) {
+  for (int i = 0; i < Filas(m); i++) {
+    for (int j = 0; j < Columnas(m); j++) {
       bool v = Get(m, i, j);
-      if (v == true)
+      if (v)
         os << '1';
       else
         os << '0';
@@ -50,9 +51,13 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
 
 }
 
-bool Leer(const char nombre[], MatrizBit& m) {
+bool Leer(const char nombre[], MatrizBit& m) {    // Tenemos  que crear un flujo para que al pasarle el nombre del archivo
+                                                  // repita el  mismo proceso que antes
 
 
+  std::istream f;
+
+  ofstream archivo_matriz(nombre[]);
 
 }
 
@@ -66,10 +71,10 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   bool elemento;
 
-  if ((m1.Filas() == m2.Filas()) && (m1.Columnas() == m2.Columnas())) {
+  if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
-    for (int i = 0; i < m.Filas(); i++) {
-      for (int j = 0; j < m.Columnas(); j++) {
+    for (int i = 0; i < Filas(m); i++) {
+      for (int j = 0; j < Columnas(m); j++) {
         elemento = Get(m1, i, j) && Get(m2, i, j);
         Set(res, i, j, elemento);
 
@@ -86,10 +91,10 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   bool elemento;
 
-  if ((m1.Filas() == m2.Filas()) && (m1.Columnas() == m2.Columnas())) {
+  if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
-    for (int i = 0; i < m.Filas(); i++) {
-      for (int j = 0; j < m.Columnas(); j++) {
+    for (int i = 0; i < Filas(m); i++) {
+      for (int j = 0; j < Columnas(m); j++) {
         elemento = Get(m1, i, j) || Get(m2, i, j);
         Set(res, i, j, elemento);
 
@@ -106,8 +111,8 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
 void Not(MatrizBit& res, const MatrizBit& m) {
 
-  for (int i = 0; i < m.Filas(); i++) {
-    for (int j = 0; j < m.Columnas(); j++) {
+  for (int i = 0; i < Filas(m); i++) {
+    for (int j = 0; j < Columnas(m); j++) {
       elemento = !Get(m1, i, j);
       Set(res, i, j, elemento);
 
@@ -118,8 +123,8 @@ void Not(MatrizBit& res, const MatrizBit& m) {
 
 void Traspuesta(MatrizBit& res, const MatrizBit& m) {
 
-  for (int i = 0; i < m.Filas(); i++) {
-    for (int j = 0; j < m.Columnas(); j++) {
+  for (int i = 0; i < Filas(m); i++) {
+    for (int j = 0; j < Columnas(m); j++) {
       elemento = Get(m1, i, j);
       Set(res, j, i, elemento);
 

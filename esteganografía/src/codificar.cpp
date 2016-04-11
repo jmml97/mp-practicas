@@ -9,37 +9,17 @@
 
 #include <iostream>
 #include "imagenES.h"
-#include "codificar.h"
 
 using namespace std;
 
-const char TERMINADOR = '\0';
-
-void ImprimirError(enum TipoError error) {
-  switch (error) {
-    case MSG_OCULTAR_GRANDE:
-      cout << "Error: el mensaje a ocultar es demasiado grande para la imagen dada." << endl;
-      break;
-    case NO_TERMINADOR:
-      cout << "Error: el mensaje a revelar no contiene ningún terminador." << endl;
-      break;
-    case MSG_REVELAR_GRANDE:
-      cout << "Error: la imagen oculta un mensaje de tamaño mayor que la cadena proporcionada." << endl;
-      break;
-    case NO_ERROR:
-      cout << "La operación se realizó correctamente. No hay errores." << endl;
-      break;
-  }
-}
-
-void Ocultar (unsigned char imagen[], int longitud_imagen, char mensaje[], TipoError &error) {
+void Ocultar (unsigned char imagen[], int longitud_imagen, char mensaje[]) {
 
   // Vamos iterando por los valores de la cadena char.
-  for(int i = 0; mensaje[i] != TERMINADOR; i++) {
+  for(int i = 0; mensaje[i] != '\0' && i < longitud_imagen  ; i++) {
 
     // Cada caracter está formado por 8 bits. Tenemos que ir insertando cada bit
     // del carácter en el bit menos significativo de cada byte de la imagen.
-    // Empezamos en el último bit (el 7) porque así es como lo indica el ejercicio
+    // Empezamos en el último bit porque así es como lo indica el ejercicio
     // (de izquierda a derecha).
     for(int j = 7; j >= 0; j--) {
 
@@ -64,27 +44,18 @@ void Ocultar (unsigned char imagen[], int longitud_imagen, char mensaje[], TipoE
 
     }
 
-    if (i > longitud_imagen) {
-      error = MSG_OCULTAR_GRANDE; // El mensaje a ocultar es mayor que el
-                                  // tamaño de la imagen.
-      mensaje[i] = TERMINADOR;
-    }
-
   }
 
 }
 
 
-void Revelar (unsigned char im_cifrada[], int longitud_mensaje, char revelacion[], TipoError &error){
+void Revelar (unsigned char im_cifrada[], int longitud_mensaje, char revelacion[]){
 
   char caracter = 0; // el caracter que está oculto con el que trabajamos.
   int num_caracter = 1; // numero del caracter en la cadena (empezamos por 1)
   int pos_bit; // posicion del bit del caracter que estamos insertando en cada
                // iteración.
   bool finalizado = false;
-
-  error = NO_TERMINADOR; // No lo cambiaremos hasta que no encontremos el
-                         // TERMINADOR
 
   for (int i = 0; i < longitud_mensaje && !finalizado; i++) {
 
@@ -112,11 +83,9 @@ void Revelar (unsigned char im_cifrada[], int longitud_mensaje, char revelacion[
     // Si hemos llegado al final del bit (y ya hemos obtenido el caracter)
     if (pos_bit == 0) {
 
-      if (caracter == TERMINADOR) {
-        // Si el carácter que hemos obtenido es el TERMINADOR, hemos acabado.
+      if (caracter == '\0') {
+        // Si el carácter que hemos obtenido es el '\0', hemos acabado.
         finalizado = true;
-        error = NO_ERROR; // Hemos encontrado el TERMINADOR y el mensaje
-                          // se ha desvelado. Todo correcto.
       } else {
         // Guardamos el caracter que hemos obtenido.
         revelacion[num_caracter - 1] = caracter;
@@ -125,12 +94,6 @@ void Revelar (unsigned char im_cifrada[], int longitud_mensaje, char revelacion[
       }
 
     }
-
-    // Si hemos llegado al máximo de la longitud del mensaje y no hemos
-    // encontrado el TERMINADOR, entonces es que el mensaje escondido es
-    // demasiado grande para nuestra cadena.
-    if (i == (longitud_mensaje - 1) && revelacion[i] != TERMINADOR)
-      error = MSG_REVELAR_GRANDE;
 
   }
 
