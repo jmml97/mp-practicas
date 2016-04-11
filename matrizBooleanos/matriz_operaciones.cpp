@@ -8,9 +8,13 @@ bool Leer(std::istream& is, MatrizBit& m) {
 
   for (int i = 0; i < m.Filas(); i++) {
     for (int j = 0; j < m.Columnas(); j++) {
-      bool v;
-      is >> bool;
-      Set(m, i, j, v);
+      char v
+      is >> v;
+      if (v == '1')
+        Set(m, i, j, true);
+      else
+        Set(m, i, j, false);
+
     }
   }
 
@@ -20,7 +24,11 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
 
   for (int i = 0; i < m.Filas(); i++) {
     for (int j = 0; j < m.Columnas(); j++) {
-      os << Get(m, i, j);
+      bool v = Get(m, i, j);
+      if (v == true)
+        os << '1';
+      else
+        os << '0';
     }
   }
 
@@ -28,7 +36,7 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
 
 bool Leer(const char nombre[], MatrizBit& m) {
 
-  
+
 
 }
 
