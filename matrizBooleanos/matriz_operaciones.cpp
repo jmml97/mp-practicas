@@ -11,9 +11,9 @@ bool Leer(std::istream& is, MatrizBit& m) {
   is >> cols;
   is >> fils;
 
-  bool init =  is && Inicializar(m, fils, cols);
+  bool exito =  is && Inicializar(m, fils, cols);
 
-  if (init) {
+  if (exito) {
     for (int i = 0; i < Filas() && init; i++) {
       for (int j = 0; j < Columnas(); j++) {
         char v
@@ -24,18 +24,18 @@ bool Leer(std::istream& is, MatrizBit& m) {
           Set(m, i, j, false);
 
       }
-      init = is;
+      exito = is;
     }
     return true;
   }
 
-  return init;
+  return exito;
 
 }
 
 bool Escribir(std::ostream& os, const MatrizBit& m) {
 
-  os << Filas(m) << " " << Columnas(m) << endl;
+  os << Filas(m) << ' ' << Columnas(m) << endl;
 
   for (int i = 0; i < Filas(m); i++) {
     for (int j = 0; j < Columnas(m); j++) {
@@ -44,26 +44,42 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
         os << '1';
       else
         os << '0';
+      os << ' ';
     }
+
   }
 
   return os;
 
 }
 
-bool Leer(const char nombre[], MatrizBit& m) {    // Tenemos  que crear un flujo para que al pasarle el nombre del archivo
-                                                  // repita el  mismo proceso que antes
-
-
-  std::istream f;
+bool Leer(const char nombre[], MatrizBit& m) {
 
   ofstream archivo_matriz(nombre[]);
+  bool exito = archivo_matriz.is_open();
+
+  if (exito) {
+
+    bool exito = Leer(archivo_matriz, m);
+
+  }
+
+  return exito;
 
 }
 
 bool Escribir(const char nombre[], const MatrizBit& m) {
 
+  ofstream archivo_matriz(nombre[]);
+  bool exito = archivo_matriz.is_open();
 
+  if (exito) {
+
+    bool exito = Escribir(archivo_matriz, m);
+
+  }
+
+  return exito;
 
 }
 

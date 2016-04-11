@@ -3,82 +3,76 @@
   *
   */
 
-  struct MatrizBit{
+#include "matriz_bit3.h"
 
-    char bool_matrix[100];
-    unsigned int filas_columnas = 0;
+bool Inicializar(MatrizBit& m, int fils, int cols) {
 
-  };
+  if (fils * cols <= 100) {                       // Devuelve true si el tamaño es correcto
 
+    m.filas_columnas = ((m.filas_columnas|fils)<<16)|cols;
 
-  bool Inicializar(MatrizBit& m, int fils, int cols) {
+    for (int i = 0; i < fils * cols; i++){
 
-    if (fils * cols <= 100) {                       // Devuelve true si el tamaño es correcto
+      m.bool_matrix[i] = '0';
 
-      m.filas_columnas = ((m.filas_columnas|fils)<<16)|cols;
-
-      for (int i = 0; i < fils * cols; i++){
-
-        m.bool_matrix[i] = '0';
-
-      }
-
-      return true;
     }
 
-    else
-      return false;
+    return true;
   }
 
-  int Filas(const MatrizBit& m) {
+  else
+    return false;
+}
 
-    int filas = 0;
+int Filas(const MatrizBit& m) {
 
-    // Extraemos los 16 últimos bits del entero filas_columnas, que se
-    // corresponden a las filas.
+  int filas = 0;
 
-    for (int i = 16; i < 32; i++) {
-      if ((m.filas_columnas&(1<<i)) != 0)
-        filas = filas|(1<<(i-16));
-    }
+  // Extraemos los 16 últimos bits del entero filas_columnas, que se
+  // corresponden a las filas.
 
-    return filas;
-
+  for (int i = 16; i < 32; i++) {
+    if ((m.filas_columnas&(1<<i)) != 0)
+      filas = filas|(1<<(i-16));
   }
 
-  int Columnas(const MatrizBit& m) {
+  return filas;
 
-    int columnas;
+}
 
-    // Extraemos los 16 primeros bits del entero filas_columnas, que se
-    // corresponden a las columnas.
+int Columnas(const MatrizBit& m) {
 
-    for (int i = 0; i < 16; i++) {
-      if ((m.filas_columnas&(1<<i)) != 0)
-        columnas = columnas|(1<<(i));
-    }
+  int columnas;
 
-    return columnas;
+  // Extraemos los 16 primeros bits del entero filas_columnas, que se
+  // corresponden a las columnas.
 
+  for (int i = 0; i < 16; i++) {
+    if ((m.filas_columnas&(1<<i)) != 0)
+      columnas = columnas|(1<<(i));
   }
 
-  bool Get(const MatrizBit& m, int f, int c) {
+  return columnas;
 
-    // Obtenemos la posición correcta y devolvemos según el valor de esa
-    // posición.
-    if (m.bool_matrix[f*Columnas(m)] + c == '1')
-      return true;
-    else
-      return false;
+}
 
-  }
+bool Get(const MatrizBit& m, int f, int c) {
 
-  void Set(MatrizBit& m, int f, int c, bool v) {
+  // Obtenemos la posición correcta y devolvemos según el valor de esa
+  // posición.
+  if (m.bool_matrix[f*Columnas(m)] + c == '1')
+    return true;
+  else
+    return false;
 
-    // Obtenemos la posición correcta y fijamos el valor según nos indiquen.
-    if (v)
-      m.bool_matrix[f*Columnas(m) + c] = '1';
-    else
-      m.bool_matrix[f*Columnas(m) + c] = '0';
+}
 
-  }
+void Set(MatrizBit& m, int f, int c, bool v) {
+
+  // Obtenemos la posición correcta y fijamos el valor según nos indiquen.
+  if (v)
+    m.bool_matrix[f*Columnas(m) + c] = '1';
+  else
+    m.bool_matrix[f*Columnas(m) + c] = '0';
+
+}

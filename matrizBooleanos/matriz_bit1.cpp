@@ -3,55 +3,48 @@
   *
   */
 
-  struct MatrizBit{
+#include "matriz_bit1.h"
 
-    bool bool_matrix[10][10];
-    int filas = 0;
-    int columnas = 0;
+bool Inicializar(MatrizBit& m, int fils, int cols) {
 
-  };
+  if (fils <= 10 && cols <= 10) {      // Devuelve true si el tamaño es correcto
 
+    m.filas = fils;
+    m.columnas = cols;
 
-  bool Inicializar(MatrizBit& m, int fils, int cols) {
+    for (int i = 0; i < m.filas; i++){
 
-    if (fils <= 10 && cols <= 10) {                       // Devuelve true si el tamaño es correcto
-
-      m.filas = fils;
-      m.columnas = cols;
-
-      for (int i = 0; i < m.filas; i++){
-
-        for (int j = 0; j < m.columnas; j++)
-          m.bool_matrix[i][j] = false;
-      }
-
-      return true;
+      for (int j = 0; j < m.columnas; j++)
+        m.bool_matrix[i][j] = false;
     }
 
-    else
-      return false;
+    return true;
   }
 
-  int Filas(const MatrizBit& m) {
+  else
+    return false;
+}
 
-    return m.filas;
+int Filas(const MatrizBit& m) {
 
-  }
+  return m.filas;
 
-  int Columnas(const MatrizBit& m) {
+}
 
-    return m.columnas;
+int Columnas(const MatrizBit& m) {
 
-  }
+  return m.columnas;
 
-  bool Get(const MatrizBit& m, int f, int c) {
+}
 
-    return m.bool_matrix[f][c];
+bool Get(const MatrizBit& m, int f, int c) {
 
-  }
+  return m.bool_matrix[f][c];
 
-  void Set(MatrizBit& m, int f, int c, bool v) {
+}
 
-    m.bool_matrix[f][c] = v;
+void Set(MatrizBit& m, int f, int c, bool v) {
 
-  }
+  m.bool_matrix[f][c] = v;
+
+}
