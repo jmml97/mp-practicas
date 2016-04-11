@@ -1,10 +1,17 @@
 
 
-#include<iosfwd> // istream,ostream
+#include <iosfwd> // istream,ostream
 #include "matriz_bit.h"
 
 
 bool Leer(std::istream& is, MatrizBit& m) {
+
+  int cols, fils;
+
+  is >> cols;
+  is >> fils;
+
+  bool init = Inicializar(m, fils, cols);
 
   for (int i = 0; i < m.Filas(); i++) {
     for (int j = 0; j < m.Columnas(); j++) {
@@ -18,9 +25,13 @@ bool Leer(std::istream& is, MatrizBit& m) {
     }
   }
 
+  return init;
+
 }
 
 bool Escribir(std::ostream& os, const MatrizBit& m) {
+
+  os << Filas(m) << " " << Columnas(m) << endl;
 
   for (int i = 0; i < m.Filas(); i++) {
     for (int j = 0; j < m.Columnas(); j++) {
@@ -32,11 +43,13 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
     }
   }
 
+  return os.fail(); // ?¿?¿?¿
+
 }
 
 bool Leer(const char nombre[], MatrizBit& m) {
 
-
+  ofstream archivo_matriz(nombre[]);
 
 }
 
