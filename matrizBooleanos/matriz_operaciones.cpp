@@ -1,22 +1,25 @@
 
 
 #include <iosfwd> // istream,ostream
+#include <iostream>
+#include <fstream>
 #include "matriz_bit.h"
 
+using namespace std;
 
 bool Leer(std::istream& is, MatrizBit& m) {
 
   int cols, fils;
 
-  is >> cols;
   is >> fils;
+  is >> cols;
 
   bool exito =  is && Inicializar(m, fils, cols);
 
   if (exito) {
-    for (int i = 0; i < Filas() && init; i++) {
-      for (int j = 0; j < Columnas(); j++) {
-        char v
+    for (int i = 0; i < Filas(m) && exito; i++) {
+      for (int j = 0; j < Columnas(m); j++) {
+        char v;
         is >> v;
         if (v == '1')
           Set(m, i, j, true);
@@ -24,7 +27,7 @@ bool Leer(std::istream& is, MatrizBit& m) {
           Set(m, i, j, false);
 
       }
-      exito = is;
+      exito = !is.fail();
     }
     return true;
   }
@@ -47,20 +50,21 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
       os << ' ';
     }
 
+    cout << endl;
   }
 
-  return os;
+  return !os.fail();
 
 }
 
 bool Leer(const char nombre[], MatrizBit& m) {
 
-  ofstream archivo_matriz(nombre[]);
+  ifstream archivo_matriz(nombre);
   bool exito = archivo_matriz.is_open();
 
   if (exito) {
 
-    bool exito = Leer(archivo_matriz, m);
+    exito = Leer(archivo_matriz, m);
 
   }
 
@@ -70,12 +74,12 @@ bool Leer(const char nombre[], MatrizBit& m) {
 
 bool Escribir(const char nombre[], const MatrizBit& m) {
 
-  ofstream archivo_matriz(nombre[]);
+  ofstream archivo_matriz(nombre);
   bool exito = archivo_matriz.is_open();
 
   if (exito) {
 
-    bool exito = Escribir(archivo_matriz, m);
+    exito = Escribir(archivo_matriz, m);
 
   }
 
@@ -89,8 +93,8 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
-    for (int i = 0; i < Filas(m); i++) {
-      for (int j = 0; j < Columnas(m); j++) {
+    for (int i = 0; i < Filas(m1); i++) {
+      for (int j = 0; j < Columnas(m1); j++) {
         elemento = Get(m1, i, j) && Get(m2, i, j);
         Set(res, i, j, elemento);
 
@@ -98,7 +102,7 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
     }
   }
   else {
-    cout << "El tamaño de las matrices no coincide." << endl;
+    std::cout << "El tamaño de las matrices no coincide." << endl;
   }
 
 }
@@ -109,8 +113,8 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
-    for (int i = 0; i < Filas(m); i++) {
-      for (int j = 0; j < Columnas(m); j++) {
+    for (int i = 0; i < Filas(m1); i++) {
+      for (int j = 0; j < Columnas(m1); j++) {
         elemento = Get(m1, i, j) || Get(m2, i, j);
         Set(res, i, j, elemento);
 
@@ -123,26 +127,24 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
 }
 
-}
 
 void Not(MatrizBit& res, const MatrizBit& m) {
 
-  for (int i = 0; i < Filas(m); i++) {
-    for (int j = 0; j < Columnas(m); j++) {
-      elemento = !Get(m1, i, j);
-      Set(res, i, j, elemento);
+  Inicializar(res, Filas(m), Columnas(m));
 
-    }
-  }
+  for (int i = 0; i < Filas(m); i++)
+    for (int j = 0; j < Columnas(m); j++)
+      Set(res, i, j, !Get(m, i, j));
 
 }
 
 void Traspuesta(MatrizBit& res, const MatrizBit& m) {
 
+  Inicializar(res, Filas(m), Columnas(m));
+
   for (int i = 0; i < Filas(m); i++) {
     for (int j = 0; j < Columnas(m); j++) {
-      elemento = Get(m1, i, j);
-      Set(res, j, i, elemento);
+      Set(res, j, i, Get(m, i, j));
 
     }
   }

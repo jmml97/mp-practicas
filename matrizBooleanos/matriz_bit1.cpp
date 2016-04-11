@@ -4,6 +4,9 @@
   */
 
 #include "matriz_bit1.h"
+#include <iostream>
+
+using namespace std;
 
 bool Inicializar(MatrizBit& m, int fils, int cols) {
 
