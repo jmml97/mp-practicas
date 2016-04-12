@@ -5,8 +5,8 @@
 struct MatrizBit{
 
   bool bool_matrix[100];
-  int filas = 0;
-  int columnas = 0;
+  int filas;
+  int columnas;
 
 };
 

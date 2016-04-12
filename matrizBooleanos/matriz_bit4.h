@@ -4,7 +4,7 @@
 struct MatrizBit{
 
   unsigned int bool_matrix[4];
-  unsigned short int filas_columnas = 0;
+  unsigned short int filas_columnas;
 
 };
 

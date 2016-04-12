@@ -8,7 +8,7 @@
 bool Inicializar(MatrizBit& m, int fils, int cols) {
 
   if (fils * cols <= 128) {                       // Devuelve true si el tamaño es correcto
-
+    m.filas_columnas = 0;
     m.filas_columnas = ((m.filas_columnas|fils)<<8)|cols;
 
     for (int i = 0; i < (fils * cols) / 32; i++) {
@@ -42,7 +42,7 @@ int Filas(const MatrizBit& m) {
 
 int Columnas(const MatrizBit& m) {
 
-  int columnas;
+  int columnas = 0;
 
   // Extraemos los 16 primeros bits del entero filas_columnas, que se
   // corresponden a las columnas.

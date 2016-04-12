@@ -3,8 +3,8 @@ using namespace std;
 
 int main() {
 
-  int dos = 2;
-  int tres = 3;
+  int dos = 4;
+  int tres = 6;
   int cero = 0;
 
   cero = ((cero|dos)<<16)|tres; // 131075

@@ -15,10 +15,12 @@ bool Leer(std::istream& is, MatrizBit& m) {
   is >> cols;
 
   bool exito =  is && Inicializar(m, fils, cols);
+  //cout << "filas: " << Filas(m) << endl;
+  //cout << "columnas: " << Columnas(m) << endl;
 
   if (exito) {
-    for (int i = 0; i < Filas(m) && exito; i++) {
-      for (int j = 0; j < Columnas(m); j++) {
+    for (int i = 0; i < Columnas(m); i++) {
+      for (int j = 0; j < Filas(m); j++) {
         char v;
         is >> v;
         if (v == '1')
@@ -29,7 +31,7 @@ bool Leer(std::istream& is, MatrizBit& m) {
       }
       exito = !is.fail();
     }
-    return true;
+    exito = true;
   }
 
   return exito;
@@ -60,9 +62,9 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
 bool Leer(const char nombre[], MatrizBit& m) {
 
   ifstream archivo_matriz(nombre);
-  bool exito = archivo_matriz.is_open();
+  bool exito = false;
 
-  if (exito) {
+  if (archivo_matriz) {
 
     exito = Leer(archivo_matriz, m);
 
@@ -93,6 +95,8 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
+    Inicializar(res, Filas(m1), Columnas(m1));
+
     for (int i = 0; i < Filas(m1); i++) {
       for (int j = 0; j < Columnas(m1); j++) {
         elemento = Get(m1, i, j) && Get(m2, i, j);
@@ -112,6 +116,8 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
   bool elemento;
 
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
+
+    Inicializar(res, Filas(m1), Columnas(m1));
 
     for (int i = 0; i < Filas(m1); i++) {
       for (int j = 0; j < Columnas(m1); j++) {
@@ -140,7 +146,7 @@ void Not(MatrizBit& res, const MatrizBit& m) {
 
 void Traspuesta(MatrizBit& res, const MatrizBit& m) {
 
-  Inicializar(res, Filas(m), Columnas(m));
+  Inicializar(res, Columnas(m), Filas(m));
 
   for (int i = 0; i < Filas(m); i++) {
     for (int j = 0; j < Columnas(m); j++) {
