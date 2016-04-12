@@ -8,33 +8,72 @@
 using namespace std;
 
 bool Leer(std::istream& is, MatrizBit& m) {
+                                                // Tenemos que comprobar que los datos del fichero sean valores numéricos
+                                                // o 'X' o '.', y aplicar un tipo de lectura, comprobamos con is.peek si
+                                                // es espacio en blanco o no y seguir leyendo hasta encontrar un caracter
+                                                // que sea '.' o 'X', para entonces proceder al siguiente método:
+                                                // Creamos un vector char que nos sirva de buffer para leer posteriormente
+                                                // la matriz. Con is.getline obtenemos la fila, al ser la primera la
+                                                // metemos en nuestro buffer con is.strcpy, aumentamos el numero de filas
+                                                // y vamos concatenando las siguientes filas con strcat
+   while (isspace(is.peek()))
+      is.ignore();
 
-  int cols, fils;
+   if (is.peek() == 'X' || is.peek() == '.') {
 
-  is >> fils;
-  is >> cols;
+     int filas = 0 , columnas = 0, check;
 
-  bool exito =  is && Inicializar(m, fils, cols);
-  //cout << "filas: " << Filas(m) << endl;
-  //cout << "columnas: " << Columnas(m) << endl;
+     char buffer[1000];
+     char linea[100];
+     is.getline(linea,100);
+     columnas = strlen(linea)
+     filas++;
+     strcpy(buffer,linea);
 
-  if (exito) {
-    for (int i = 0; i < Columnas(m); i++) {
-      for (int j = 0; j < Filas(m); j++) {
-        char v;
-        is >> v;
-        if (v == '1')
-          Set(m, i, j, true);
-        else
-          Set(m, i, j, false);
+     while (is.peek() == 'X' || is.peek() == '.') {
+       is.getline(linea,100);
+       strcat(buffer,linea);
 
-      }
-      exito = !is.fail();
+       filas++;
+       check = strlen(linea);
+       if (check != columnas)
+        returne false;
+     }
+
+
+     // Falta recorrer uno a uno los elementos del vector buffer e ir asignandolos con un Set() a la matriz m
+
+
+
+   }
+
+  else {
+    int cols, fils;
+
+    is >> fils;
+    is >> cols;
+
+    bool exito =  is && Inicializar(m, fils, cols);
+    //cout << "filas: " << Filas(m) << endl;
+    //cout << "columnas: " << Columnas(m) << endl;
+
+    if (exito) {
+      for (int i = 0; i < Columnas(m); i++) {
+        for (int j = 0; j < Filas(m); j++) {
+          char v;
+          is >> v;
+          if (v == '1')
+            Set(m, i, j, true);
+            else
+            Set(m, i, j, false);
+
+          }
+            exito = !is.fail();
+          }
+          exito = true;
+        }
     }
-    exito = true;
-  }
-
-  return exito;
+      return exito;
 
 }
 
