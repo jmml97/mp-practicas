@@ -60,4 +60,7 @@ int main(int argc, char* argv[]) {
   // cout << "res: " << endl;       Igual que hemos explicado ahí arriba
   Escribir(cout, res);
   }
+
+  else
+    std::cout << "\nSe ha producido un error en la lectura" << std::endl;
 }

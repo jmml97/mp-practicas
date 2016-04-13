@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "matriz_bit.h"
+#include "string.h"       // Necesario para funciones strlen, strcpy y strcat
 
 using namespace std;
 
@@ -25,25 +26,34 @@ bool Leer(std::istream& is, MatrizBit& m) {
 
      char buffer[1000];
      char linea[100];
-     is.getline(linea,100);
-     columnas = strlen(linea)
+     is.getline(linea,100);               // Lee toda la línea y la mete en el vector línea
+     columnas = strlen(linea);            // Obtiene tamaño cadena
      filas++;
-     strcpy(buffer,linea);
+     strcpy(buffer,linea);                // Copia al principio de buffer el valor de línea (Estas funciones se pueden
+                                          // consultar con man "man strlen")
 
-     while (is.peek() == 'X' || is.peek() == '.') {
+     while (is.peek() == 'X' || is.peek() == '.') { // Consulta el primer caracter y despues coge toda la línea
        is.getline(linea,100);
-       strcat(buffer,linea);
+       strcat(buffer,linea);              // Concatena línea al final de buffer
 
        filas++;
        check = strlen(linea);
        if (check != columnas)
-        returne false;
+        return false;
      }
 
 
-     // Falta recorrer uno a uno los elementos del vector buffer e ir asignandolos con un Set() a la matriz m
 
+     for (int i = 0; i < filas; i++)
+        for (int j = 0; j < columnas; j++)
+          if(buffer[i*columnas + j] == 'X')
+            Set(m, i, j, true);
+          else if (buffer[i*columnas + j] == '.')
+            Set(m, i, j, false);
+          else
+            return false;
 
+      return true;
 
    }
 
@@ -72,9 +82,9 @@ bool Leer(std::istream& is, MatrizBit& m) {
           }
           exito = true;
         }
-    }
-      return exito;
 
+      return exito;
+  }
 }
 
 bool Escribir(std::ostream& os, const MatrizBit& m) {
