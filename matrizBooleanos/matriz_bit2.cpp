@@ -12,11 +12,8 @@ bool Inicializar(MatrizBit& m, int fils, int cols) {
     m.filas = fils;
     m.columnas = cols;
 
-    for (int i = 0; i < m.filas * m.columnas; i++){
-
+    for (int i = 0; i < m.filas * m.columnas; i++)
       m.bool_matrix[i] = false;
-
-    }
 
     return true;
   }

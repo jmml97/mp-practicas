@@ -5,6 +5,25 @@
 
 #include "matriz_bit3.h"
 
+bool Inicializar(MatrizBit& m, int fils, int cols) {
+
+  if (fils * cols <= 100) {            // Devuelve true si el tamaño es correcto
+
+    m.filas_columnas = 0;
+    // En los primeros 16 bits se guardan las filas, en los últimos, las
+    // columnas.
+    m.filas_columnas = ((m.filas_columnas|fils)<<16)|cols;
+
+    for (int i = 0; i < fils * cols; i++)
+      m.bool_matrix[i] = '0';
+
+    return true;
+  }
+  else
+    return false;
+
+}
+
 int Filas(const MatrizBit& m) {
 
   int filas = 0;
@@ -33,38 +52,9 @@ int Columnas(const MatrizBit& m) {
       columnas = columnas|(1<<(i));
   }
 
-
-
   return columnas;
 
 }
-
-bool Inicializar(MatrizBit& m, int fils, int cols) {
-
-  bool exito;
-
-  if (fils * cols <= 100) {                       // Devuelve true si el tamaño es correcto
-
-    m.filas_columnas = 0;
-    m.filas_columnas = ((m.filas_columnas|fils)<<16)|cols;
-
-
-    for (int i = 0; i < fils * cols; i++){
-
-      m.bool_matrix[i] = '0';
-
-    }
-
-    exito = true;
-  }
-  else
-    exito = false;
-
-  return exito;
-
-}
-
-
 
 bool Get(const MatrizBit& m, int f, int c) {
 
@@ -83,13 +73,9 @@ void Set(MatrizBit& m, int f, int c, bool v) {
 
   m.bool_matrix[6] = '0';
 
-  if (v) {
+  if (v)
     m.bool_matrix[f*Columnas(m) + c] = '1';
-  }
-
-  else {
+  else
     m.bool_matrix[f*Columnas(m) + c] = '0';
-  }
-
 
 }

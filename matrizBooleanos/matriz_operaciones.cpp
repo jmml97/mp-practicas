@@ -9,88 +9,117 @@
 using namespace std;
 
 bool Leer(std::istream& is, MatrizBit& m) {
-                                                // Tenemos que comprobar que los datos del fichero sean valores numéricos
-                                                // o 'X' o '.', y aplicar un tipo de lectura, comprobamos con is.peek si
-                                                // es espacio en blanco o no y seguir leyendo hasta encontrar un caracter
-                                                // que sea '.' o 'X', para entonces proceder al siguiente método:
-                                                // Creamos un vector char que nos sirva de buffer para leer posteriormente
-                                                // la matriz. Con is.getline obtenemos la fila, al ser la primera la
-                                                // metemos en nuestro buffer con is.strcpy, aumentamos el numero de filas
-                                                // y vamos concatenando las siguientes filas con strcat
-   while (isspace(is.peek()))
-      is.ignore();
 
-   if (is.peek() == 'X' || is.peek() == '.') {
+  // Tenemos que comprobar que los datos del fichero sean valores numéricos o
+  // 'X' o '.', y aplicar un tipo de lectura. Para ello comprobamos con is.peek
+  // si el siguiente caracter es un espacio en blanco o no y seguiremos leyendo
+  // hasta encontrar un caracter que sea ''.' o 'X', para entonces proceder a
+  // la lectura. Si no es así, entonces tendremos valores numéricos y el proceso
+  // es mucho más sencillo.
 
-     int filas = 0 , columnas = 0, check;
+  bool exito = true;
+  int cols = 0, fils = 0;
 
-     char buffer[1000];
-     char linea[100];
-     is.getline(linea,100);               // Lee toda la línea y la mete en el vector línea
-     columnas = strlen(linea);            // Obtiene tamaño cadena
-     filas++;
-     strcpy(buffer,linea);                // Copia al principio de buffer el valor de línea (Estas funciones se pueden
-                                          // consultar con man "man strlen")
+  while (isspace(is.peek()))
+    is.ignore();
 
-     while (is.peek() == 'X' || is.peek() == '.') { // Consulta el primer caracter y despues coge toda la línea
-       is.getline(linea,100);
-       strcat(buffer,linea);              // Concatena línea al final de buffer
+  if (is.peek() == 'X' || is.peek() == '.') {
 
-       filas++;
-       check = strlen(linea);
-       if (check != columnas)
-        return false;
-     }
+    char buffer[1000];    // Aquí almacenaremos todos los caracteres.
+    char linea[100];      // Aquí almacenaremos cada línea, con tamaño máx. 100.
 
 
+    is.getline(linea, 100); // Copiamos una línea entera al vector linea.
+    cols = strlen(linea);   // El número de columnas será el número de
+                            // caracteres de la primera fila.
+    fils++;
+    strcpy(buffer, linea);  // Copia al principio de buffer el valor de linea.
 
-     for (int i = 0; i < filas; i++)
-        for (int j = 0; j < columnas; j++)
-          if(buffer[i*columnas + j] == 'X')
-            Set(m, i, j, true);
-          else if (buffer[i*columnas + j] == '.')
-            Set(m, i, j, false);
-          else
-            return false;
+    // Continuamos leyendo hasta que no haya más 'X' o '.'.
+    while ((is.peek() == 'X' || is.peek() == '.') && exito) {
+      is.getline(linea, 100);
+      strcat(buffer, linea);  // Copia al final de buffer el valor de linea.
 
-      return true;
+      fils++;
 
-   }
+      // Si la línea leida no tiene la misma longitud que la primera (número de
+      // columnas), la matriz no es válida.
+      // Conversión a int porque strlen() devuelve un size_t.
+      if (int(strlen(linea)) != cols)
+        exito = false;
+    }
 
+    if (exito)
+      exito = Inicializar(m, fils, cols);
+
+    // Asignamos valores a la matriz según lo que tengamos en el vector.
+    for (int i = 0; i < fils; i++) {
+      for (int j = 0; j < cols && exito; j++) {
+        if (buffer[i*cols + j] == 'X')
+          Set(m, i, j, true);
+        else if (buffer[i*cols + j] == '.')
+          Set(m, i, j, false);
+        else
+          exito = false;
+      }
+    }
+
+  }
   else {
-    int cols, fils;
 
+    // Primero leemos los valores de las filas y las columnas.
     is >> fils;
     is >> cols;
 
+    // Si se han leído correctamente, procedemos a la inicialización.
     bool exito =  is && Inicializar(m, fils, cols);
-    //cout << "filas: " << Filas(m) << endl;
-    //cout << "columnas: " << Columnas(m) << endl;
+    char v; // Aquí almacenaremos el caracter que nos proporcione el flujo.
 
+    // Si todo ha ido correctamente, asignamos a la matriz los valores que nos
+    // indica el flujo.
     if (exito) {
-      for (int i = 0; i < Columnas(m); i++) {
-        for (int j = 0; j < Filas(m); j++) {
-          char v;
+      for (int i = 0; i < Filas(m); i++) {
+        for (int j = 0; j < Columnas(m); j++) {
           is >> v;
           if (v == '1')
             Set(m, i, j, true);
-            else
+          else if (v == '0')
             Set(m, i, j, false);
-
           }
-            exito = !is.fail();
-          }
-          exito = true;
-        }
+        exito = !is.fail();
+      }
+    }
 
-      return exito;
   }
+
+  return exito;
+
+}
+
+
+bool Leer(const char nombre[], MatrizBit& m) {
+
+  // Abrimos el flujo para leer el archivo.
+  ifstream archivo_matriz(nombre);
+  bool exito = false;
+
+  // Si se ha abierto, pasamos el flujo a la función Leer.
+  if (archivo_matriz) {
+
+    exito = Leer(archivo_matriz, m);
+
+  }
+
+  return exito;
+
 }
 
 bool Escribir(std::ostream& os, const MatrizBit& m) {
 
+  // Escribimos las filas y columnas.
   os << Filas(m) << ' ' << Columnas(m) << endl;
 
+  // Dependiendo de los valores del vector, escribimos 0 o 1.
   for (int i = 0; i < Filas(m); i++) {
     for (int j = 0; j < Columnas(m); j++) {
       bool v = Get(m, i, j);
@@ -104,31 +133,19 @@ bool Escribir(std::ostream& os, const MatrizBit& m) {
     cout << endl;
   }
 
-  return !os.fail();
+  return os.good();
 
 }
 
-bool Leer(const char nombre[], MatrizBit& m) {
-
-  ifstream archivo_matriz(nombre);
-  bool exito = false;
-
-  if (archivo_matriz) {
-
-    exito = Leer(archivo_matriz, m);
-
-  }
-
-  return exito;
-
-}
 
 bool Escribir(const char nombre[], const MatrizBit& m) {
 
+  // Abrimos el flujo para lescribir el archivo.
   ofstream archivo_matriz(nombre);
-  bool exito = archivo_matriz.is_open();
+  bool exito = false;
 
-  if (exito) {
+  // Si se ha abierto, pasamos el flujo a la función Escribir.
+  if (archivo_matriz) {
 
     exito = Escribir(archivo_matriz, m);
 
@@ -142,6 +159,8 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   bool elemento;
 
+  // Las matrices deben tener el mismo tamaño para realizar operaciones
+  // binarias.
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
     Inicializar(res, Filas(m1), Columnas(m1));
@@ -155,7 +174,7 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
     }
   }
   else {
-    std::cout << "El tamaño de las matrices no coincide." << endl;
+    cout << "El tamaño de las matrices no coincide." << endl;
   }
 
 }
@@ -164,6 +183,8 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
   bool elemento;
 
+  // Las matrices deben tener el mismo tamaño para realizar operaciones
+  // binarias.
   if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2))) {
 
     Inicializar(res, Filas(m1), Columnas(m1));
@@ -182,14 +203,15 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2) {
 
 }
 
-
 void Not(MatrizBit& res, const MatrizBit& m) {
 
   Inicializar(res, Filas(m), Columnas(m));
 
-  for (int i = 0; i < Filas(m); i++)
-    for (int j = 0; j < Columnas(m); j++)
+  for (int i = 0; i < Filas(m); i++) {
+    for (int j = 0; j < Columnas(m); j++) {
       Set(res, i, j, !Get(m, i, j));
+    }
+  }
 
 }
 
@@ -200,7 +222,6 @@ void Traspuesta(MatrizBit& res, const MatrizBit& m) {
   for (int i = 0; i < Filas(m); i++) {
     for (int j = 0; j < Columnas(m); j++) {
       Set(res, j, i, Get(m, i, j));
-
     }
   }
 

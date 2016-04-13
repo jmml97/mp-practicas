@@ -11,15 +11,11 @@ bool Inicializar(MatrizBit& m, int fils, int cols) {
     m.filas_columnas = 0;
     m.filas_columnas = ((m.filas_columnas|fils)<<8)|cols;
 
-    for (int i = 0; i < (fils * cols) / 32; i++) {
-
+    for (int i = 0; i < (fils * cols) / 32; i++)
       m.bool_matrix[i] = 0;
-
-    }
 
     return true;
   }
-
   else
     return false;
 }
