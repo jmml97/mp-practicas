@@ -16,6 +16,8 @@ class Tablero {
     Matriz tablero;
     int objetivo_fichas, turno, ganador;
 
+
+
   public:
 
     int GetFilas();
@@ -26,7 +28,8 @@ class Tablero {
 
     int GetTurno();
     void SetTurno(int n);
-
+    void CambiaTurno();
+    
     int GetPuntuacion();
 
     int GetGanador();

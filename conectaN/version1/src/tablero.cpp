@@ -61,10 +61,29 @@ void Tablero::SetGanador(int n) {
 
 }
 
+void Tablero::CambiaTurno(){
+
+  if (turno == 2)
+    turno = 1;
+
+  else
+    turno = 2;
+}
+
 bool Tablero::InsertarFicha(int columna) {
 
+  bool colocada = false;
 
+  for (int i = tablero.GetFilas() - 1; i >= 0 && !colocada; i--){
 
+    if (ContenidoCasilla(i,columna - 1) == 0 ) {
+
+      tablero.Modifica(i,columna - 1, GetTurno());
+      colocada = true;
+    }
+  }
+
+  return colocada;
 }
 
 void Tablero::VaciarTablero() {
@@ -81,7 +100,46 @@ int Tablero::ContenidoCasilla(int x, int y) {
 
 bool Tablero::PartidaFinalizada() {
 
+  bool terminada = false;
+  int contador = 0;
 
+  for (int i = 0; i < tablero.GetColumnas() && !terminada; i++)
+    for(int j = 0; j < tablero.GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
+
+        for(int k = 0; k < tablero.GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
+
+          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
+            contador++;
+            if (contador == GetObjetivoFichas())
+              terminada = true;
+
+            else
+              contador =0;
+          }
+        }
+
+        contador = 0;
+
+        for(int k = 0; k < tablero.GetFilas() - 1; k++) {
+
+          if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
+            contador++;
+            if(contador == GetObjetivoFichas())
+              terminada = true;
+          }
+          else
+            contador = 0;
+        }
+
+        contador = 0;
+
+        for(int k = 0; k < tablero.GetFilas() -1 || k < tablero.GetColumnas() -1; k++){
+
+          if(ContenidoCasilla(k,k))
+        }
+
+
+    }
 
 }
 
