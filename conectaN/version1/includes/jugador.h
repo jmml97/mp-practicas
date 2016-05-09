@@ -1,3 +1,6 @@
+#ifndef jugador_h
+#define jugador_h
+
 class Jugador {
 
   private:
@@ -21,3 +24,5 @@ class Jugador {
 
 
 };
+
+#endif 

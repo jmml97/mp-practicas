@@ -1,3 +1,7 @@
+
+#ifndef matriz_h
+#define matriz_h
+
 /*
   Matriz del tablero mediante memoria estática
 */
@@ -23,3 +27,5 @@ class Matriz {
     void Modifica (int fila, int columna, int valor);
 
 };
+
+#endif
