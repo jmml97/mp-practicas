@@ -21,8 +21,8 @@ class Jugador {
 
     void EscogeColumna(int c);
 
-
+    Jugador(char c[], int t);
 
 };
 
-#endif 
+#endif

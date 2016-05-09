@@ -11,7 +11,8 @@ char Jugador::GetNombre() {
 
 void Jugador::SetNombre(char c[]) {
 
-
+  for (int i = 0; i < 50; i++)
+    nombre[i] = c[i];
 
 }
 
@@ -42,5 +43,12 @@ void Jugador::SetPuntuacion(int n) {
 void Jugador::EscogeColumna(int c) {
 
 
+
+}
+
+Jugador::Jugador(char c[], int t) {
+
+  SetNombre(c);
+  SetTurno(t);
 
 }
