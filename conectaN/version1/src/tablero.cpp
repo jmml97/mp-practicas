@@ -7,6 +7,17 @@
 
 using namespace std;
 
+
+Tablero::Tablero(int filas, int columnas, int objetivo) {
+
+  tablero.SetFilas(filas);
+  tablero.SetColumnas(columnas);
+  SetObjetivoFichas(objetivo);
+  SetTurno(0);
+  ganador = 0;
+
+}
+
 int Tablero::GetFilas() {
 
   return tablero.GetFilas();
@@ -55,9 +66,13 @@ int Tablero::GetGanador() {
 
 }
 
-void Tablero::SetGanador(int n) {
+void Tablero::Ganador() {   // Establece el ganador si la partida ha finalizado
 
-  ganador = n;
+  if (PartidaFinalizada())
+    ganador = GetTurno();
+
+  else
+    ganador = 0;
 
 }
 
@@ -69,6 +84,106 @@ void Tablero::CambiaTurno(){
   else
     turno = 2;
 }
+
+
+int Tablero::ContenidoCasilla(int x, int y) {
+
+  return tablero.Consulta(x, y);
+
+}
+
+bool Tablero::PartidaFinalizada() {
+
+  bool terminada = false;
+  int contador = 0;
+
+  for (int i = 0; i < tablero.GetColumnas() && !terminada; i++)
+    for(int j = 0; j < tablero.GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
+
+        for(int k = 0; k < tablero.GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
+
+          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
+            contador++;
+            if (contador == GetObjetivoFichas())
+              terminada = true;
+          }
+            else
+              contador =0;
+          }
+
+
+
+
+        if(!terminada) {
+          contador = 0;
+          for(int k = 0; k < tablero.GetFilas() - 1; k++) {
+
+            if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
+              contador++;
+              if(contador == GetObjetivoFichas())
+                terminada = true;
+            }
+            else
+              contador = 0;
+          }
+        }
+
+        /*  for(int k = 0; k < tablero.GetFilas() -1 || k < tablero.GetColumnas() -1; k++){
+
+            if(ContenidoCasilla(k,k))       // Creo que esto se me ha colado jeje salu2 jmj no lo borro porque tq
+          }*/
+
+
+        if (!terminada){
+          contador = 0;
+
+          int minimo = tablero.GetFilas();
+
+          if (minimo > tablero.GetColumnas())
+            minimo = tablero.GetColumnas();
+
+          for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && !terminada ; k++){
+
+            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
+              contador++;
+
+              if(contador == GetObjetivoFichas())
+                terminada = true;
+            }
+
+            else
+              contador = 0;
+
+          }
+        }
+
+        if(!terminada){
+          contador = 0;
+
+          for(int k = 0; (i-k >= 0) && (j-k >= 0) && !terminada ; k++){
+
+            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
+              contador++;
+
+              if(contador == GetObjetivoFichas())
+                terminada = true;
+            }
+
+            else
+              contador = 0;
+
+          }
+        }
+
+    }
+
+    return terminada;
+
+}
+
+
+
+// MÉTODOS QUE MODIFICAN EL TABLERO
 
 bool Tablero::InsertarFicha(int columna) {
 
@@ -92,63 +207,7 @@ void Tablero::VaciarTablero() {
 
 }
 
-int Tablero::ContenidoCasilla(int x, int y) {
-
-  return tablero.Consulta(x, y);
-
-}
-
-bool Tablero::PartidaFinalizada() {
-
-  bool terminada = false;
-  int contador = 0;
-
-  for (int i = 0; i < tablero.GetColumnas() && !terminada; i++)
-    for(int j = 0; j < tablero.GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
-
-        for(int k = 0; k < tablero.GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
-
-          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
-            contador++;
-            if (contador == GetObjetivoFichas())
-              terminada = true;
-
-            else
-              contador =0;
-          }
-        }
-
-        contador = 0;
-
-        for(int k = 0; k < tablero.GetFilas() - 1; k++) {
-
-          if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
-            contador++;
-            if(contador == GetObjetivoFichas())
-              terminada = true;
-          }
-          else
-            contador = 0;
-        }
-
-        contador = 0;
-
-        for(int k = 0; k < tablero.GetFilas() -1 || k < tablero.GetColumnas() -1; k++){
-
-          if(ContenidoCasilla(k,k))
-        }
 
 
-    }
-
-}
-
-Tablero::Tablero(int filas, int columnas, int objetivo) {
-
-  tablero.SetFilas(filas);
-  tablero.SetColumnas(columnas);
-  SetObjetivoFichas(objetivo);
-  SetTurno(0);
-  ganador = 0;
 
 }
