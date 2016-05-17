@@ -21,6 +21,7 @@ class Matriz {
     void SetColumnas(int col);
     int GetFilas();
     int GetColumnas();
+    int GetUsadas();
 
     void Reset();
     int Consulta(int fila, int columna);

@@ -50,6 +50,20 @@ int Matriz::GetColumnas() {
 
 }
 
+int Matriz::GetUsadas() {   // Devuelve el número de fichas usadas, lo usamos para el recuento de puntos y la finalización
+                            // de la partida
+    int contador = 0;
+
+    for (int i = 0; i < GetFilas(); i++){
+      for (int j = 0; j < GetColumnas; j++){
+        if (Consulta(i,j) != 0)
+          contador++;
+      }
+    }
+
+    return contador;    
+}
+
 
 int Matriz::Consulta(int fila, int columna) {
 

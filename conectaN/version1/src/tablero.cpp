@@ -13,7 +13,7 @@ Tablero::Tablero(int filas, int columnas, int objetivo) {
   tablero.SetFilas(filas);
   tablero.SetColumnas(columnas);
   SetObjetivoFichas(objetivo);
-  SetTurno(0);
+  SetTurno(1);
   ganador = 0;
 
 }
@@ -56,7 +56,7 @@ void Tablero::SetTurno(int n) {
 
 int Tablero::GetPuntuacion() {
 
-  return (objetivo_fichas*10 + ((tablero.GetFilas()*tablero.GetColumnas()/2) - turno));
+  return (objetivo_fichas*10 + ((GetFilas()*GetColumnas()/2) - tablero.GetUsadas()));
 
 }
 
@@ -66,14 +66,9 @@ int Tablero::GetGanador() {
 
 }
 
-void Tablero::Ganador() {   // Establece el ganador si la partida ha finalizado
+void Tablero::SetGanador() {   // Establece el ganador si la partida ha finalizado
 
-  if (PartidaFinalizada())
     ganador = GetTurno();
-
-  else
-    ganador = 0;
-
 }
 
 void Tablero::CambiaTurno(){
@@ -92,15 +87,16 @@ int Tablero::ContenidoCasilla(int x, int y) {
 
 }
 
-bool Tablero::PartidaFinalizada() {
+int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el caso de empate
 
   bool terminada = false;
+  int resultado;
   int contador = 0;
 
-  for (int i = 0; i < tablero.GetColumnas() && !terminada; i++)
-    for(int j = 0; j < tablero.GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
+  for (int i = 0; i < GetColumnas() && !terminada; i++)
+    for(int j = 0; j < GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
 
-        for(int k = 0; k < tablero.GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
+        for(int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
 
           if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
             contador++;
@@ -114,9 +110,9 @@ bool Tablero::PartidaFinalizada() {
 
 
 
-        if(!terminada) {
+        if(!terminada) {            // Check columnas
           contador = 0;
-          for(int k = 0; k < tablero.GetFilas() - 1; k++) {
+          for(int k = 0; k < GetFilas() - 1; k++) {
 
             if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
               contador++;
@@ -134,13 +130,13 @@ bool Tablero::PartidaFinalizada() {
           }*/
 
 
-        if (!terminada){
+        if (!terminada){            // Diagonal normal
           contador = 0;
 
-          int minimo = tablero.GetFilas();
+          int minimo = GetFilas();
 
-          if (minimo > tablero.GetColumnas())
-            minimo = tablero.GetColumnas();
+          if (minimo > GetColumnas())
+            minimo = GetColumnas();
 
           for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && !terminada ; k++){
 
@@ -157,10 +153,10 @@ bool Tablero::PartidaFinalizada() {
           }
         }
 
-        if(!terminada){
+        if(!terminada){           // Diagonal inversa
           contador = 0;
 
-          for(int k = 0; (i-k >= 0) && (j-k >= 0) && !terminada ; k++){
+          for(int k = 0; (i+k < tablero.GetColumnas() - 1) && (j-k >= 0) && !terminada ; k++){
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
               contador++;
@@ -177,8 +173,39 @@ bool Tablero::PartidaFinalizada() {
 
     }
 
-    return terminada;
+    resultado = terminada;
 
+    if (tablero.GetUsadas() == GetFilas()*GetColumnas())
+      resultado = 2;
+
+    return resultado;
+
+}
+
+
+
+void PrettyPrint(){
+
+  for (int i = 0; i < GetColumnas())
+    cout << ('a'+i) << " ";
+
+  for (int i = 0; i < GetFilas(); i++){
+
+    cout << "|";
+    for (int j = 0; j < GetColumnas(); j++){
+
+      if (Consulta() == 1)
+        cout << "X";
+      else if (Consulta() == 2)
+        cout << "O";
+      else
+        cout << " ";
+
+      cout << "|";
+
+    }
+    cout << endl;
+  }
 }
 
 
@@ -189,11 +216,14 @@ bool Tablero::InsertarFicha(int columna) {
 
   bool colocada = false;
 
-  for (int i = tablero.GetFilas() - 1; i >= 0 && !colocada; i--){
+  if (columna < 0 || columna >= GetColumnas())
+    return false;
+
+  for (int i = GetFilas() - 1; i >= 0 && !colocada; i--){
 
     if (ContenidoCasilla(i,columna - 1) == 0 ) {
 
-      tablero.Modifica(i,columna - 1, GetTurno());
+      Modifica(i,columna - 1, GetTurno());
       colocada = true;
     }
   }

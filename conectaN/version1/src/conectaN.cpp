@@ -24,8 +24,58 @@ int main(int argc, char const *argv[]) {
   cin >> nombre2;
 
 
-  Jugador jugador1(nombre1, 0), jugador2(nombre2, 0);
+  Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
   Tablero tablero(f, c, o);
+
+do {
+  cout << "¡Comienza la partida!" << endl;
+
+  do {
+    if (tablero.GetTurno() == 1){
+      cout << " Jugador " << jugador1.GetNombre() << ", su turno" << endl;
+      jugador1.EscogeColumna();
+    }
+    else{
+      cout << " Jugador " << jugador2.GetNombre() << ", su turno" << endl;
+      jugador2.EscogeColumna();
+    }
+
+
+  } while (tablero.PartidaFinalizada() == 0);
+
+  if (tablero.PartidaFinalizada() == 2)
+    cout << "Se ha producido un empate :S" << endl;
+
+  else  {
+
+    tablero.SetGanador();
+    int puntuacion = tablero.GetPuntuacion();
+    cout << "El ganador es:"
+
+    if (tablero.GetGanador() == 1)
+      jugador1.AddPuntuacion(puntuacion);
+
+    else if (tablero.GetGanador() == 2)
+      jugador2.AddPuntuacion();
+  }
+
+  char partida;
+  bool otra;
+  do {
+    cout << "¿Otra? (S/N)" << endl;
+    cin >> partida;
+  }while (partida != S && partida != N);
+
+  if (partida == "S")
+    otra = true;
+  else
+    otra = false;
+} while (otra);
+
+
+cout << "Fin de la partida \nResultados:" << endl;
+
+
 
   return 0;
 

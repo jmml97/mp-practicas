@@ -18,6 +18,7 @@ class Jugador {
 
     int GetPuntuacion();
     void SetPuntuacion(int n);
+    void Jugador::AddPuntuacion(int n);
 
     void EscogeColumna(int c);
 
