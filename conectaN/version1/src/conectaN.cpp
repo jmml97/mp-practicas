@@ -26,6 +26,7 @@ int main(int argc, char const *argv[]) {
 
   Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
   Tablero tablero(f, c, o);
+  bool otra;
 
 do {
   cout << "¡Comienza la partida!" << endl;
@@ -58,7 +59,7 @@ do {
     }
 
     else if (tablero.GetGanador() == 2){
-      jugador2.AddPuntuacion();
+      jugador2.AddPuntuacion(puntuacion);
       jugador2.AddPartGan();
       }
 
@@ -71,11 +72,11 @@ do {
   }
 
   char partida;
-  bool otra;
+
   do {
     cout << "¿Otra? Insert coin: (S/N):";
     cin >> partida;
-  }while (partida != S && partida != N);
+  }while (partida != 'S' && partida != 'N');
 
   if (partida == 'S')
     otra = true;

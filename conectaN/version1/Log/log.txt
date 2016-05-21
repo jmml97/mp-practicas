@@ -2,6 +2,7 @@ Log 21/05/2016:
 
 -Avanzado con el main:
   ·Muestra puntuacion al final de cada partida
+  ·Sofocados algunos de los llantos del compilador(Movido booleano "otra" a otro sitio y correcciones compilatorias)
 
 -Añadido partidas ganadas en jugador.h para mostrarlas al final de cada partida, y al final del juego
  con sus correspondientes métodos set/get y función AddPartGan() para actualizarlas
