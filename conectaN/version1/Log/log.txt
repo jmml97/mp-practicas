@@ -1,0 +1,9 @@
+Log 21/05/2016:
+
+-Avanzado con el main:
+  ·Muestra puntuacion al final de cada partida
+
+-Añadido partidas ganadas en jugador.h para mostrarlas al final de cada partida, y al final del juego
+ con sus correspondientes métodos set/get y función AddPartGan() para actualizarlas
+
+-Añadido en la clase jugador un método MuestraResultados() que se encargue de mostrar los resultados

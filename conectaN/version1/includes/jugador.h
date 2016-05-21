@@ -7,6 +7,7 @@ class Jugador {
     char nombre[50];
     int turno;
     int puntuacion;
+    int partidas_ganadas;
 
   public:
 
@@ -17,8 +18,14 @@ class Jugador {
     void SetTurno(int n);
 
     int GetPuntuacion();
-    void SetPuntuacion(int n);
-    void Jugador::AddPuntuacion(int n);
+    void ASetPuntuacion(int n);
+    void AddPuntuacion(int n);
+
+    void SetPartGan(int n);
+    int GetPartGan();
+    void AddPartGan();
+
+    void MuestraResultados();
 
     void EscogeColumna(int c);
 

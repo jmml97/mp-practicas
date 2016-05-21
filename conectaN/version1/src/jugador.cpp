@@ -46,6 +46,19 @@ void Jugador::SetPuntuacion(int n) {
 
 }
 
+void Jugador::SetPartGan(int n){
+
+  partidas_ganadas = n;
+}
+
+int Jugador::GetPartGan(){
+  return partidas_ganadas;
+}
+
+void Jugador::AddPartGan(){
+  partidas_ganadas++;
+}
+
 void Jugador::AddPuntuacion(int n) {
   puntuacion += n;
 }
@@ -62,6 +75,11 @@ void Jugador::EscogeColumna(Tablero tablero) {
 
   } while (!tablero.InsertarFicha(col - 'a'));
 
+}
+
+void Jugador::MuestraResultados(){
+
+  cout << "El jugador " << GetNombre() << " acumula un total de: " << GetPartGan() << " y " << GetPuntuacion() << " puntos." << endl;
 }
 
 Jugador::Jugador(char c[], int t) {
