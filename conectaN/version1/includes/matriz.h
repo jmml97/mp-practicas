@@ -19,11 +19,12 @@ class Matriz {
 
     void SetFilas(int fils);
     void SetColumnas(int col);
+    void Reset();
+    
     int GetFilas();
     int GetColumnas();
     int GetUsadas();
 
-    void Reset();
     int Consulta(int fila, int columna);
     void Modifica (int fila, int columna, int valor);
 

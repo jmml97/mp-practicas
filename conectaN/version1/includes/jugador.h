@@ -1,5 +1,6 @@
 #ifndef jugador_h
 #define jugador_h
+#include "tablero.h"
 
 class Jugador {
 
@@ -13,12 +14,13 @@ class Jugador {
 
     char GetNombre();
     void SetNombre(char c[]);
+    void CoutNombre();
 
     int GetTurno();
     void SetTurno(int n);
 
     int GetPuntuacion();
-    void ASetPuntuacion(int n);
+    void SetPuntuacion(int n);
     void AddPuntuacion(int n);
 
     void SetPartGan(int n);
@@ -27,7 +29,7 @@ class Jugador {
 
     void MuestraResultados();
 
-    void EscogeColumna(int c);
+    void EscogeColumna(Tablero& tablero);
 
     Jugador(char c[], int t);
 

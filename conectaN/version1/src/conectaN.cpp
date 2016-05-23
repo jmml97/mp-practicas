@@ -33,11 +33,15 @@ do {
 
   do {
     if (tablero.GetTurno() == 1){
-      cout << " Jugador " << jugador1.GetNombre() << ", su turno" << endl;
+      cout << " Jugador ";
+      jugador1.CoutNombre();
+      cout << ", su turno" << endl;
       jugador1.EscogeColumna(tablero);
     }
     else{
-      cout << " Jugador " << jugador2.GetNombre() << ", su turno" << endl;
+      cout << " Jugador ";
+      jugador2.CoutNombre();
+      cout << ", su turno" << endl;
       jugador2.EscogeColumna(tablero);
     }
 
@@ -56,11 +60,13 @@ do {
     if (tablero.GetGanador() == 1){
       jugador1.AddPuntuacion(puntuacion);
       jugador1.AddPartGan();
+      jugador1.CoutNombre();
     }
 
     else if (tablero.GetGanador() == 2){
       jugador2.AddPuntuacion(puntuacion);
       jugador2.AddPartGan();
+      jugador2.CoutNombre();
       }
 
 

@@ -156,7 +156,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
         if(!terminada){           // Diagonal inversa
           contador = 0;
 
-          for(int k = 0; (i+k < tablero.GetColumnas() - 1) && (j-k >= 0) && !terminada ; k++){
+          for(int k = 0; (i+k < GetColumnas() - 1) && (j-k >= 0) && !terminada ; k++){
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
               contador++;
@@ -184,19 +184,28 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
 
 
-void PrettyPrint(){
+void Tablero::PrettyPrint(){
 
-  for (int i = 0; i < GetColumnas())
-    cout << ('a'+i) << " ";
+  int columnas = GetColumnas();                                                  // Xq esto no funciona?? :(
+  int filas = GetFilas();
+  char letra;
 
-  for (int i = 0; i < GetFilas(); i++){
+  cout << " ";
+  
+  for (int i = 0; i < columnas; i++){
+    letra = ('a'+i);
+    cout << letra << " ";
+  }
+  cout << endl;
+
+  for (int i = 0; i < filas; i++){
 
     cout << "|";
-    for (int j = 0; j < GetColumnas(); j++){
+    for (int j = 0; j < columnas; j++){
 
-      if (Consulta() == 1)
+      if (ContenidoCasilla(i,j) == 1)
         cout << "X";
-      else if (Consulta() == 2)
+      else if (ContenidoCasilla(i,j) == 2)
         cout << "O";
       else
         cout << " ";
@@ -223,7 +232,7 @@ bool Tablero::InsertarFicha(int columna) {
 
     if (ContenidoCasilla(i,columna - 1) == 0 ) {
 
-      Modifica(i,columna - 1, GetTurno());
+      tablero.Modifica(i,columna - 1, GetTurno());
       colocada = true;
     }
   }
@@ -234,10 +243,5 @@ bool Tablero::InsertarFicha(int columna) {
 void Tablero::VaciarTablero() {
 
   tablero.Reset();
-
-}
-
-
-
 
 }

@@ -16,9 +16,9 @@ void Jugador::SetNombre(char c[]) {
 
 }
 
-void Jugador::GetNombre() {
+void Jugador::CoutNombre() {
 
-  for (int i = 0; nombre[i] != \0 && i < 50; i++)
+  for (int i = 0; nombre[i] != '\0' && i < 50; i++)
     cout << nombre[i];
 }
 
@@ -46,6 +46,10 @@ void Jugador::SetPuntuacion(int n) {
 
 }
 
+void Jugador::AddPuntuacion(int n) {
+  puntuacion += n;
+}
+
 void Jugador::SetPartGan(int n){
 
   partidas_ganadas = n;
@@ -59,11 +63,8 @@ void Jugador::AddPartGan(){
   partidas_ganadas++;
 }
 
-void Jugador::AddPuntuacion(int n) {
-  puntuacion += n;
-}
 
-void Jugador::EscogeColumna(Tablero tablero) {
+void Jugador::EscogeColumna(Tablero& tablero) {
 
   tablero.PrettyPrint();
 

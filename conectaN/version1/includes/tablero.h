@@ -29,17 +29,18 @@ class Tablero {
     int GetTurno();
     void SetTurno(int n);
     void CambiaTurno();
-    
+
     int GetPuntuacion();
 
     int GetGanador();
-    void SetGanador(int n);
+    void SetGanador();
+
+    int ContenidoCasilla(int x, int y);
+    int PartidaFinalizada();
+    void PrettyPrint();
 
     bool InsertarFicha(int columna);
     void VaciarTablero();
-    int ContenidoCasilla(int x, int y);
-    bool PartidaFinalizada();
-    void PrettyPrint();
 
     Tablero(int filas, int columnas, int objetivo);
 

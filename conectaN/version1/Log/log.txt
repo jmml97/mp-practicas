@@ -8,3 +8,17 @@ Log 21/05/2016:
  con sus correspondientes métodos set/get y función AddPartGan() para actualizarlas
 
 -Añadido en la clase jugador un método MuestraResultados() que se encargue de mostrar los resultados
+
+
+
+Log 23/05/2016:
+
+-Corregida la cabecera de jugador.h (intento de corrección, sigue fallando en función EscogeColumna())
+  ARREGLO: No se había incluido tablero.h en la clase jugador
+
+-Comprobado que las cabeceras de matriz, tablero y jugador concuerden
+
+-Creada función CoutNombre() en clase jugador para mostrar el nombre (Había dos GetNombre())
+
+-Solucionados varios problemas de compilación (falta errores en PrettyPrint())
+  ARREGLO: Ya se han solucionado los errores de compilación, ahora bienvenidos al fabuloso mundo de los errores lógicos

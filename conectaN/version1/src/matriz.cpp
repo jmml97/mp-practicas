@@ -55,13 +55,13 @@ int Matriz::GetUsadas() {   // Devuelve el número de fichas usadas, lo usamos p
     int contador = 0;
 
     for (int i = 0; i < GetFilas(); i++){
-      for (int j = 0; j < GetColumnas; j++){
+      for (int j = 0; j < GetColumnas(); j++){
         if (Consulta(i,j) != 0)
           contador++;
       }
     }
 
-    return contador;    
+    return contador;
 }
 
 
