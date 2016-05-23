@@ -22,3 +22,6 @@ Log 23/05/2016:
 
 -Solucionados varios problemas de compilación (falta errores en PrettyPrint())
   ARREGLO: Ya se han solucionado los errores de compilación, ahora bienvenidos al fabuloso mundo de los errores lógicos
+
+-Presuntos errores lógicos:
+  ·

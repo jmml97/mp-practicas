@@ -80,7 +80,9 @@ void Jugador::EscogeColumna(Tablero& tablero) {
 
 void Jugador::MuestraResultados(){
 
-  cout << "El jugador " << GetNombre() << " acumula un total de: " << GetPartGan() << " y " << GetPuntuacion() << " puntos." << endl;
+  cout << "El jugador ";
+  CoutNombre();
+  cout << " acumula un total de: " << GetPartGan() << " y " << GetPuntuacion() << " puntos." << endl;
 }
 
 Jugador::Jugador(char c[], int t) {

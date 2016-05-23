@@ -1,6 +1,7 @@
 #include "jugador.h"
 #include "tablero.h"
 
+#include <cctype>
 #include <iostream>
 
 using namespace std;
@@ -15,8 +16,11 @@ int main(int argc, char const *argv[]) {
   cin >> f;
   cout << "Introduce el número de columnas del tablero: ";
   cin >> c;
+  do {
   cout << "Introduce el número de fichas objetivo: ";
   cin >> o;
+
+} while (o > f &&  o > c);
 
   cout << "Introduce el nombre del primer jugador: ";
   cin >> nombre1;
@@ -29,6 +33,7 @@ int main(int argc, char const *argv[]) {
   bool otra;
 
 do {
+  tablero.VaciarTablero();
   cout << "¡Comienza la partida!" << endl;
 
   do {
@@ -70,7 +75,7 @@ do {
       }
 
 
-      cout << "Resultados:" << endl;
+      cout << "\nResultados:" << endl;
       jugador1.MuestraResultados();
       jugador2.MuestraResultados();
 
@@ -82,6 +87,7 @@ do {
   do {
     cout << "¿Otra? Insert coin: (S/N):";
     cin >> partida;
+    partida = toupper(partida);
   }while (partida != 'S' && partida != 'N');
 
   if (partida == 'S')
