@@ -12,10 +12,19 @@ int main(int argc, char const *argv[]) {
   char nombre1[50], nombre2[50];
 
   cout << "Bienvenido a ConectaN" << endl;
+
+  do{
   cout << "Introduce el número de filas del tablero: ";
   cin >> f;
+
+} while (f < 1);
+
+  do {
   cout << "Introduce el número de columnas del tablero: ";
   cin >> c;
+
+} while (c < 1);
+
   do {
   cout << "Introduce el número de fichas objetivo: ";
   cin >> o;

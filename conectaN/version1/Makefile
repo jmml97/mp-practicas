@@ -26,7 +26,7 @@ $(OBJ)/conectaN.o : $(SRC)/conectaN.cpp $(INC)/jugador.h $(INC)/tablero.h
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/conectaN.o $(SRC)/conectaN.cpp
 
 conectaN: $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o
-	$(CXX) -o $(BIN)/conectaN $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o
+	$(CXX) -g -o $(BIN)/conectaN $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o
 
 
 # ************ Limpieza ************

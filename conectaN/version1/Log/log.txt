@@ -24,4 +24,10 @@ Log 23/05/2016:
   ARREGLO: Ya se han solucionado los errores de compilación, ahora bienvenidos al fabuloso mundo de los errores lógicos
 
 -Presuntos errores lógicos:
-  ·
+  ·La partida acaba un poco pronto, y bien no cambia el turno nunca, o cuando acaba la partida
+
+
+
+Log 24/05/2016:
+
+-Añadidas condiciones en main()

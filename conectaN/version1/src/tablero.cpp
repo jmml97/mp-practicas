@@ -94,11 +94,12 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
   int contador = 0;
 
   for (int i = 0; i < GetColumnas() && !terminada; i++)
-    for(int j = 0; j < GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal, vertical y diagonal por ficha
+    for(int j = 0; j < GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal,
+                                                             // vertical y diagonal por ficha
 
         for(int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
 
-          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
+          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1) && ContenidoCasilla(j,k) != 0){
             contador++;
             if (contador == GetObjetivoFichas())
               terminada = true;
@@ -114,7 +115,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           contador = 0;
           for(int k = 0; k < GetFilas() - 1; k++) {
 
-            if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
+            if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k) && ContenidoCasilla(j,k) != 0) {
               contador++;
               if(contador == GetObjetivoFichas())
                 terminada = true;
@@ -123,11 +124,6 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
               contador = 0;
           }
         }
-
-        /*  for(int k = 0; k < tablero.GetFilas() -1 || k < tablero.GetColumnas() -1; k++){
-
-            if(ContenidoCasilla(k,k))       // Creo que esto se me ha colado jeje salu2 jmj no lo borro porque tq
-          }*/
 
 
         if (!terminada){            // Diagonal normal
@@ -140,7 +136,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
           for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && !terminada ; k++){
 
-            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
+            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != 0){
               contador++;
 
               if(contador == GetObjetivoFichas())
@@ -158,7 +154,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
           for(int k = 0; (i+k < GetColumnas() - 1) && (j-k >= 0) && !terminada ; k++){
 
-            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1)){
+            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != '0'){
               contador++;
 
               if(contador == GetObjetivoFichas())
@@ -186,12 +182,12 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
 void Tablero::PrettyPrint(){
 
-  int columnas = GetColumnas();                                                  // Xq esto no funciona?? :(
+  int columnas = GetColumnas();
   int filas = GetFilas();
   char letra;
 
   cout << " ";
-  
+
   for (int i = 0; i < columnas; i++){
     letra = ('a'+i);
     cout << letra << " ";
