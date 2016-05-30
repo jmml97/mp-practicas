@@ -48,22 +48,21 @@ do {
 
   do {
 
-    // Cambia el turno al otro jugador
-    tablero.SetTurno(tablero.GetTurno() == 1 ? 2 : 1);
+    tablero.CambiaTurno();
 
-    if (tablero.GetTurno() == 1){
+    if (tablero.GetTurno() == 1) {
 
       cout << "Jugador ";
       jugador1.ImprimirNombre();
-      cout << ", su turno" << endl;
+      cout << ", su turno (x)" << endl;
       jugador1.EscogeColumna(tablero);
 
     }
-    else{
+    else {
 
       cout << "Jugador ";
       jugador2.ImprimirNombre();
-      cout << ", su turno" << endl;
+      cout << ", su turno (o)" << endl;
       jugador2.EscogeColumna(tablero);
 
     }
@@ -73,19 +72,20 @@ do {
 
   if (tablero.PartidaFinalizada() == 2)
     cout << "Se ha producido un empate :S" << endl;
-  else  {
+  else {
 
     tablero.PrettyPrint();
     tablero.SetGanador();
     int puntuacion = tablero.GetPuntuacion();
-    cout << "Fin de la partida. El ganador es: " << endl;
+    cout << "Fin de la partida. El ganador es ";
 
     if (tablero.GetGanador() == 1){
+
       jugador1.AddPuntuacion(puntuacion);
       jugador1.AddPartGan();
       jugador1.ImprimirNombre();
-    }
 
+    }
     else if (tablero.GetGanador() == 2){
 
       jugador2.AddPuntuacion(puntuacion);
@@ -95,9 +95,10 @@ do {
     }
 
 
-      cout << "\nResultados:" << endl;
-      jugador1.MuestraResultados();
-      jugador2.MuestraResultados();
+    cout << "\nResultados:" << endl;
+    cout << "-----------" << endl;
+    jugador1.MuestraResultados();
+    jugador2.MuestraResultados();
 
 
   }
@@ -105,7 +106,7 @@ do {
   char partida;
 
   do {
-    cout << "¿Otra? Insert coin: (S/N):";
+    cout << "¿Otra? Insert coin: (S/N): ";
     cin >> partida;
     partida = toupper(partida);
   } while (partida != 'S' && partida != 'N');

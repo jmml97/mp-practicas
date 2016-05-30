@@ -69,15 +69,13 @@ int Tablero::GetGanador() {
 void Tablero::SetGanador() {   // Establece el ganador si la partida ha finalizado
 
     ganador = GetTurno();
+
 }
 
 void Tablero::CambiaTurno(){
 
-  if (turno == 2)
-    turno = 1;
+  turno = turno == 2 ? 1 : 2;
 
-  else
-    turno = 2;
 }
 
 
@@ -186,9 +184,9 @@ void Tablero::PrettyPrint(){
 
 
       if (ContenidoCasilla(i,j) == 1)
-        cout << "X";
+        cout << "x";
       else if (ContenidoCasilla(i,j) == 2)
-        cout << "O";
+        cout << "o";
       else
         cout << " ";
 
@@ -197,6 +195,11 @@ void Tablero::PrettyPrint(){
     }
     cout << endl;
   }
+
+  for (int i = 0; i < 2*GetColumnas() + 1; i++){
+    cout << "=";
+  }
+  cout << endl;
 }
 
 
