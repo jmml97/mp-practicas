@@ -94,7 +94,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
   for (int i = 0; i < GetColumnas() && terminada != 1; i++)
     for(int j = 0; j < GetFilas() && terminada != 1; j++){       // Realizamos las comprobaciones horizontal,
-                                                             // vertical y diagonal por ficha
+                                                                 // vertical y diagonal por ficha
 
         for (int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
 
@@ -114,7 +114,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           contador = 0;
           for(int k = 0; k < GetFilas() - 1; k++) {
 
-            if(ContenidoCasilla(j,k) != 0 && ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
+            if(ContenidoCasilla(k,i) != 0 && ContenidoCasilla(k,i) == ContenidoCasilla(k+1,i)) {
               contador++;
               cout << "Comprobación vertical----------" << endl;
               cout << "contador: " << contador << endl;
@@ -151,9 +151,10 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
         }
 
-        if (terminada != 1){           // Diagonal inversa
+        if (terminada != 1){           // Diagonal inversa   i columnas j filas
           contador = 0;
 
+          /* INTUYO QUE ESTO NO ESTÁ MUY BIEN
           if (j > 0 && ContenidoCasilla(i,j) != 0 && ContenidoCasilla(i,j) == ContenidoCasilla(i+1, j-1)) {
 
             contador++;
@@ -166,10 +167,11 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
           else
             contador = 0;
+            */
 
-          for(int k = 0; (i+k <= GetColumnas()) && (j-k >= 0) && terminada != 1 ; k++){
+          for(int k = 0; (j+k <= GetFilas()) && (i-k >= 0) && terminada != 1 ; k++){
 
-            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != '0'){
+            if(ContenidoCasilla(j+k,i-k) == ContenidoCasilla(j+k+1,i-k-1) && ContenidoCasilla(j,k) != 0){
               contador++;
               cout << "Comprobación diagonal inversa----------" << endl;
               cout << "contador: " << contador << endl;

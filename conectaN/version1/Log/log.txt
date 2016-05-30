@@ -35,3 +35,5 @@ Log 24/05/2016:
 Log 30/05/2016:
 
 -Arreglado alternamiento de turnos, comprobaciones de finalización no funcionan tan bien
+-Cambiada comprobación vertical de la PartidaFinalizada, se comprobaba (j,k) y (j,k+1) en lugar de (i,k) con (i,k+1)
+-Las partidas ahora duran algo más de un turno, aunque no de la manera esperada
