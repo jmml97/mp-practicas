@@ -89,42 +89,42 @@ int Tablero::ContenidoCasilla(int x, int y) {
 
 int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el caso de empate
 
-  bool terminada = false;
-  int resultado;
+  int terminada = 0;
   int contador = 0;
 
   for (int i = 0; i < GetColumnas() && !terminada; i++)
     for(int j = 0; j < GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal,
                                                              // vertical y diagonal por ficha
 
-        for(int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
+        for (int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
 
-          if(ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1) && ContenidoCasilla(j,k) != 0){
+          if(ContenidoCasilla(j,k) != 0 && ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
             contador++;
+            cout << "Comprobación horizontal----------" << endl;
+            cout << "contador: " << contador << endl;
             if (contador == GetObjetivoFichas())
-              terminada = true;
-          }
-            else
-              contador =0;
+              terminada = 1;
           }
 
-
-
+          else
+            contador = 0;
+        }
 
         if(!terminada) {            // Check columnas
           contador = 0;
           for(int k = 0; k < GetFilas() - 1; k++) {
 
-            if(ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k) && ContenidoCasilla(j,k) != 0) {
+            if(ContenidoCasilla(j,k) != 0 && ContenidoCasilla(j,k) == ContenidoCasilla(j+1,k)) {
               contador++;
+              cout << "Comprobación vertical----------" << endl;
+              cout << "contador: " << contador << endl;
               if(contador == GetObjetivoFichas())
-                terminada = true;
+                terminada = 1;
             }
             else
               contador = 0;
           }
         }
-
 
         if (!terminada){            // Diagonal normal
           contador = 0;
@@ -138,9 +138,11 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != 0){
               contador++;
+              cout << "Comprobación diagonal----------" << endl;
+              cout << "contador: " << contador << endl;
 
               if(contador == GetObjetivoFichas())
-                terminada = true;
+                terminada = 1;
             }
 
             else
@@ -149,32 +151,46 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
         }
 
-        if(!terminada){           // Diagonal inversa
+        if (!terminada){           // Diagonal inversa
           contador = 0;
 
-          for(int k = 0; (i+k < GetColumnas() - 1) && (j-k >= 0) && !terminada ; k++){
+          if (j > 0 && ContenidoCasilla(i,j) != '0' && ContenidoCasilla(i,j) == ContenidoCasilla(i+1, j-1)) {
+
+            contador++;
+            cout << "Comprobación diagonal inversa----------" << endl;
+            cout << "contador: " << contador << endl;
+
+            if(contador == GetObjetivoFichas())
+              terminada = 1;
+
+          }
+          else
+            contador = 0;
+          
+          for(int k = 0; (i+k <= GetColumnas()) && (j-k >= 0) && !terminada ; k++){
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != '0'){
               contador++;
+              cout << "Comprobación diagonal inversa----------" << endl;
+              cout << "contador: " << contador << endl;
 
               if(contador == GetObjetivoFichas())
-                terminada = true;
+                terminada = 1;
             }
 
             else
               contador = 0;
 
           }
+
         }
 
     }
 
-    resultado = terminada;
-
     if (tablero.GetUsadas() == GetFilas()*GetColumnas())
-      resultado = 2;
+      terminada = 2;
 
-    return resultado;
+    return terminada;
 
 }
 
@@ -182,22 +198,24 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
 
 void Tablero::PrettyPrint(){
 
-  int columnas = GetColumnas();
-  int filas = GetFilas();
   char letra;
 
   cout << " ";
 
-  for (int i = 0; i < columnas; i++){
+  for (int i = 0; i < GetColumnas(); i++){
     letra = ('a'+i);
     cout << letra << " ";
   }
   cout << endl;
 
-  for (int i = 0; i < filas; i++){
+  for (int i = GetFilas() - 1; i >= 0; i--){
 
     cout << "|";
-    for (int j = 0; j < columnas; j++){
+    for (int j = 0; j < GetColumnas(); j++){
+
+      // cout << GetColumnas()*i + j;
+      //cout << i << "," << j;
+
 
       if (ContenidoCasilla(i,j) == 1)
         cout << "X";
@@ -219,21 +237,19 @@ void Tablero::PrettyPrint(){
 
 bool Tablero::InsertarFicha(int columna) {
 
-  bool colocada = false;
-
   if (columna < 0 || columna >= GetColumnas())
     return false;
 
-  for (int i = GetFilas() - 1; i >= 0 && !colocada; i--){
+  for (int i = 0; i < GetFilas(); i++){
 
-    if (ContenidoCasilla(i,columna - 1) == 0 ) {
-
-      tablero.Modifica(i,columna - 1, GetTurno());
-      colocada = true;
+    if (ContenidoCasilla(i, columna) == 0 && ContenidoCasilla(i + 1, columna) == 0) {
+      tablero.Modifica(i, columna, GetTurno());
+      return true;
     }
+
   }
 
-  return colocada;
+  return false;
 }
 
 void Tablero::VaciarTablero() {

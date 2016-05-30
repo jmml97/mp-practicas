@@ -50,6 +50,7 @@ int Matriz::GetColumnas() {
 
 }
 
+// Cambiar a tablero.cpp
 int Matriz::GetUsadas() {   // Devuelve el número de fichas usadas, lo usamos para el recuento de puntos y la finalización
                             // de la partida
     int contador = 0;

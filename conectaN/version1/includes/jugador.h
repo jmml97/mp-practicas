@@ -14,7 +14,7 @@ class Jugador {
 
     char GetNombre();
     void SetNombre(char c[]);
-    void CoutNombre();
+    void ImprimirNombre();
 
     int GetTurno();
     void SetTurno(int n);

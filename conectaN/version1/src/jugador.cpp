@@ -16,7 +16,7 @@ void Jugador::SetNombre(char c[]) {
 
 }
 
-void Jugador::CoutNombre() {
+void Jugador::ImprimirNombre() {
 
   for (int i = 0; nombre[i] != '\0' && i < 50; i++)
     cout << nombre[i];
@@ -71,18 +71,21 @@ void Jugador::EscogeColumna(Tablero& tablero) {
   char col;       // Usamos char para poder pedir la columna con su letra correspondiente
   do{
 
-    cout << "Introduzca una la columna: ";
+    cout << "Introduzca una columna: ";
     cin >> col;
 
   } while (!tablero.InsertarFicha(col - 'a'));
+
+  // Cambia el turno al otro jugador
+  tablero.SetTurno(tablero.GetTurno() == 1 ? 2 : 1);
 
 }
 
 void Jugador::MuestraResultados(){
 
   cout << "El jugador ";
-  CoutNombre();
-  cout << " acumula un total de: " << GetPartGan() << " y " << GetPuntuacion() << " puntos." << endl;
+  ImprimirNombre();
+  cout << " acumula un total de: " << GetPartGan() << " partidas ganadas y " << GetPuntuacion() << " puntos." << endl;
 }
 
 Jugador::Jugador(char c[], int t) {
