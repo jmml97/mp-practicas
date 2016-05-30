@@ -31,3 +31,7 @@ Log 23/05/2016:
 Log 24/05/2016:
 
 -Añadidas condiciones en main()
+
+Log 30/05/2016:
+
+-Arreglado alternamiento de turnos, comprobaciones de finalización no funcionan tan bien

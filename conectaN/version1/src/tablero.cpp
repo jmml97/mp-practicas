@@ -13,7 +13,7 @@ Tablero::Tablero(int filas, int columnas, int objetivo) {
   tablero.SetFilas(filas);
   tablero.SetColumnas(columnas);
   SetObjetivoFichas(objetivo);
-  SetTurno(1);
+  SetTurno(2);
   ganador = 0;
 
 }

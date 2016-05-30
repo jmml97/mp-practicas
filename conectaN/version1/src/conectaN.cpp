@@ -47,6 +47,10 @@ do {
   cout << "¡Comienza la partida!" << endl;
 
   do {
+
+    // Cambia el turno al otro jugador
+    tablero.SetTurno(tablero.GetTurno() == 1 ? 2 : 1);
+
     if (tablero.GetTurno() == 1){
 
       cout << "Jugador ";

@@ -76,9 +76,7 @@ void Jugador::EscogeColumna(Tablero& tablero) {
 
   } while (!tablero.InsertarFicha(col - 'a'));
 
-  // Cambia el turno al otro jugador
-  tablero.SetTurno(tablero.GetTurno() == 1 ? 2 : 1);
-
+  
 }
 
 void Jugador::MuestraResultados(){
