@@ -8,7 +8,7 @@ CXXFLAGS =  -Wall -Wextra -pedantic -std=c++03 -g  -I$(INC)
 
 # ************ All ***********************
 
-all : conectaN
+all : $(OBJ) $(BIN) conectaN
 
 # ************ Generación de documentación ******************
 documentacion:
@@ -27,6 +27,15 @@ $(OBJ)/conectaN.o : $(SRC)/conectaN.cpp $(INC)/jugador.h $(INC)/tablero.h
 
 conectaN: $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o
 	$(CXX) -g -o $(BIN)/conectaN $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o
+
+
+# ***********Creación de directorios************
+
+$(OBJ):
+	mkdir obj
+
+$(BIN):
+	mkdir bin
 
 
 # ************ Limpieza ************

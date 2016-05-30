@@ -92,8 +92,8 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
   int terminada = 0;
   int contador = 0;
 
-  for (int i = 0; i < GetColumnas() && !terminada; i++)
-    for(int j = 0; j < GetFilas() && !terminada; j++){       // Realizamos las comprobaciones horizontal,
+  for (int i = 0; i < GetColumnas() && terminada != 1; i++)
+    for(int j = 0; j < GetFilas() && terminada != 1; j++){       // Realizamos las comprobaciones horizontal,
                                                              // vertical y diagonal por ficha
 
         for (int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
@@ -110,7 +110,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
             contador = 0;
         }
 
-        if(!terminada) {            // Check columnas
+        if(terminada != 1) {            // Check columnas
           contador = 0;
           for(int k = 0; k < GetFilas() - 1; k++) {
 
@@ -126,7 +126,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
         }
 
-        if (!terminada){            // Diagonal normal
+        if (terminada != 1){            // Diagonal normal
           contador = 0;
 
           int minimo = GetFilas();
@@ -134,7 +134,7 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           if (minimo > GetColumnas())
             minimo = GetColumnas();
 
-          for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && !terminada ; k++){
+          for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && terminada != 1 ; k++){
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != 0){
               contador++;
@@ -151,10 +151,10 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
         }
 
-        if (!terminada){           // Diagonal inversa
+        if (terminada != 1){           // Diagonal inversa
           contador = 0;
 
-          if (j > 0 && ContenidoCasilla(i,j) != '0' && ContenidoCasilla(i,j) == ContenidoCasilla(i+1, j-1)) {
+          if (j > 0 && ContenidoCasilla(i,j) != 0 && ContenidoCasilla(i,j) == ContenidoCasilla(i+1, j-1)) {
 
             contador++;
             cout << "Comprobación diagonal inversa----------" << endl;
@@ -166,8 +166,8 @@ int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el c
           }
           else
             contador = 0;
-          
-          for(int k = 0; (i+k <= GetColumnas()) && (j-k >= 0) && !terminada ; k++){
+
+          for(int k = 0; (i+k <= GetColumnas()) && (j-k >= 0) && terminada != 1 ; k++){
 
             if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != '0'){
               contador++;
