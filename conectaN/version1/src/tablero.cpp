@@ -87,116 +87,82 @@ int Tablero::ContenidoCasilla(int x, int y) {
 
 }
 
-int Tablero::PartidaFinalizada() {    // int en vez de bool para considerar el caso de empate
+bool Tablero::HayNHorizontal(int fil, int col) {
 
-  int terminada = 0;
-  int contador = 0;
+  for (int i = 0; i < GetObjetivoFichas() - 1; i++)
+    if (ContenidoCasilla(fil, col + i) != ContenidoCasilla(fil, col + i + 1))
+      return false;
 
-  for (int i = 0; i < GetColumnas() && terminada != 1; i++)
-    for(int j = 0; j < GetFilas() && terminada != 1; j++){       // Realizamos las comprobaciones horizontal,
-                                                                 // vertical y diagonal por ficha
-
-        for (int k = 0; k < GetColumnas() - 1; k++){  // Comparamos cada uno con su siguiente para comprob. horizontal
-
-          if(ContenidoCasilla(j,k) != 0 && ContenidoCasilla(j,k) == ContenidoCasilla(j,k+1)){
-            contador++;
-            cout << "Comprobación horizontal----------" << endl;
-            cout << "contador: " << contador << endl;
-            if (contador == GetObjetivoFichas())
-              terminada = 1;
-          }
-
-          else
-            contador = 0;
-        }
-
-        if(terminada != 1) {            // Check columnas
-          contador = 0;
-          for(int k = 0; k < GetFilas() - 1; k++) {
-
-            if(ContenidoCasilla(k,i) != 0 && ContenidoCasilla(k,i) == ContenidoCasilla(k+1,i)) {
-              contador++;
-              cout << "Comprobación vertical----------" << endl;
-              cout << "contador: " << contador << endl;
-              if(contador == GetObjetivoFichas())
-                terminada = 1;
-            }
-            else
-              contador = 0;
-          }
-        }
-
-        if (terminada != 1){            // Diagonal normal
-          contador = 0;
-
-          int minimo = GetFilas();
-
-          if (minimo > GetColumnas())
-            minimo = GetColumnas();
-
-          for(int k = 0; (i+k < minimo - 1) && (j+k < minimo - 1) && terminada != 1 ; k++){
-
-            if(ContenidoCasilla(j+k,i+k) == ContenidoCasilla(j+k+1,i+k+1) && ContenidoCasilla(j,k) != 0){
-              contador++;
-              cout << "Comprobación diagonal----------" << endl;
-              cout << "contador: " << contador << endl;
-
-              if(contador == GetObjetivoFichas())
-                terminada = 1;
-            }
-
-            else
-              contador = 0;
-
-          }
-        }
-
-        if (terminada != 1){           // Diagonal inversa   i columnas j filas
-          contador = 0;
-
-          /* INTUYO QUE ESTO NO ESTÁ MUY BIEN
-          if (j > 0 && ContenidoCasilla(i,j) != 0 && ContenidoCasilla(i,j) == ContenidoCasilla(i+1, j-1)) {
-
-            contador++;
-            cout << "Comprobación diagonal inversa----------" << endl;
-            cout << "contador: " << contador << endl;
-
-            if(contador == GetObjetivoFichas())
-              terminada = 1;
-
-          }
-          else
-            contador = 0;
-            */
-
-          for(int k = 0; (j+k <= GetFilas()) && (i-k >= 0) && terminada != 1 ; k++){
-
-            if(ContenidoCasilla(j+k,i-k) == ContenidoCasilla(j+k+1,i-k-1) && ContenidoCasilla(j,k) != 0){
-              contador++;
-              cout << "Comprobación diagonal inversa----------" << endl;
-              cout << "contador: " << contador << endl;
-
-              if(contador == GetObjetivoFichas())
-                terminada = 1;
-            }
-
-            else
-              contador = 0;
-
-          }
-
-        }
-
-    }
-
-    if (tablero.GetUsadas() == GetFilas()*GetColumnas())
-      terminada = 2;
-
-    return terminada;
+  return true;
 
 }
 
+bool Tablero::HayNVertical(int fil, int col) {
 
+  for (int i = 0; i < GetObjetivoFichas() - 1; i++)
+    if (ContenidoCasilla(fil + i, col) != ContenidoCasilla(fil + i + 1, col))
+      return false;
+
+  return true;
+
+}
+
+bool Tablero::HayNDiagonal(int fil, int col) {
+
+  for (int i = 0; i < GetObjetivoFichas() - 1; i++)
+    if (ContenidoCasilla(fil + i, col + i ) != ContenidoCasilla(fil + i + 1, col + i + 1))
+      return false;
+
+  return true;
+
+}
+
+bool Tablero::HayNDiagonalInv(int fil, int col) {
+
+  for (int i = 0; i < GetObjetivoFichas() - 1; i++)
+    if (ContenidoCasilla(fil - i, col + i ) != ContenidoCasilla(fil - i - 1, col + i + 1))
+      return false;
+
+  return true;
+
+}
+
+bool Tablero::HayNEnLinea() {
+
+  int n = GetObjetivoFichas();
+
+  for (int fil = 0; fil < GetFilas(); fil++) {
+    for (int col = 0; col < GetColumnas(); col++) {
+
+      if (ContenidoCasilla(fil, col) != 0) {
+
+        if (col <= GetColumnas() - n && HayNHorizontal(fil, col))
+          return true;
+        if (fil <= GetFilas() - n && HayNVertical(fil, col))
+          return true;
+        if(col <= GetColumnas() - n&& fil <= GetFilas() - n && HayNDiagonal(fil, col))
+          return true;
+        if (col <= GetColumnas() - n && fil >= n - 1 && HayNDiagonalInv(fil, col))
+          return true;
+
+      }
+
+    }
+  }
+
+  return false;
+}
+
+int Tablero::PartidaFinalizada() {
+
+  if (HayNEnLinea())
+    return 1;
+  if (tablero.GetUsadas() == GetFilas() * GetColumnas())
+    return 2;
+  else
+    return 0;
+
+}
 
 void Tablero::PrettyPrint(){
 

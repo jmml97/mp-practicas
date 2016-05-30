@@ -36,8 +36,14 @@ class Tablero {
     void SetGanador();
 
     int ContenidoCasilla(int x, int y);
-    int PartidaFinalizada();
     void PrettyPrint();
+
+    bool HayNHorizontal(int fil, int col);
+    bool HayNVertical(int fil, int col);
+    bool HayNDiagonal(int fil, int col);
+    bool HayNDiagonalInv(int fil, int col);
+    bool HayNEnLinea();
+    int PartidaFinalizada();
 
     bool InsertarFicha(int columna);
     void VaciarTablero();
