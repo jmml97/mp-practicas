@@ -43,3 +43,4 @@ Log 31/05/2016:
 
 -Intento de:
   ·Añadir constructor copia, operador asignación y destructor (Hay cosas que no funcionan y no están bien hechas)
+  ·Revisión del punto anterior: Parece funcionar sin problema
