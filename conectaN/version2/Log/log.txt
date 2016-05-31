@@ -1,0 +1,45 @@
+Log 21/05/2016:
+
+-Avanzado con el main:
+  ·Muestra puntuacion al final de cada partida
+  ·Sofocados algunos de los llantos del compilador(Movido booleano "otra" a otro sitio y correcciones compilatorias)
+
+-Añadido partidas ganadas en jugador.h para mostrarlas al final de cada partida, y al final del juego
+ con sus correspondientes métodos set/get y función AddPartGan() para actualizarlas
+
+-Añadido en la clase jugador un método MuestraResultados() que se encargue de mostrar los resultados
+
+
+
+Log 23/05/2016:
+
+-Corregida la cabecera de jugador.h (intento de corrección, sigue fallando en función EscogeColumna())
+  ARREGLO: No se había incluido tablero.h en la clase jugador
+
+-Comprobado que las cabeceras de matriz, tablero y jugador concuerden
+
+-Creada función CoutNombre() en clase jugador para mostrar el nombre (Había dos GetNombre())
+
+-Solucionados varios problemas de compilación (falta errores en PrettyPrint())
+  ARREGLO: Ya se han solucionado los errores de compilación, ahora bienvenidos al fabuloso mundo de los errores lógicos
+
+-Presuntos errores lógicos:
+  ·La partida acaba un poco pronto, y bien no cambia el turno nunca, o cuando acaba la partida
+
+
+
+Log 24/05/2016:
+
+-Añadidas condiciones en main()
+
+Log 30/05/2016:
+
+-Arreglado alternamiento de turnos, comprobaciones de finalización no funcionan tan bien
+-Cambiada comprobación vertical de la PartidaFinalizada, se comprobaba (j,k) y (j,k+1) en lugar de (i,k) con (i,k+1)
+-Las partidas ahora duran algo más de un turno, aunque no de la manera esperada
+
+
+Log 31/05/2016:
+
+-Intento de:
+  ·Añadir constructor copia, operador asignación y destructor (Hay cosas que no funcionan y no están bien hechas)
