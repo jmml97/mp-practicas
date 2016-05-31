@@ -13,19 +13,27 @@ class Jugador {
 
   public:
 
-    char GetNombre();
+    inline char GetNombre() const {
+      return *nombre;
+    }
     void SetNombre(char c[]);
     void ImprimirNombre();
 
-    int GetTurno();
+    inline int GetTurno() const {
+      return turno;
+    }
     void SetTurno(int n);
 
-    int GetPuntuacion();
+    inline int GetPuntuacion() const {
+      return puntuacion;
+    }
     void SetPuntuacion(int n);
     void AddPuntuacion(int n);
 
     void SetPartGan(int n);
-    int GetPartGan();
+    inline int GetPartGan() const {
+      return partidas_ganadas;
+    }
     void AddPartGan();
 
     void MuestraResultados();

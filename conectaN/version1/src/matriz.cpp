@@ -8,7 +8,7 @@
 using namespace std;
 
 
-Matriz::Matriz() { // Constructor vacío, inicializa a 0
+Matriz::Matriz() {
 
   for (int i = 0; i < 20; i++)
       for (int j = 0; j < 20;j++)
@@ -38,21 +38,10 @@ void Matriz::Reset() {
 
 }
 
-int Matriz::GetFilas() {
+// Devuelve el número de casillas usadas en la matriz (su contenido es distinto
+// de 0).
+int Matriz::GetUsadas() {
 
-  return filas;
-
-}
-
-int Matriz::GetColumnas() {
-
-  return columnas;
-
-}
-
-// Cambiar a tablero.cpp
-int Matriz::GetUsadas() {   // Devuelve el número de fichas usadas, lo usamos para el recuento de puntos y la finalización
-                            // de la partida
     int contador = 0;
 
     for (int i = 0; i < GetFilas(); i++){

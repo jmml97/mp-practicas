@@ -30,21 +30,9 @@ int Tablero::GetColumnas() {
 
 }
 
-int Tablero::GetObjetivoFichas() {
-
-  return objetivo_fichas;
-
-}
-
 void Tablero::SetObjetivoFichas(int objetivo) {
 
   objetivo_fichas = objetivo;
-
-}
-
-int Tablero::GetTurno() {
-
-  return turno;
 
 }
 
@@ -57,12 +45,6 @@ void Tablero::SetTurno(int n) {
 int Tablero::GetPuntuacion() {
 
   return (objetivo_fichas*10 + ((GetFilas()*GetColumnas()/2) - tablero.GetUsadas()));
-
-}
-
-int Tablero::GetGanador() {
-
-  return ganador;
 
 }
 
@@ -125,6 +107,9 @@ bool Tablero::HayNDiagonalInv(int fil, int col) {
 
 }
 
+// Comprueba si hay N fichas en línea. Recorre el tablero y cuando llega a una
+// ficha, comprueba si hay n fichas adyacentes en línea (de todas las formas
+// posibles).
 bool Tablero::HayNEnLinea() {
 
   int n = GetObjetivoFichas();
@@ -151,6 +136,10 @@ bool Tablero::HayNEnLinea() {
   return false;
 }
 
+// Devuelve si la partida ha finalizado.
+// 0: La partida no ha finalizado.
+// 1: La partida ha finalizado y hay un ganador.
+// 2: La partida ha finalizado y hay empate.
 int Tablero::PartidaFinalizada() {
 
   if (HayNEnLinea())
@@ -164,6 +153,10 @@ int Tablero::PartidaFinalizada() {
 
 void Tablero::PrettyPrint(){
 
+  cout << "\n\n";
+
+  // Imprime las letras de las columnas
+
   char letra;
 
   cout << " ";
@@ -173,6 +166,8 @@ void Tablero::PrettyPrint(){
     cout << letra << " ";
   }
   cout << endl;
+
+  // Imprime el casillero
 
   for (int i = GetFilas() - 1; i >= 0; i--){
 
@@ -196,16 +191,20 @@ void Tablero::PrettyPrint(){
     cout << endl;
   }
 
+  // Imprime la base
+
   for (int i = 0; i < 2*GetColumnas() + 1; i++){
     cout << "=";
   }
-  cout << endl;
+
+  cout << "\n\n";
 }
 
 
 
 // MÉTODOS QUE MODIFICAN EL TABLERO
 
+// Se encarga de insertar una ficha en el casillero si la columna introducida es // adecuada (existe y tiene espacios vacíos).
 bool Tablero::InsertarFicha(int columna) {
 
   if (columna < 0 || columna >= GetColumnas())
@@ -213,7 +212,7 @@ bool Tablero::InsertarFicha(int columna) {
 
   for (int i = 0; i < GetFilas(); i++){
 
-    if (ContenidoCasilla(i, columna) == 0 && ContenidoCasilla(i + 1, columna) == 0) {
+    if (ContenidoCasilla(i, columna) == 0) {
       tablero.Modifica(i, columna, GetTurno());
       return true;
     }

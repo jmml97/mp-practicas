@@ -18,11 +18,16 @@ class Matriz {
     Matriz();
 
     void SetFilas(int fils);
+    inline int GetFilas() const {
+      return filas;
+    }
+
     void SetColumnas(int col);
+    inline int GetColumnas() const {
+      return columnas;
+    }
+
     void Reset();
-    
-    int GetFilas();
-    int GetColumnas();
     int GetUsadas();
 
     int Consulta(int fila, int columna);

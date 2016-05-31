@@ -11,30 +11,34 @@ int main(int argc, char const *argv[]) {
   int f, c, o;
   char nombre1[50], nombre2[50];
 
-  cout << "Bienvenido a ConectaN" << endl;
+  cout << "\n";
+  cout << "¡Bienvenido a ConectaN!" << endl;
+  cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
 
   do{
-  cout << "Introduce el número de filas del tablero: ";
+  cout << "¿Cuántas filas quieres que tenga el tablero? ";
   cin >> f;
 
 } while (f < 1);
 
   do {
-  cout << "Introduce el número de columnas del tablero: ";
+  cout << "¿Cuántas columnas quieres que tenga el tablero? ";
   cin >> c;
 
 } while (c < 1);
 
   do {
-  cout << "Introduce el número de fichas objetivo: ";
+  cout << "¿Cuál será el número de fichas a alinear? ";
   cin >> o;
 
 } while (o > f &&  o > c);
 
-  cout << "Introduce el nombre del primer jugador: ";
+  cout << "Jugador 1, ¿cúal es tu nombre? ";
   cin >> nombre1;
-  cout << "Introduce el nombre del segundo jugador: ";
+  cout << "Jugador 2, ¿cuál es tu nombre? ";
   cin >> nombre2;
+  cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
+  cout << "\n" << endl;
 
 
   Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
@@ -50,19 +54,19 @@ do {
 
     tablero.CambiaTurno();
 
+    cout << "¡Turno de ";
+
     if (tablero.GetTurno() == 1) {
 
-      cout << "Jugador ";
       jugador1.ImprimirNombre();
-      cout << ", su turno (x)" << endl;
+      cout << " (x)!" << endl;
       jugador1.EscogeColumna(tablero);
 
     }
     else {
 
-      cout << "Jugador ";
       jugador2.ImprimirNombre();
-      cout << ", su turno (o)" << endl;
+      cout << " (o)!" << endl;
       jugador2.EscogeColumna(tablero);
 
     }
@@ -77,7 +81,7 @@ do {
     tablero.PrettyPrint();
     tablero.SetGanador();
     int puntuacion = tablero.GetPuntuacion();
-    cout << "Fin de la partida. El ganador es ";
+    cout << "¡Se acabó! ¡Fin de la partida! El ganador es ";
 
     if (tablero.GetGanador() == 1){
 
@@ -94,8 +98,9 @@ do {
 
     }
 
+    cout << ". ¡Enhorabuena!" << endl;
 
-    cout << "\nResultados:" << endl;
+    cout << "\nLos resultados por ahora son: " << endl;
     cout << "-----------" << endl;
     jugador1.MuestraResultados();
     jugador2.MuestraResultados();
@@ -121,7 +126,7 @@ do {
 cout << "Resultados finales: " << endl;
 jugador1.MuestraResultados();
 jugador2.MuestraResultados();
-cout << "Gracias por jugar a Conecta-N" << endl;
+cout << "¡Gracias por jugar a Conecta-N!" << endl;
 
 return 0;
 

@@ -15,23 +15,27 @@ class Tablero {
     Matriz tablero;
     int objetivo_fichas, turno, ganador;
 
-
-
   public:
 
     int GetFilas();
     int GetColumnas();
 
-    int GetObjetivoFichas();
+    inline int GetObjetivoFichas() const {
+      return objetivo_fichas;
+    }
     void SetObjetivoFichas(int objetivo);
 
-    int GetTurno();
+    inline int GetTurno() const {
+      return turno;
+    }
     void SetTurno(int n);
     void CambiaTurno();
 
     int GetPuntuacion();
 
-    int GetGanador();
+    inline int GetGanador() const {
+      return ganador;
+    }
     void SetGanador();
 
     int ContenidoCasilla(int x, int y);
