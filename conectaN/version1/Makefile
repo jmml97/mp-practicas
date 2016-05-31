@@ -16,13 +16,13 @@ documentacion:
 
 # ************ Compilación de módulos ************
 
-$(OBJ)/matriz.o : $(SRC)/matriz.cpp $(INC)/matriz.h
+$(OBJ)/matriz.o : $(SRC)/matriz.cpp $(INC)/matriz.hpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/matriz.o $(SRC)/matriz.cpp
-$(OBJ)/tablero.o : $(SRC)/tablero.cpp $(INC)/tablero.h $(INC)/matriz.h
+$(OBJ)/tablero.o : $(SRC)/tablero.cpp $(INC)/tablero.hpp $(INC)/matriz.hpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/tablero.o $(SRC)/tablero.cpp
-$(OBJ)/jugador.o : $(SRC)/jugador.cpp $(INC)/jugador.h
+$(OBJ)/jugador.o : $(SRC)/jugador.cpp $(INC)/jugador.hpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/jugador.o $(SRC)/jugador.cpp
-$(OBJ)/conectaN.o : $(SRC)/conectaN.cpp $(INC)/jugador.h $(INC)/tablero.h
+$(OBJ)/conectaN.o : $(SRC)/conectaN.cpp $(INC)/jugador.hpp $(INC)/tablero.hpp
 	$(CXX) -c $(CXXFLAGS) -o $(OBJ)/conectaN.o $(SRC)/conectaN.cpp
 
 conectaN: $(OBJ)/conectaN.o $(OBJ)/jugador.o $(OBJ)/matriz.o $(OBJ)/tablero.o

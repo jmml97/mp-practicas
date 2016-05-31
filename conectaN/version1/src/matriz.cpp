@@ -3,7 +3,7 @@
 */
 
 #include <iostream>
-#include "matriz.h"
+#include "matriz.hpp"
 
 using namespace std;
 

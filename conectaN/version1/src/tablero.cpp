@@ -3,7 +3,7 @@
 */
 
 #include <iostream>
-#include "tablero.h"
+#include "tablero.hpp"
 
 using namespace std;
 

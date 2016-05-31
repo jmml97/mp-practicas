@@ -1,13 +1,12 @@
 
 #ifndef tablero_h
-
 #define tablero_h
 
 /*
   Clase Tablero que se encarga de interactuar con Matriz para almacenar los datos del juego
 */
 
-#include "matriz.h"
+#include "matriz.hpp"
 
 class Tablero {
 

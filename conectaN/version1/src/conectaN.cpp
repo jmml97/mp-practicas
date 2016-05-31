@@ -1,5 +1,5 @@
-#include "jugador.h"
-#include "tablero.h"
+#include "jugador.hpp"
+#include "tablero.hpp"
 
 #include <cctype>
 #include <iostream>

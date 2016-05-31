@@ -1,6 +1,7 @@
 #ifndef jugador_h
 #define jugador_h
-#include "tablero.h"
+
+#include "tablero.hpp"
 
 class Jugador {
 
