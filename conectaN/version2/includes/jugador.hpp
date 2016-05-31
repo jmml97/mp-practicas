@@ -6,18 +6,18 @@
 class Jugador {
 
   private:
-    char nombre[50];
+    char *nombre;
     int turno;
     int puntuacion;
     int partidas_ganadas;
 
   public:
 
-    inline char GetNombre() const {
-      return *nombre;
+    inline char* GetNombre() const {
+      return nombre;
     }
     void SetNombre(char c[]);
-    void ImprimirNombre();
+    void ImprimirNombre() const;
 
     inline int GetTurno() const {
       return turno;
@@ -38,10 +38,18 @@ class Jugador {
 
     void MuestraResultados();
 
-    void EscogeColumna(Tablero& tablero);
+    bool EscogeColumna(Tablero& tablero);
 
     Jugador(char c[], int t);
+    Jugador(char c[], int t, int p, int g);
+    Jugador(const Jugador &j);
+    ~Jugador();
+
+    Jugador operator=(const Jugador &j) const;
 
 };
+
+ostream& operator<<(ostream &os, const Jugador &j);
+istream& operator>>(istream &is, Jugador &j);
 
 #endif

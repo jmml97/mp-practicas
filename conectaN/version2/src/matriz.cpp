@@ -14,10 +14,19 @@ Matriz::Matriz() {
 
 }
 
+Matriz::Matriz(int f, int c) {
+
+  filas = f;
+  columnas = c;
+  matriz = new int[filas*columnas];
+
+}
+
 Matriz::~Matriz(){              // Destructor
 
   delete[] matriz;
   filas = columnas = 0;
+
 }
 
 Matriz::Matriz(const Matriz &m) {      // Constructor copia
@@ -70,7 +79,7 @@ void Matriz::SetColumnas(int col) {
 void Matriz::Reset() {
 
   for (int i = 0; i < filas * columnas; i++)
-        matriz[i] = 0;
+    matriz[i] = 0;
 
 }
 
@@ -91,19 +100,59 @@ int Matriz::GetUsadas() {
 }
 
 
-int Matriz::Consulta(int fila, int columna) {
+int Matriz::Consulta(int fila, int columna) const{
 
   return matriz[fila*columnas + columna];
 
 }
 
-int Matriz::Consulta(int posicion){     // Sobrecarga Consulta() para acceder dada una posición i-ésima
+// Sobrecarga Consulta() para acceder dada una posición i-ésima
+int Matriz::Consulta(int posicion) const{
 
   return matriz[posicion];
+
 }
 
-void Matriz::Modifica (int fila, int columna, int valor){
+void Matriz::Modifica (int fila, int columna, int valor) {
 
   matriz[fila*columnas + columna] = valor;
+
+}
+
+void Matriz::Modifica (int posicion, int valor) {
+
+  matriz[posicion] = valor;
+
+}
+
+// Operadores de E/S
+
+ostream& operator<<(ostream &os, const Matriz &m) {
+
+  os << m.GetColumnas() << '\n';
+  os << m.GetFilas() << '\n';
+
+  for (int i = 0; i < m.GetFilas() * m.GetColumnas(); i++)
+    os << m.Consulta(i) << ' ';
+
+  return os;
+
+}
+
+istream& operator>>(istream &is, Matriz &m) {
+
+  int f, c, tmp;
+
+  is >> f >> c;
+
+  m.SetColumnas(f);
+  m.SetFilas(c);
+
+  for (int i = 0; i < m.GetFilas() * m.GetColumnas(); i++) {
+    cin >> tmp;
+    m.Modifica(i, tmp);
+  }
+
+  return is;
 
 }

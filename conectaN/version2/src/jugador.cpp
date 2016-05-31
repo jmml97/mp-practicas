@@ -5,14 +5,13 @@ using namespace std;
 
 void Jugador::SetNombre(char c[]) {
 
-  for (int i = 0; i < 50; i++)
-    nombre[i] = c[i];
+  nombre = c;
 
 }
 
-void Jugador::ImprimirNombre() {
+void Jugador::ImprimirNombre() const {
 
-  for (int i = 0; nombre[i] != '\0' && i < 50; i++)
+  for (int i = 0; nombre[i] != '\0'; i++)
     cout << nombre[i];
 
 }
@@ -37,21 +36,17 @@ void Jugador::AddPartGan() {
   partidas_ganadas++;
 }
 
-void Jugador::EscogeColumna(Tablero& tablero) {
+bool Jugador::EscogeColumna(Tablero& tablero) {
 
   tablero.PrettyPrint();
 
   char col;
 
-  do {
-
-    ImprimirNombre() ;
-    cout << ", ¿en qué columna quieres poner tu ficha? ";
-    cin >> col;
-
-  } while (!tablero.InsertarFicha(col - 'a'));
-
-  cout << "¡Listo!" << endl;
+  ImprimirNombre() ;
+  cout << ", ¿en qué columna quieres poner tu ficha? ";
+  cin >> col;
+  bool exito = tablero.InsertarFicha(col - 'a');
+  return exito;
 
 }
 
@@ -69,5 +64,71 @@ Jugador::Jugador(char c[], int t) {
   SetTurno(t);
   SetPuntuacion(0);
   SetPartGan(0);
+
+}
+
+Jugador::Jugador(char c[], int t, int p, int g) {
+
+  SetNombre(c);
+  SetTurno(t);
+  SetPuntuacion(p);
+  SetPartGan(g);
+
+}
+
+Jugador::Jugador(const Jugador &j) {
+
+  this->SetNombre(j.GetNombre());
+  this->SetTurno(j.GetTurno());
+  this->SetPuntuacion(j.GetPuntuacion());
+  this->SetPartGan(j.GetPartGan());
+
+}
+
+Jugador::~Jugador() {
+
+
+
+}
+
+Jugador Jugador::operator=(const Jugador &j) const {
+
+  Jugador jugador(j.GetNombre(), j.GetTurno(), j.GetPuntuacion(), j.GetPartGan());
+
+  return jugador;
+
+}
+
+// Operadores de E/S
+
+ostream& operator<<(ostream &os, const Jugador &j) {
+
+  os << '#';
+  j.ImprimirNombre();
+  os << '\n';
+  os << j.GetTurno() << ' ';
+  os << j.GetPuntuacion() << ' ';
+  os << j.GetPartGan() << ' ';
+
+  return os;
+
+}
+
+istream& operator>>(istream &is, Jugador &j) {
+
+  char *n = new char[0];
+  int t = 0, p = 0, g = 0;
+
+  if (is.peek() == '#') {
+    is.ignore();
+    is >> n >> t >> p >> g;
+  }
+
+  j.SetNombre(n);
+  j.SetTurno(1);
+  j.SetPuntuacion(p);
+  j.SetPartGan(g);
+
+  return is;
 
 }

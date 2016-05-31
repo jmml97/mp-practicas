@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char const *argv[]) {
 
   int f, c, o;
-  char nombre1[50], nombre2[50];
+  char *nombre1 = new char[0], *nombre2 = new char[0];
 
   cout << "\n";
   cout << "¡Bienvenido a ConectaN!" << endl;
@@ -56,18 +56,32 @@ do {
 
     cout << "¡Turno de ";
 
+    bool exito;
+
     if (tablero.GetTurno() == 1) {
 
       jugador1.ImprimirNombre();
       cout << " (x)!" << endl;
-      jugador1.EscogeColumna(tablero);
+
+      do {
+        exito = jugador1.EscogeColumna(tablero);
+        if (!exito)
+          cout << "Error. Introduce una columna correcta." << endl;
+      } while (!exito);
+
+
 
     }
     else {
 
       jugador2.ImprimirNombre();
       cout << " (o)!" << endl;
-      jugador2.EscogeColumna(tablero);
+
+      do {
+        exito = jugador2.EscogeColumna(tablero);
+        if (!exito)
+          cout << "Error. Introduce una columna correcta." << endl;
+      } while (!exito);
 
     }
 
@@ -104,7 +118,6 @@ do {
     cout << "-----------" << endl;
     jugador1.MuestraResultados();
     jugador2.MuestraResultados();
-
 
   }
 

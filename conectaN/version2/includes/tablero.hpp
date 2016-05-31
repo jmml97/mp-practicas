@@ -7,6 +7,9 @@
 */
 
 #include "matriz.hpp"
+#include <iostream>
+
+using namespace std;
 
 class Tablero {
 
@@ -17,8 +20,8 @@ class Tablero {
 
   public:
 
-    int GetFilas();
-    int GetColumnas();
+    int GetFilas() const;
+    int GetColumnas() const;
 
     inline int GetObjetivoFichas() const {
       return objetivo_fichas;
@@ -38,8 +41,8 @@ class Tablero {
     }
     void SetGanador();
 
-    int ContenidoCasilla(int x, int y);
-    void PrettyPrint();
+    int ContenidoCasilla(int x, int y) const;
+    void PrettyPrint(ostream &os = cout);
 
     bool HayNHorizontal(int fil, int col);
     bool HayNVertical(int fil, int col);
@@ -51,9 +54,14 @@ class Tablero {
     bool InsertarFicha(int columna);
     void VaciarTablero();
 
+    void LeerMatrizTablero(istream &is);
+    void EscribirMatrizTablero(ostream &os) const;
+
     Tablero(int filas, int columnas, int objetivo);
 
-
 };
+
+ostream& operator<<(ostream &os, const Tablero &t);
+istream& operator>>(istream &is, Tablero &t);
 
 #endif

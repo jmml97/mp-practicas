@@ -10,21 +10,21 @@ using namespace std;
 
 Tablero::Tablero(int filas, int columnas, int objetivo) {
 
-  tablero.SetFilas(filas);
-  tablero.SetColumnas(columnas);
+  Matriz tmp(filas, columnas);
+  tablero = tmp;
   SetObjetivoFichas(objetivo);
   SetTurno(2);
   ganador = 0;
 
 }
 
-int Tablero::GetFilas() {
+int Tablero::GetFilas() const {
 
   return tablero.GetFilas();
 
 }
 
-int Tablero::GetColumnas() {
+int Tablero::GetColumnas() const{
 
   return tablero.GetColumnas();
 
@@ -61,7 +61,7 @@ void Tablero::CambiaTurno(){
 }
 
 
-int Tablero::ContenidoCasilla(int x, int y) {
+int Tablero::ContenidoCasilla(int x, int y) const{
 
   return tablero.Consulta(x, y);
 
@@ -151,27 +151,27 @@ int Tablero::PartidaFinalizada() {
 
 }
 
-void Tablero::PrettyPrint(){
+void Tablero::PrettyPrint(ostream &os){
 
-  cout << "\n\n";
+  os << "\n\n";
 
   // Imprime las letras de las columnas
 
   char letra;
 
-  cout << " ";
+  os << " ";
 
   for (int i = 0; i < GetColumnas(); i++){
     letra = ('a'+i);
-    cout << letra << " ";
+    os << letra << " ";
   }
-  cout << endl;
+  os << endl;
 
   // Imprime el casillero
 
   for (int i = GetFilas() - 1; i >= 0; i--){
 
-    cout << "|";
+    os << "|";
     for (int j = 0; j < GetColumnas(); j++){
 
       // cout << GetColumnas()*i + j;
@@ -179,25 +179,25 @@ void Tablero::PrettyPrint(){
 
 
       if (ContenidoCasilla(i,j) == 1)
-        cout << "x";
+        os << "x";
       else if (ContenidoCasilla(i,j) == 2)
-        cout << "o";
+        os << "o";
       else
-        cout << " ";
+        os << " ";
 
-      cout << "|";
+      os << "|";
 
     }
-    cout << endl;
+    os << endl;
   }
 
   // Imprime la base
 
   for (int i = 0; i < 2*GetColumnas() + 1; i++){
-    cout << "=";
+    os << "=";
   }
 
-  cout << "\n\n";
+  os << "\n\n";
 }
 
 
@@ -225,5 +225,39 @@ bool Tablero::InsertarFicha(int columna) {
 void Tablero::VaciarTablero() {
 
   tablero.Reset();
+
+}
+
+void Tablero::LeerMatrizTablero(istream &is) {
+  is >> tablero;
+}
+
+void Tablero::EscribirMatrizTablero(ostream &os) const{
+  os << tablero;
+}
+
+// Operadores de E/S
+
+ostream& operator<<(ostream &os, const Tablero &t) {
+
+  os << t.GetObjetivoFichas() << ' ';
+  os << t.GetTurno() << ' ';
+  os << t.GetGanador() << '\n';
+
+  t.EscribirMatrizTablero(os);
+
+  return os;
+
+}
+
+istream& operator>>(istream &is, Tablero &t) {
+
+  int o, tu, g;
+
+  is >> o >> tu >> g;
+
+  t.LeerMatrizTablero(is);
+
+  return is;
 
 }
