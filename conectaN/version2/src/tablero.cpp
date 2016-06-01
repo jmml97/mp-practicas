@@ -13,7 +13,7 @@ Tablero::Tablero(int filas, int columnas, int objetivo) {
   Matriz tmp(filas, columnas);
   tablero = tmp;
   SetObjetivoFichas(objetivo);
-  SetTurno(1);
+  SetTurno(2);
   ganador = 0;
 
 }

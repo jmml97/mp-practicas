@@ -120,6 +120,8 @@ do {
     bool exito = false;
     char res, archivo[100];
 
+    tablero.CambiaTurno();
+
     while (!exito) {
 
       switch (tablero.GetTurno()) {
@@ -128,6 +130,7 @@ do {
         case 2: exito = JugarTurno(jugador2, tablero);
                 break;
       }
+
       if (!exito) {
         cout << "Error en la introducción de la columna. ¿Quieres guardar la partida?" << endl;
         cin >> res;
@@ -135,12 +138,11 @@ do {
         if (tolower(res) == 's') {
           cout << "Nombre del archivo: ";
           cin >> archivo;
+
+          Guardar(archivo, jugador1, jugador2, tablero);
+
         }
 
-        Guardar(archivo, jugador1, jugador2, tablero);
-        cout << "turno: " << tablero.GetTurno() << endl;
-      } else {
-        tablero.CambiaTurno();
       }
 
     }
@@ -199,9 +201,6 @@ cout << "Resultados finales: " << endl;
 jugador1.MuestraResultados();
 jugador2.MuestraResultados();
 cout << "¡Gracias por jugar a Conecta-N!" << endl;
-
-Cargar("datos_inventados.txt", jugador1, jugador2, tablero);
-Guardar("datos.txt", jugador1, jugador2, tablero);
 
 return 0;
 

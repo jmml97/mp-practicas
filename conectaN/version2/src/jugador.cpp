@@ -38,14 +38,24 @@ void Jugador::AddPartGan() {
 
 bool Jugador::EscogeColumna(Tablero& tablero) {
 
+  bool exito = false;
+
   tablero.PrettyPrint();
 
-  char col;
+  if (nombre[0] == '@') {
+    while(!exito)
+      exito = tablero.InsertarFicha(rand() % tablero.GetColumnas());
+  } else {
 
-  ImprimirNombre(cout) ;
-  cout << ", ¿en qué columna quieres poner tu ficha? ";
-  cin >> col;
-  bool exito = tablero.InsertarFicha(col - 'a');
+    char col;
+
+    ImprimirNombre(cout) ;
+    cout << ", ¿en qué columna quieres poner tu ficha? ";
+    cin >> col;
+    exito = tablero.InsertarFicha(col - 'a');
+
+  }
+
   return exito;
 
 }
