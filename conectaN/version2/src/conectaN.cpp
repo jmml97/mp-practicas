@@ -13,17 +13,22 @@ bool Cargar(char c[], Jugador &j1, Jugador &j2, Tablero &t) {
 
   if (f) {
 
-    char tmp[17];
-    f.getline(tmp, 17);
+    char tmp;
+    const char* req = "#MP-CONECTAN-1.0";
 
-    const char* s1 = tmp;
-    const char* s2 = "#MP-CONECTAN-1.0";
-
-    if (strcmp(s1, s2) == 0) {
-      f >> j1;
-      f >> j2;
-      f >> t;
+    while (f.peek() != '#') {
+      f.ignore();
     }
+
+    for (int i = 0; i < strlen(req); i++) {
+      f >> tmp;
+      if (tmp != req[i])
+        return false;
+    }
+
+    f >> j1;
+    f >> j2;
+    f >> t;
 
     f.close();
 
@@ -49,6 +54,19 @@ bool Guardar(char c[], Jugador j1, Jugador j2, Tablero t) {
   }
 
   return f.good();
+
+}
+
+bool JugarTurno(Jugador &j, Tablero &t) {
+
+  cout << "¡Turno de "; j.ImprimirNombre(cout); cout << " !";
+
+  switch (j.GetTurno()) {
+    case 1: cout << " (x)" << endl;
+    case 2: cout << " (o)" << endl;
+  }
+
+  return j.EscogeColumna(t);
 
 }
 
@@ -86,7 +104,6 @@ int main(int argc, char const *argv[]) {
   cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
   cout << "\n" << endl;
 
-
   Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
   Tablero tablero(f, c, o);
   bool otra;
@@ -100,37 +117,28 @@ do {
 
     tablero.CambiaTurno();
 
-    cout << "¡Turno de ";
+    bool exito = false;
+    char res, archivo[100];
 
-    bool exito;
+    while (!exito) {
 
-    if (tablero.GetTurno() == 1) {
+      switch (tablero.GetTurno()) {
+        case 1: exito = JugarTurno(jugador1, tablero);
+        case 2: exito = JugarTurno(jugador2, tablero);
+      }
+      if (!exito) {
+        cout << "Error en la introducción de la columna. ¿Quieres guardar la partida?" << endl;
+        cin >> res;
 
-      jugador1.ImprimirNombre(cout);
-      cout << " (x)!" << endl;
+        if (tolower(res) == 's') {
+          cout << "Nombre del archivo: ";
+          cin >> archivo;
+        }
 
-      do {
-        exito = jugador1.EscogeColumna(tablero);
-        if (!exito)
-          cout << "Error. Introduce una columna correcta." << endl;
-      } while (!exito);
-
-
-
-    }
-    else {
-
-      jugador2.ImprimirNombre(cout);
-      cout << " (o)!" << endl;
-
-      do {
-        exito = jugador2.EscogeColumna(tablero);
-        if (!exito)
-          cout << "Error. Introduce una columna correcta." << endl;
-      } while (!exito);
+        Guardar(archivo, jugador1, jugador2, tablero);
+      }
 
     }
-
 
   } while (tablero.PartidaFinalizada() == 0);
 
