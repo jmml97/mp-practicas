@@ -63,7 +63,9 @@ bool JugarTurno(Jugador &j, Tablero &t) {
 
   switch (j.GetTurno()) {
     case 1: cout << " (x)" << endl;
+            break;
     case 2: cout << " (o)" << endl;
+            break;
   }
 
   return j.EscogeColumna(t);
@@ -115,8 +117,6 @@ do {
 
   do {
 
-    tablero.CambiaTurno();
-
     bool exito = false;
     char res, archivo[100];
 
@@ -124,7 +124,9 @@ do {
 
       switch (tablero.GetTurno()) {
         case 1: exito = JugarTurno(jugador1, tablero);
+                break;
         case 2: exito = JugarTurno(jugador2, tablero);
+                break;
       }
       if (!exito) {
         cout << "Error en la introducción de la columna. ¿Quieres guardar la partida?" << endl;
@@ -136,6 +138,9 @@ do {
         }
 
         Guardar(archivo, jugador1, jugador2, tablero);
+        cout << "turno: " << tablero.GetTurno() << endl;
+      } else {
+        tablero.CambiaTurno();
       }
 
     }
