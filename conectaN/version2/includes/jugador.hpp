@@ -17,7 +17,7 @@ class Jugador {
       return nombre;
     }
     void SetNombre(char c[]);
-    void ImprimirNombre() const;
+    void ImprimirNombre(ostream &os) const;
 
     inline int GetTurno() const {
       return turno;

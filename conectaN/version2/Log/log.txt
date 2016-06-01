@@ -44,3 +44,10 @@ Log 31/05/2016:
 -Intento de:
   ·Añadir constructor copia, operador asignación y destructor (Hay cosas que no funcionan y no están bien hechas)
   ·Revisión del punto anterior: Parece funcionar sin problema
+
+Log 01/06/2016:
+
+TODO
+- Jugador automático: ¿Comprobar nombre al elegir columna en el programa principal? (E introducir columna aleatoria ahí)
+- Guardar y cargar partida. Cargar se hace dependiendo de los argumentos del programa (el argumento será el nombre del archivo). Guardar se hace si no introducimos una columna correcta.
+- Numero de jugadas por turno. Añadir dato miembro a tablero que controle las jugadas posibles. ¿Añadir a jugador el numero de turnos usados? (Para guardar/cargar la partida).

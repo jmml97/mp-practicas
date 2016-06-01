@@ -3,8 +3,54 @@
 
 #include <cctype>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
+
+bool Cargar(char c[], Jugador &j1, Jugador &j2, Tablero &t) {
+
+  ifstream f(c, ios::in);
+
+  if (f) {
+
+    char tmp[17];
+    f.getline(tmp, 17);
+
+    const char* s1 = tmp;
+    const char* s2 = "#MP-CONECTAN-1.0";
+
+    if (strcmp(s1, s2) == 0) {
+      f >> j1;
+      f >> j2;
+      f >> t;
+    }
+
+    f.close();
+
+  }
+
+  return f.good();
+
+}
+
+bool Guardar(char c[], Jugador j1, Jugador j2, Tablero t) {
+
+  ofstream f(c, ios::out);
+
+  if (f) {
+
+    f << "#MP-CONECTAN-1.0" << endl;
+    f << j1 << endl;
+    f << j2 << endl;
+    f << t;
+
+    f.close();
+
+  }
+
+  return f.good();
+
+}
 
 int main(int argc, char const *argv[]) {
 
@@ -60,7 +106,7 @@ do {
 
     if (tablero.GetTurno() == 1) {
 
-      jugador1.ImprimirNombre();
+      jugador1.ImprimirNombre(cout);
       cout << " (x)!" << endl;
 
       do {
@@ -74,7 +120,7 @@ do {
     }
     else {
 
-      jugador2.ImprimirNombre();
+      jugador2.ImprimirNombre(cout);
       cout << " (o)!" << endl;
 
       do {
@@ -101,14 +147,14 @@ do {
 
       jugador1.AddPuntuacion(puntuacion);
       jugador1.AddPartGan();
-      jugador1.ImprimirNombre();
+      jugador1.ImprimirNombre(cout);
 
     }
     else if (tablero.GetGanador() == 2){
 
       jugador2.AddPuntuacion(puntuacion);
       jugador2.AddPartGan();
-      jugador2.ImprimirNombre();
+      jugador2.ImprimirNombre(cout);
 
     }
 
@@ -140,6 +186,9 @@ cout << "Resultados finales: " << endl;
 jugador1.MuestraResultados();
 jugador2.MuestraResultados();
 cout << "¡Gracias por jugar a Conecta-N!" << endl;
+
+Cargar("datos_inventados.txt", jugador1, jugador2, tablero);
+Guardar("datos.txt", jugador1, jugador2, tablero);
 
 return 0;
 

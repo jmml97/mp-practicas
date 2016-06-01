@@ -9,10 +9,10 @@ void Jugador::SetNombre(char c[]) {
 
 }
 
-void Jugador::ImprimirNombre() const {
+void Jugador::ImprimirNombre(ostream &os) const {
 
   for (int i = 0; nombre[i] != '\0'; i++)
-    cout << nombre[i];
+    os << nombre[i];
 
 }
 
@@ -42,7 +42,7 @@ bool Jugador::EscogeColumna(Tablero& tablero) {
 
   char col;
 
-  ImprimirNombre() ;
+  ImprimirNombre(cout) ;
   cout << ", ¿en qué columna quieres poner tu ficha? ";
   cin >> col;
   bool exito = tablero.InsertarFicha(col - 'a');
@@ -53,7 +53,7 @@ bool Jugador::EscogeColumna(Tablero& tablero) {
 void Jugador::MuestraResultados(){
 
   cout << "El jugador ";
-  ImprimirNombre();
+  ImprimirNombre(cout);
   cout << " acumula un total de: " << GetPartGan() << " partida(s) ganadas y " << GetPuntuacion() << " puntos." << endl;
 
 }
@@ -104,7 +104,7 @@ Jugador Jugador::operator=(const Jugador &j) const {
 ostream& operator<<(ostream &os, const Jugador &j) {
 
   os << '#';
-  j.ImprimirNombre();
+  j.ImprimirNombre(os);
   os << '\n';
   os << j.GetTurno() << ' ';
   os << j.GetPuntuacion() << ' ';
@@ -119,10 +119,11 @@ istream& operator>>(istream &is, Jugador &j) {
   char *n = new char[0];
   int t = 0, p = 0, g = 0;
 
-  if (is.peek() == '#') {
+  while (is.peek() != '#')
     is.ignore();
-    is >> n >> t >> p >> g;
-  }
+
+  is.ignore();
+  is >> n >> t >> p >> g;
 
   j.SetNombre(n);
   j.SetTurno(1);
