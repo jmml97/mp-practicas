@@ -74,30 +74,40 @@ bool JugarTurno(Jugador &j, Tablero &t) {
 
 int main(int argc, char const *argv[]) {
 
-  int f, c, o;
+  int f, c, o, t;
   char *nombre1 = new char[0], *nombre2 = new char[0];
 
   cout << "\n";
   cout << "¡Bienvenido a ConectaN!" << endl;
   cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
 
-  do{
-  cout << "¿Cuántas filas quieres que tenga el tablero? ";
-  cin >> f;
+  do {
 
-} while (f < 1);
+    cout << "¿Cuántas filas quieres que tenga el tablero? ";
+    cin >> f;
+
+  } while (f < 1);
 
   do {
-  cout << "¿Cuántas columnas quieres que tenga el tablero? ";
-  cin >> c;
 
-} while (c < 1);
+    cout << "¿Cuántas columnas quieres que tenga el tablero? ";
+    cin >> c;
+
+  } while (c < 1);
 
   do {
-  cout << "¿Cuál será el número de fichas a alinear? ";
-  cin >> o;
 
-} while (o > f &&  o > c);
+    cout << "¿Cuál será el número de fichas a alinear? ";
+    cin >> o;
+
+  } while (o > f &&  o > c);
+
+  do {
+
+    cout << "¿Cuál será el número de fichas a insertar por turno? ";
+    cin >> t;
+
+  } while (t < 1 && t > o - 2);
 
   cout << "Jugador 1, ¿cúal es tu nombre? ";
   cin >> nombre1;
@@ -107,7 +117,7 @@ int main(int argc, char const *argv[]) {
   cout << "\n" << endl;
 
   Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
-  Tablero tablero(f, c, o);
+  Tablero tablero(f, c, o, t);
   bool otra;
 
 do {
@@ -120,7 +130,11 @@ do {
     bool exito = false;
     char res, archivo[100];
 
-    tablero.CambiaTurno();
+    cout << "Insertadas en turno: " << tablero.GetInsertadasEnTurno() << endl;
+    cout << "Fichas por turno: " << tablero.GetFichasPorTurno() << endl;
+
+    if (tablero.GetInsertadasEnTurno() == tablero.GetFichasPorTurno())
+      tablero.CambiaTurno();
 
     while (!exito) {
 
@@ -145,7 +159,11 @@ do {
 
       }
 
+      if (exito)
+        tablero.AumentarInsertadasEnTurno();
+
     }
+
 
   } while (tablero.PartidaFinalizada() == 0);
 

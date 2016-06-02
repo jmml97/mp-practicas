@@ -148,7 +148,7 @@ istream& operator>>(istream &is, Matriz &m) {
   m.SetColumnas(f);
   m.SetFilas(c);
 
-  for (int i = 0; i < (m.GetFilas() * m.GetColumnas()); i++) {
+  for (int i = 0; i < m.GetFilas() * m.GetColumnas(); i++) {
     is >> tmp;
     m.Modifica(i, tmp);
   }

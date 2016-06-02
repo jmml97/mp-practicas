@@ -16,7 +16,7 @@ class Tablero {
   private:
 
     Matriz tablero;
-    int objetivo_fichas, turno, ganador;
+    int objetivo_fichas, fichas_por_turno, insertadas_en_turno, turno, ganador;
 
   public:
 
@@ -27,6 +27,29 @@ class Tablero {
       return objetivo_fichas;
     }
     void SetObjetivoFichas(int objetivo);
+    inline void SetFichasPorTurno(int t) {
+      fichas_por_turno = t;
+    }
+
+    inline int GetFichasPorTurno() const{
+      return fichas_por_turno;
+    }
+
+    inline int GetInsertadasEnTurno() const {
+      return insertadas_en_turno;
+    }
+
+    inline void SetInsertadasEnturno(int i) {
+      insertadas_en_turno = i;
+    }
+
+    inline void AumentarInsertadasEnTurno() {
+      insertadas_en_turno++;
+    }
+
+    inline void ResetInsertadasEnTurno() {
+      insertadas_en_turno = 0;
+    }
 
     inline int GetTurno() const {
       return turno;
@@ -57,7 +80,7 @@ class Tablero {
     void LeerMatrizTablero(istream &is);
     void EscribirMatrizTablero(ostream &os) const;
 
-    Tablero(int filas, int columnas, int objetivo);
+    Tablero(int filas, int columnas, int objetivo, int fichas_turno);
 
 };
 
