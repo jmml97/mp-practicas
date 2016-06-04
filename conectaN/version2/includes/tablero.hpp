@@ -20,6 +20,9 @@ class Tablero {
 
   public:
 
+    Tablero();
+    Tablero(int filas, int columnas, int objetivo, int fichas_turno);
+
     int GetFilas() const;
     int GetColumnas() const;
 
@@ -80,8 +83,7 @@ class Tablero {
     void LeerMatrizTablero(istream &is);
     void EscribirMatrizTablero(ostream &os) const;
 
-    Tablero();
-    Tablero(int filas, int columnas, int objetivo, int fichas_turno);
+
 
 };
 

@@ -1,11 +1,69 @@
 #include "jugador.hpp"
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
+Jugador::Jugador() {
+
+  nombre = 0;
+  SetTurno(0);
+  SetPuntuacion(0);
+  SetPartGan(0);
+
+}
+
+Jugador::Jugador(char c[], int t) {
+
+  SetNombre(c);
+  SetTurno(t);
+  SetPuntuacion(0);
+  SetPartGan(0);
+
+}
+
+Jugador::Jugador(char c[], int t, int p, int g) {
+
+  SetNombre(c);
+  SetTurno(t);
+  SetPuntuacion(p);
+  SetPartGan(g);
+
+}
+
+Jugador::Jugador(const Jugador &j) {
+
+  nombre = new char[strlen(j.nombre)];
+  for (size_t i = 0; i < strlen(j.nombre); i++)
+    nombre[i] = j.nombre[i];
+  turno = j.turno;
+  puntuacion = j.puntuacion;
+  partidas_ganadas = j.partidas_ganadas;
+
+}
+
+Jugador::~Jugador() {
+
+  delete[] nombre;
+  turno = puntuacion = partidas_ganadas = 0;
+
+}
+
+Jugador& Jugador::operator=(const Jugador &j) {
+
+  SetNombre(j.GetNombre());
+  SetTurno(j.GetTurno());
+  SetPuntuacion(j.GetPuntuacion());
+  SetPartGan(j.GetPartGan());
+
+  return *this;
+
+}
+
 void Jugador::SetNombre(char c[]) {
 
-  nombre = c;
+  nombre = new char[strlen(c)];
+  strcpy(nombre, c);
 
 }
 
@@ -68,59 +126,6 @@ void Jugador::MuestraResultados(){
 
 }
 
-Jugador::Jugador() {
-
-  nombre = 0;
-  SetTurno(0);
-  SetPuntuacion(0);
-  SetPartGan(0);
-
-}
-
-Jugador::Jugador(char c[], int t) {
-
-  SetNombre(c);
-  SetTurno(t);
-  SetPuntuacion(0);
-  SetPartGan(0);
-
-}
-
-Jugador::Jugador(char c[], int t, int p, int g) {
-
-  SetNombre(c);
-  SetTurno(t);
-  SetPuntuacion(p);
-  SetPartGan(g);
-
-}
-
-Jugador::Jugador(const Jugador &j) {
-
-  this->SetNombre(j.GetNombre());
-  this->SetTurno(j.GetTurno());
-  this->SetPuntuacion(j.GetPuntuacion());
-  this->SetPartGan(j.GetPartGan());
-
-}
-
-Jugador::~Jugador() {
-
-
-
-}
-
-Jugador& Jugador::operator=(const Jugador &j) {
-
-  SetNombre(j.GetNombre());
-  SetTurno(j.GetTurno());
-  SetPuntuacion(j.GetPuntuacion());
-  SetPartGan(j.GetPartGan());
-
-  return *this;
-
-}
-
 // Operadores de E/S
 
 ostream& operator<<(ostream &os, const Jugador &j) {
@@ -152,6 +157,7 @@ istream& operator>>(istream &is, Jugador &j) {
   j.SetPuntuacion(p);
   j.SetPartGan(g);
 
+  delete[] n;
   return is;
 
 }

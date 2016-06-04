@@ -9,7 +9,7 @@
 
 using namespace std;
 
-bool Cargar(const char c[], Jugador &j1, Jugador &j2, Tablero &t) {
+bool Cargar(const char *c, Jugador &j1, Jugador &j2, Tablero &t) {
 
   ifstream f(c, ios::in);
 
@@ -32,11 +32,11 @@ bool Cargar(const char c[], Jugador &j1, Jugador &j2, Tablero &t) {
     f >> j2;
     f >> t;
 
-    f.close();
-
   }
 
-  return f.good();
+	f.close();
+
+	return f.good();
 
 }
 
@@ -156,7 +156,7 @@ do {
       }
 
       if (!exito) {
-        cout << "Error en la introducción de la columna. ¿Quieres guardar la partida?" << endl;
+        cout << "Error en la introducción de la columna. ¿Quieres guardar la partida? (S/N)";
         cin >> res;
 
         if (tolower(res) == 's') {

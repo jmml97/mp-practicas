@@ -14,6 +14,14 @@ class Jugador {
 
   public:
 
+    Jugador();
+    Jugador(char c[], int t);
+    Jugador(char c[], int t, int p, int g);
+    Jugador(const Jugador &j);
+    ~Jugador();
+
+    Jugador& operator=(const Jugador &j);
+
     inline char* GetNombre() const {
       return nombre;
     }
@@ -41,13 +49,7 @@ class Jugador {
 
     bool EscogeColumna(Tablero& tablero);
 
-    Jugador();
-    Jugador(char c[], int t);
-    Jugador(char c[], int t, int p, int g);
-    Jugador(const Jugador &j);
-    ~Jugador();
 
-    Jugador& operator=(const Jugador &j);
 
 };
 

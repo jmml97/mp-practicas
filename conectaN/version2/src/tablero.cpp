@@ -29,6 +29,7 @@ Tablero::Tablero(int filas, int columnas, int objetivo, int fichas_turno) {
 
 }
 
+
 int Tablero::GetFilas() const {
 
   return tablero.GetFilas();

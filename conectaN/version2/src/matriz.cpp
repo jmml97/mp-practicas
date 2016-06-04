@@ -22,13 +22,6 @@ Matriz::Matriz(int f, int c) {
 
 }
 
-Matriz::~Matriz(){              // Destructor
-
-  delete[] matriz;
-  filas = columnas = 0;
-
-}
-
 Matriz::Matriz(const Matriz &m) {      // Constructor copia
 
   int fils = m.GetFilas();
@@ -42,25 +35,33 @@ Matriz::Matriz(const Matriz &m) {      // Constructor copia
   for (int i = 0; i < fils*cols;i++) {
 
     matriz[i]= m.matriz[i];
+
   }
+
+}
+
+Matriz::~Matriz() {
+
+  delete[] this->matriz;
+  this->columnas = this->filas = 0;
 
 }
 
 Matriz& Matriz::operator=(const Matriz &m){    // Operador asignación
 
-  if(this != &m){
+  if (&m != this) {
 
-    delete[]matriz;
-    filas = m.GetFilas();
-    columnas = m.GetColumnas();
-    matriz = new int[filas*columnas];
+    this->filas = m.filas;
+    this->columnas = m.columnas;
+    this->matriz = new int [this->filas*this->columnas];
 
-    for (int i = 0; i < filas * columnas;i++){
+    for (int i = 0; i < this->filas*this->columnas; i++)
       matriz[i] = m.matriz[i];
-    }
+
   }
 
   return *this;
+
 }
 
 
@@ -129,8 +130,8 @@ void Matriz::Modifica (int posicion, int valor) {
 
 ostream& operator<<(ostream &os, const Matriz &m) {
 
-  os << m.GetColumnas() << '\n';
   os << m.GetFilas() << '\n';
+  os << m.GetColumnas() << '\n';
 
   for (int i = 0; i < m.GetFilas() * m.GetColumnas(); i++)
     os << m.Consulta(i) << ' ';
@@ -145,8 +146,7 @@ istream& operator>>(istream &is, Matriz &m) {
 
   is >> f >> c;
 
-  m.SetColumnas(f);
-  m.SetFilas(c);
+  m = Matriz(f, c);
 
   for (int i = 0; i < m.GetFilas() * m.GetColumnas(); i++) {
     is >> tmp;
