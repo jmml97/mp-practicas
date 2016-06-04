@@ -2,6 +2,7 @@
 #define jugador_h
 
 #include "tablero.hpp"
+#include <stdlib.h>
 
 class Jugador {
 
