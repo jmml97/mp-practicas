@@ -22,7 +22,7 @@ bool Cargar(const char c[], Jugador &j1, Jugador &j2, Tablero &t) {
       f.ignore();
     }
 
-    for (int i = 0; i < strlen(req); i++) {
+    for (size_t i = 0; i < strlen(req); i++) {
       f >> tmp;
       if (tmp != req[i])
         return false;

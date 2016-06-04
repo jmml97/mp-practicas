@@ -112,12 +112,7 @@ Jugador::~Jugador() {
 
 Jugador& Jugador::operator=(const Jugador &j) {
 
-  cout << "holaaaa" << endl;
-
   SetNombre(j.GetNombre());
-  j.ImprimirNombre(cout);
-  cout << endl;
-  ImprimirNombre(cout);
   SetTurno(j.GetTurno());
   SetPuntuacion(j.GetPuntuacion());
   SetPartGan(j.GetPartGan());
