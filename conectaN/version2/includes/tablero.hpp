@@ -80,6 +80,7 @@ class Tablero {
     void LeerMatrizTablero(istream &is);
     void EscribirMatrizTablero(ostream &os) const;
 
+    Tablero();
     Tablero(int filas, int columnas, int objetivo, int fichas_turno);
 
 };

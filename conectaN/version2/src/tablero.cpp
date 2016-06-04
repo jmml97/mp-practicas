@@ -7,11 +7,20 @@
 
 using namespace std;
 
+Tablero::Tablero() {
+
+  tablero = Matriz(0, 0);
+  SetObjetivoFichas(0);
+  SetFichasPorTurno(0);
+  ResetInsertadasEnTurno();
+  SetTurno(0);
+  ganador = 0;
+
+}
 
 Tablero::Tablero(int filas, int columnas, int objetivo, int fichas_turno) {
 
-  Matriz tmp(filas, columnas);
-  tablero = tmp;
+  tablero = Matriz(filas, columnas);
   SetObjetivoFichas(objetivo);
   SetFichasPorTurno(fichas_turno);
   ResetInsertadasEnTurno();
@@ -52,8 +61,8 @@ int Tablero::GetPuntuacion() {
 
 void Tablero::SetGanador() {   // Establece el ganador si la partida ha finalizado
 
-    ganador = GetTurno();
-    CambiaTurno();
+  ganador = GetTurno();
+  CambiaTurno();
 
 }
 
@@ -240,6 +249,7 @@ void Tablero::EscribirMatrizTablero(ostream &os) const{
   os << tablero;
 }
 
+
 // Operadores de E/S
 
 ostream& operator<<(ostream &os, const Tablero &t) {
@@ -265,6 +275,7 @@ istream& operator>>(istream &is, Tablero &t) {
   t.SetObjetivoFichas(o);
   t.SetFichasPorTurno(f);
   t.SetInsertadasEnturno(i);
+  t.SetTurno(tu);
 
   t.LeerMatrizTablero(is);
 

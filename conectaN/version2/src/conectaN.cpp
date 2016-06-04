@@ -5,9 +5,11 @@
 #include <iostream>
 #include <fstream>
 
+#include <stdlib.h>
+
 using namespace std;
 
-bool Cargar(char c[], Jugador &j1, Jugador &j2, Tablero &t) {
+bool Cargar(const char c[], Jugador &j1, Jugador &j2, Tablero &t) {
 
   ifstream f(c, ios::in);
 
@@ -59,7 +61,7 @@ bool Guardar(char c[], Jugador j1, Jugador j2, Tablero t) {
 
 bool JugarTurno(Jugador &j, Tablero &t) {
 
-  cout << "¡Turno de "; j.ImprimirNombre(cout); cout << " !";
+  cout << "¡Turno de "; j.ImprimirNombre(cout); cout << "!";
 
   switch (j.GetTurno()) {
     case 1: cout << " (x)" << endl;
@@ -74,64 +76,72 @@ bool JugarTurno(Jugador &j, Tablero &t) {
 
 int main(int argc, char const *argv[]) {
 
-  int f, c, o, t;
+  int f = 0, c = 0, o = 0, t = 0;
   char *nombre1 = new char[0], *nombre2 = new char[0];
-
-  cout << "\n";
-  cout << "¡Bienvenido a ConectaN!" << endl;
-  cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
-
-  do {
-
-    cout << "¿Cuántas filas quieres que tenga el tablero? ";
-    cin >> f;
-
-  } while (f < 1);
-
-  do {
-
-    cout << "¿Cuántas columnas quieres que tenga el tablero? ";
-    cin >> c;
-
-  } while (c < 1);
-
-  do {
-
-    cout << "¿Cuál será el número de fichas a alinear? ";
-    cin >> o;
-
-  } while (o > f &&  o > c);
-
-  do {
-
-    cout << "¿Cuál será el número de fichas a insertar por turno? ";
-    cin >> t;
-
-  } while (t < 1 && t > o - 2);
-
-  cout << "Jugador 1, ¿cúal es tu nombre? ";
-  cin >> nombre1;
-  cout << "Jugador 2, ¿cuál es tu nombre? ";
-  cin >> nombre2;
-  cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
-  cout << "\n" << endl;
-
-  Jugador jugador1(nombre1, 1), jugador2(nombre2, 2);
-  Tablero tablero(f, c, o, t);
   bool otra;
+  Jugador jugador1, jugador2;
+  Tablero tablero;
+
+  if (argc == 2) {
+    Cargar(argv[1], jugador1, jugador2, tablero);
+  }
+  else if (argc == 1) {
+
+    cout << "\n";
+    cout << "¡Bienvenido a ConectaN!" << endl;
+    cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
+
+    do {
+
+      cout << "¿Cuántas filas quieres que tenga el tablero? ";
+      cin >> f;
+
+    } while (f < 1);
+
+    do {
+
+      cout << "¿Cuántas columnas quieres que tenga el tablero? ";
+      cin >> c;
+
+    } while (c < 1);
+
+    do {
+
+      cout << "¿Cuál será el número de fichas a alinear? ";
+      cin >> o;
+
+    } while (o > f &&  o > c);
+
+    do {
+
+      cout << "¿Cuál será el número de fichas a insertar por turno? ";
+      cin >> t;
+
+    } while (t < 1 && t > o - 2);
+
+    cout << "Jugador 1, ¿cúal es tu nombre? ";
+    cin >> nombre1;
+    cout << "Jugador 2, ¿cuál es tu nombre? ";
+    cin >> nombre2;
+    cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
+    cout << "\n" << endl;
+
+    jugador1 = Jugador(nombre1, 1);
+    jugador2 = Jugador(nombre2, 2);
+    tablero = Tablero(f, c, o, t);
+
+  }
+  else
+    cout << "Error. El programa se ejecuta sin parámetros o bien con el nombre del archivo de partida a cargar." << endl;
 
 do {
 
-  tablero.VaciarTablero();
   cout << "¡Comienza la partida!" << endl;
 
   do {
 
     bool exito = false;
     char res, archivo[100];
-
-    cout << "Insertadas en turno: " << tablero.GetInsertadasEnTurno() << endl;
-    cout << "Fichas por turno: " << tablero.GetFichasPorTurno() << endl;
 
     if (tablero.GetInsertadasEnTurno() == tablero.GetFichasPorTurno())
       tablero.CambiaTurno();
@@ -173,17 +183,18 @@ do {
 
     tablero.PrettyPrint();
     tablero.SetGanador();
+    tablero.VaciarTablero();
     int puntuacion = tablero.GetPuntuacion();
     cout << "¡Se acabó! ¡Fin de la partida! El ganador es ";
 
-    if (tablero.GetGanador() == 1){
+    if (tablero.GetGanador() == 1) {
 
       jugador1.AddPuntuacion(puntuacion);
       jugador1.AddPartGan();
       jugador1.ImprimirNombre(cout);
 
     }
-    else if (tablero.GetGanador() == 2){
+    else if (tablero.GetGanador() == 2) {
 
       jugador2.AddPuntuacion(puntuacion);
       jugador2.AddPartGan();

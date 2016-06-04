@@ -68,6 +68,15 @@ void Jugador::MuestraResultados(){
 
 }
 
+Jugador::Jugador() {
+
+  nombre = 0;
+  SetTurno(0);
+  SetPuntuacion(0);
+  SetPartGan(0);
+
+}
+
 Jugador::Jugador(char c[], int t) {
 
   SetNombre(c);
@@ -101,11 +110,19 @@ Jugador::~Jugador() {
 
 }
 
-Jugador Jugador::operator=(const Jugador &j) const {
+Jugador& Jugador::operator=(const Jugador &j) {
 
-  Jugador jugador(j.GetNombre(), j.GetTurno(), j.GetPuntuacion(), j.GetPartGan());
+  cout << "holaaaa" << endl;
 
-  return jugador;
+  SetNombre(j.GetNombre());
+  j.ImprimirNombre(cout);
+  cout << endl;
+  ImprimirNombre(cout);
+  SetTurno(j.GetTurno());
+  SetPuntuacion(j.GetPuntuacion());
+  SetPartGan(j.GetPartGan());
+
+  return *this;
 
 }
 
@@ -136,7 +153,7 @@ istream& operator>>(istream &is, Jugador &j) {
   is >> n >> t >> p >> g;
 
   j.SetNombre(n);
-  j.SetTurno(1);
+  j.SetTurno(t);
   j.SetPuntuacion(p);
   j.SetPartGan(g);
 
