@@ -185,7 +185,7 @@ void Tablero::PrettyPrint(ostream &os){
 
   for (int i = GetFilas() - 1; i >= 0; i--){
 
-    os << "|";
+    os << "\033[0;37m|\033[0m";
     for (int j = 0; j < GetColumnas(); j++){
 
       // cout << GetColumnas()*i + j;
@@ -193,13 +193,13 @@ void Tablero::PrettyPrint(ostream &os){
 
 
       if (ContenidoCasilla(i,j) == 1)
-        os << "x";
+        os << "\033[0;36mx\033[0m";
       else if (ContenidoCasilla(i,j) == 2)
-        os << "o";
+        os << "\033[0;32mo\033[0m";
       else
         os << " ";
 
-      os << "|";
+      os << "\033[0;37m|\033[0m";
 
     }
     os << endl;
@@ -208,7 +208,7 @@ void Tablero::PrettyPrint(ostream &os){
   // Imprime la base
 
   for (int i = 0; i < 2*GetColumnas() + 1; i++){
-    os << "=";
+    os << "\033[0;37m=\033[0m";
   }
 
   os << "\n\n";

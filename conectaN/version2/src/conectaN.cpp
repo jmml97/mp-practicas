@@ -88,7 +88,7 @@ int main(int argc, char const *argv[]) {
   else if (argc == 1) {
 
     cout << "\n";
-    cout << "¡Bienvenido a ConectaN!" << endl;
+    cout << "\033[1;35;1m¡Bienvenido a ConectaN!\033[1m" << endl;
     cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
 
     do {
@@ -156,7 +156,7 @@ do {
       }
 
       if (!exito) {
-        cout << "Error en la introducción de la columna. ¿Quieres guardar la partida? (S/N)";
+        cout << "\033[1;31mError en la introducción de la columna. ¿Quieres guardar la partida?\033[0m" << "\033[51;31m(S/N) \033[51m\n";
         cin >> res;
 
         if (tolower(res) == 's') {
@@ -178,7 +178,7 @@ do {
   } while (tablero.PartidaFinalizada() == 0);
 
   if (tablero.PartidaFinalizada() == 2){
-    cout << "Se ha producido un empate :S" << endl;
+    cout << "\033[1;31mSe ha producido un empate :S\033[0m\n"<< endl;
     tablero.VaciarTablero();
     }
   else {
@@ -187,7 +187,7 @@ do {
     tablero.SetGanador();
     tablero.VaciarTablero();
     int puntuacion = tablero.GetPuntuacion();
-    cout << "¡Se acabó! ¡Fin de la partida! El ganador es ";
+    cout << "\033[1;34m¡Se acabó! ¡Fin de la partida! El ganador es \033[0m\n";
 
     if (tablero.GetGanador() == 1) {
 

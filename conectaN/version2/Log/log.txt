@@ -45,7 +45,13 @@ Log 31/05/2016:
   ·Añadir constructor copia, operador asignación y destructor (Hay cosas que no funcionan y no están bien hechas)
   ·Revisión del punto anterior: Parece funcionar sin problema
 
-Log 01/06/2016:
+Log 07/06/2016:
+
+  COLOREEEES!!!!
+    -Añadidos muchos colores sin gusto ninguno, se hace con cout << "\033[0;36mx\033[0m" donde---> [0 indica el modo (0 es
+    normal, 1 es negrita...), 36 es el numero de color, que oscila entre 30 y 37, y tiene la variante bright, que se
+    escribiría como "\033[0;36;1mx\033[0m", añadiendo ";1", el texto va entre las "m", pero el [0m no se toca.
+    CONSULTAR TABLA: https://en.wikipedia.org/wiki/ANSI_escape_code#graphics
 
 TODO
 
