@@ -177,8 +177,10 @@ do {
 
   } while (tablero.PartidaFinalizada() == 0);
 
-  if (tablero.PartidaFinalizada() == 2)
+  if (tablero.PartidaFinalizada() == 2){
     cout << "Se ha producido un empate :S" << endl;
+    tablero.VaciarTablero();
+    }
   else {
 
     tablero.PrettyPrint();
