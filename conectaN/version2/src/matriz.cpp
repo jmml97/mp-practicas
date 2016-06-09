@@ -64,19 +64,6 @@ Matriz& Matriz::operator=(const Matriz &m){    // Operador asignación
 
 }
 
-
-void Matriz::SetFilas(int fils) {
-
-  filas = fils;
-
-}
-
-void Matriz::SetColumnas(int col) {
-
-  columnas = col;
-
-}
-
 void Matriz::Reset() {
 
   for (int i = 0; i < filas * columnas; i++)
@@ -98,32 +85,6 @@ int Matriz::GetUsadas() {
     }
 
     return contador;
-}
-
-
-int Matriz::Consulta(int fila, int columna) const{
-
-  return matriz[fila*columnas + columna];
-
-}
-
-// Sobrecarga Consulta() para acceder dada una posición i-ésima
-int Matriz::Consulta(int posicion) const{
-
-  return matriz[posicion];
-
-}
-
-void Matriz::Modifica (int fila, int columna, int valor) {
-
-  matriz[fila*columnas + columna] = valor;
-
-}
-
-void Matriz::Modifica (int posicion, int valor) {
-
-  matriz[posicion] = valor;
-
 }
 
 // Operadores de E/S

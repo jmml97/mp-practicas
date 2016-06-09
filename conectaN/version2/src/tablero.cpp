@@ -5,6 +5,11 @@
 #include <iostream>
 #include "tablero.hpp"
 
+#define RED     "\033[31m"
+#define BLUE    "\033[34m"
+#define BOLDGREEN   "\033[1m\033[32m"
+#define RESET   "\033[0m"
+
 using namespace std;
 
 Tablero::Tablero() {
@@ -29,28 +34,17 @@ Tablero::Tablero(int filas, int columnas, int objetivo, int fichas_turno) {
 
 }
 
+void Tablero::CambiaTurno(){
 
-int Tablero::GetFilas() const {
-
-  return tablero.GetFilas();
-
-}
-
-int Tablero::GetColumnas() const{
-
-  return tablero.GetColumnas();
+  turno = turno == 2 ? 1 : 2;
+  ResetInsertadasEnTurno();
 
 }
 
-void Tablero::SetObjetivoFichas(int objetivo) {
+void Tablero::SetGanador() {
 
-  objetivo_fichas = objetivo;
-
-}
-
-void Tablero::SetTurno(int n) {
-
-  turno = n;
+  ganador = GetTurno();
+  CambiaTurno();
 
 }
 
@@ -60,26 +54,9 @@ int Tablero::GetPuntuacion() {
 
 }
 
-void Tablero::SetGanador() {   // Establece el ganador si la partida ha finalizado
-
-  ganador = GetTurno();
-  CambiaTurno();
-
-}
-
-void Tablero::CambiaTurno(){
-
-  turno = turno == 2 ? 1 : 2;
-  ResetInsertadasEnTurno();
-
-}
-
-
-int Tablero::ContenidoCasilla(int x, int y) const{
-
-  return tablero.Consulta(x, y);
-
-}
+// Métodos que encuentran N fichas en línea ////////////////////////////////////
+//
+//
 
 bool Tablero::HayNHorizontal(int fil, int col) {
 
@@ -121,9 +98,6 @@ bool Tablero::HayNDiagonalInv(int fil, int col) {
 
 }
 
-// Comprueba si hay N fichas en línea. Recorre el tablero y cuando llega a una
-// ficha, comprueba si hay n fichas adyacentes en línea (de todas las formas
-// posibles).
 bool Tablero::HayNEnLinea() {
 
   int n = GetObjetivoFichas();
@@ -165,57 +139,6 @@ int Tablero::PartidaFinalizada() {
 
 }
 
-void Tablero::PrettyPrint(ostream &os){
-
-  os << "\n\n";
-
-  // Imprime las letras de las columnas
-
-  char letra;
-
-  os << " ";
-
-  for (int i = 0; i < GetColumnas(); i++){
-    letra = ('a'+i);
-    os << letra << " ";
-  }
-  os << endl;
-
-  // Imprime el casillero
-
-  for (int i = GetFilas() - 1; i >= 0; i--){
-
-    os << "\033[0;37m|\033[0m";
-    for (int j = 0; j < GetColumnas(); j++){
-
-      // cout << GetColumnas()*i + j;
-      //cout << i << "," << j;
-
-
-      if (ContenidoCasilla(i,j) == 1)
-        os << "\033[0;36mx\033[0m";
-      else if (ContenidoCasilla(i,j) == 2)
-        os << "\033[0;32mo\033[0m";
-      else
-        os << " ";
-
-      os << "\033[0;37m|\033[0m";
-
-    }
-    os << endl;
-  }
-
-  // Imprime la base
-
-  for (int i = 0; i < 2*GetColumnas() + 1; i++){
-    os << "\033[0;37m=\033[0m";
-  }
-
-  os << "\n\n";
-}
-
-
-
 // MÉTODOS QUE MODIFICAN EL TABLERO
 
 // Se encarga de insertar una ficha en el casillero si la columna introducida es // adecuada (existe y tiene espacios vacíos).
@@ -236,20 +159,58 @@ bool Tablero::InsertarFicha(int columna) {
   return false;
 }
 
-void Tablero::VaciarTablero() {
+void Tablero::PrettyPrint(ostream &os){
 
-  tablero.Reset();
+  os << "\n\n";
 
+  // Imprime las letras de las columnas
+
+  char letra;
+
+  os << " ";
+
+  for (int i = 0; i < GetColumnas(); i++){
+    letra = ('a'+i);
+    os << letra << " ";
+  }
+  os << endl;
+
+  // Imprime el casillero
+
+  for (int i = GetFilas() - 1; i >= 0; i--){
+
+    os << "|";
+    for (int j = 0; j < GetColumnas(); j++){
+
+      // cout << GetColumnas()*i + j;
+      //cout << i << "," << j;
+
+
+      if (ContenidoCasilla(i,j) == 1)
+        os << BLUE << "x";
+      else if (ContenidoCasilla(i,j) == 2)
+        os << RED << "o";
+      else
+        os << " ";
+
+      os << RESET;
+
+      os << "|";
+
+    }
+    os << endl;
+  }
+
+  // Imprime la base
+
+  os << BOLDGREEN;
+
+  for (int i = 0; i < 2*GetColumnas() + 1; i++){
+    os << "=";
+  }
+
+  os << RESET << "\n\n";
 }
-
-void Tablero::LeerMatrizTablero(istream &is) {
-  is >> tablero;
-}
-
-void Tablero::EscribirMatrizTablero(ostream &os) const{
-  os << tablero;
-}
-
 
 // Operadores de E/S
 

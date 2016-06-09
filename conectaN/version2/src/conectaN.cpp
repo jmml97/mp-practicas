@@ -7,6 +7,24 @@
 
 #include <string.h>
 
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE   "\033[37m"      /* White */
+#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
+#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
+#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
+#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
+#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
+#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
+#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+
 using namespace std;
 
 bool Cargar(const char *c, Jugador &j1, Jugador &j2, Tablero &t) {
@@ -64,9 +82,9 @@ bool JugarTurno(Jugador &j, Tablero &t) {
   cout << "¡Turno de "; j.ImprimirNombre(cout); cout << "!";
 
   switch (j.GetTurno()) {
-    case 1: cout << " (x)" << endl;
+    case 1: cout << BLUE << " (x)" << RESET << endl;
             break;
-    case 2: cout << " (o)" << endl;
+    case 2: cout << RED << " (o)" << RESET << endl;
             break;
   }
 
@@ -88,7 +106,7 @@ int main(int argc, char const *argv[]) {
   else if (argc == 1) {
 
     cout << "\n";
-    cout << "\033[1;35;1m¡Bienvenido a ConectaN!\033[1m" << endl;
+    cout << BOLDWHITE << "Bienvenido a ConectaN!" << endl;
     cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
 
     do {
@@ -125,6 +143,7 @@ int main(int argc, char const *argv[]) {
     cin >> nombre2;
     cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
     cout << "\n" << endl;
+    cout << RESET << endl;
 
     jugador1 = Jugador(nombre1, 1);
     jugador2 = Jugador(nombre2, 2);
@@ -132,7 +151,7 @@ int main(int argc, char const *argv[]) {
 
   }
   else
-    cout << "Error. El programa se ejecuta sin parámetros o bien con el nombre del archivo de partida a cargar." << endl;
+    cout << "Error. El programa se ejecuta sin parámetros o bien con el nombre del archivo de partida a cargar." << RESET << endl;
 
 do {
 
@@ -156,7 +175,7 @@ do {
       }
 
       if (!exito) {
-        cout << "\033[1;31mError en la introducción de la columna. ¿Quieres guardar la partida?\033[0m" << "\033[51;31m(S/N) \033[51m\n";
+        cout << BOLDRED << "Error en la introducción de la columna. ¿Quieres guardar la partida? (S/N) " << RESET;
         cin >> res;
 
         if (tolower(res) == 's') {
@@ -178,7 +197,7 @@ do {
   } while (tablero.PartidaFinalizada() == 0);
 
   if (tablero.PartidaFinalizada() == 2){
-    cout << "\033[1;31mSe ha producido un empate :S\033[0m\n"<< endl;
+    cout << BOLDYELLOW << "Se ha producido un empate :S\n" << RESET << endl;
     tablero.VaciarTablero();
     }
   else {
@@ -187,7 +206,7 @@ do {
     tablero.SetGanador();
     tablero.VaciarTablero();
     int puntuacion = tablero.GetPuntuacion();
-    cout << "\033[1;34m¡Se acabó! ¡Fin de la partida! El ganador es \033[0m\n";
+    cout << BOLDGREEN << "¡Se acabó! ¡Fin de la partida! El ganador es \n" ;
 
     if (tablero.GetGanador() == 1) {
 
@@ -204,12 +223,15 @@ do {
 
     }
 
-    cout << ". ¡Enhorabuena!" << endl;
+    cout << ". ¡Enhorabuena!" << RESET << endl;
 
+
+    cout << BOLDWHITE << endl;
     cout << "\nLos resultados por ahora son: " << endl;
     cout << "-----------" << endl;
     jugador1.MuestraResultados();
     jugador2.MuestraResultados();
+    cout << RESET << endl;
 
   }
 
@@ -228,10 +250,12 @@ do {
 
 } while (otra);
 
+cout << BOLDWHITE << endl;
 cout << "Resultados finales: " << endl;
 jugador1.MuestraResultados();
 jugador2.MuestraResultados();
 cout << "¡Gracias por jugar a Conecta-N!" << endl;
+cout << RESET << endl;
 
 return 0;
 

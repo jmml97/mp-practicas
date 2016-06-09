@@ -31,25 +31,38 @@ class Jugador {
     inline int GetTurno() const {
       return turno;
     }
-    void SetTurno(int n);
+
+    inline void SetTurno(int n) {
+      turno = n;
+    }
 
     inline int GetPuntuacion() const {
       return puntuacion;
     }
-    void SetPuntuacion(int n);
-    void AddPuntuacion(int n);
 
-    void SetPartGan(int n);
+    inline void SetPuntuacion(int n) {
+      puntuacion = n;
+    }
+
+    inline void AddPuntuacion(int n) {
+      puntuacion += n;
+    }
+
     inline int GetPartGan() const {
       return partidas_ganadas;
     }
-    void AddPartGan();
 
-    void MuestraResultados();
+    inline void SetPartGan(int n) {
+      partidas_ganadas = n;
+    }
+
+    inline void AddPartGan() {
+      partidas_ganadas++;
+    }
+
+    void MuestraResultados() const;
 
     bool EscogeColumna(Tablero& tablero);
-
-
 
 };
 

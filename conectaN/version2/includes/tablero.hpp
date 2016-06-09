@@ -23,13 +23,22 @@ class Tablero {
     Tablero();
     Tablero(int filas, int columnas, int objetivo, int fichas_turno);
 
-    int GetFilas() const;
-    int GetColumnas() const;
+    inline int GetFilas() const {
+      return tablero.GetFilas();
+    }
+
+    inline int GetColumnas() const {
+      return tablero.GetColumnas();
+    }
 
     inline int GetObjetivoFichas() const {
       return objetivo_fichas;
     }
-    void SetObjetivoFichas(int objetivo);
+
+    inline void SetObjetivoFichas(int objetivo) {
+      objetivo_fichas = objetivo;
+    }
+
     inline void SetFichasPorTurno(int t) {
       fichas_por_turno = t;
     }
@@ -57,33 +66,55 @@ class Tablero {
     inline int GetTurno() const {
       return turno;
     }
-    void SetTurno(int n);
-    void CambiaTurno();
 
-    int GetPuntuacion();
+    inline void SetTurno(int n) {
+      turno = n;
+    }
+
+    void CambiaTurno();
 
     inline int GetGanador() const {
       return ganador;
     }
+
     void SetGanador();
 
-    int ContenidoCasilla(int x, int y) const;
-    void PrettyPrint(ostream &os = cout);
+    int GetPuntuacion();
 
+    // Consulta del trablero.
+    inline int ContenidoCasilla(int x, int y) const {
+        return tablero.Consulta(x, y);
+    }
+
+    // Comprobación de las N fichas en línea de las distintas formas.
     bool HayNHorizontal(int fil, int col);
     bool HayNVertical(int fil, int col);
     bool HayNDiagonal(int fil, int col);
     bool HayNDiagonalInv(int fil, int col);
+
+    // Comprueba si hay N fichas en línea. Recorre el tablero y cuando llega a // una ficha, comprueba si hay n fichas adyacentes en línea (de todas las
+    // formas posibles).
     bool HayNEnLinea();
+
+    // Comprueba si la partida ha finalizado.
     int PartidaFinalizada();
 
     bool InsertarFicha(int columna);
-    void VaciarTablero();
 
-    void LeerMatrizTablero(istream &is);
-    void EscribirMatrizTablero(ostream &os) const;
+    inline void VaciarTablero() {
+      tablero.Reset();
+    }
 
+    inline void LeerMatrizTablero(istream &is) {
+      is >> tablero;
+    }
+    
+    inline void EscribirMatrizTablero(ostream &os) const {
+      os << tablero;
+    }
 
+    // Impresión del tablero.
+    void PrettyPrint(ostream &os = cout);
 
 };
 

@@ -74,26 +74,6 @@ void Jugador::ImprimirNombre(ostream &os) const {
 
 }
 
-void Jugador::SetTurno(int n) {
-  turno = n;
-}
-
-void Jugador::SetPuntuacion(int n) {
-  puntuacion = n;
-}
-
-void Jugador::AddPuntuacion(int n) {
-  puntuacion += n;
-}
-
-void Jugador::SetPartGan(int n) {
-  partidas_ganadas = n;
-}
-
-void Jugador::AddPartGan() {
-  partidas_ganadas++;
-}
-
 bool Jugador::EscogeColumna(Tablero& tablero) {
 
   bool exito = false;
@@ -118,7 +98,7 @@ bool Jugador::EscogeColumna(Tablero& tablero) {
 
 }
 
-void Jugador::MuestraResultados(){
+void Jugador::MuestraResultados() const {
 
   cout << "El jugador ";
   ImprimirNombre(cout);
