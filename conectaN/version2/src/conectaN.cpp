@@ -7,6 +7,8 @@
 
 #include <string.h>
 
+// Colores para la consola.
+
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -27,6 +29,9 @@
 
 using namespace std;
 
+// Carga una partida a partir del nombre de archivo proporcionado.
+// Hay que proporcionarle los jugadores y el tablero para que los
+// modifique.
 bool Cargar(const char *c, Jugador &j1, Jugador &j2, Tablero &t) {
 
   ifstream f(c, ios::in);
@@ -58,6 +63,7 @@ bool Cargar(const char *c, Jugador &j1, Jugador &j2, Tablero &t) {
 
 }
 
+// Guarda la partida en un archivo del nombre que se le indique.
 bool Guardar(char c[], Jugador j1, Jugador j2, Tablero t) {
 
   ofstream f(c, ios::out);
@@ -77,6 +83,7 @@ bool Guardar(char c[], Jugador j1, Jugador j2, Tablero t) {
 
 }
 
+// Presenta la interfaz de turno de cada jugador.
 bool JugarTurno(Jugador &j, Tablero &t) {
 
   cout << "¡Turno de "; j.ImprimirNombre(cout); cout << "!";
@@ -94,54 +101,76 @@ bool JugarTurno(Jugador &j, Tablero &t) {
 
 int main(int argc, char const *argv[]) {
 
+  // Filas, columnas, objetivo de fichas y fichas por turno.
   int f = 0, c = 0, o = 0, t = 0;
   char *nombre1 = new char[0], *nombre2 = new char[0];
-  bool otra;
+  // ¿Otra partida?
+  bool otra, cargada = false;
   Jugador jugador1, jugador2;
   Tablero tablero;
 
+  // CONFIRGURACIÓN DE LA PARTIDA.
+  // Si recibe como argumento el nombre de un archivo (sea válido o no), intenta
+  // cargarlo. Si no es posible cargarlo, pregunta por un nombre de archivo
+  // válido.
+  // En caso de que el programa se ejecute sin argumentos, se pide al usuario
+  // información sobre la partida.
+
   if (argc == 2) {
-    Cargar(argv[1], jugador1, jugador2, tablero);
+
+    cargada = Cargar(argv[1], jugador1, jugador2, tablero);
+
+    do {
+
+      cout << RED << "Error al cargar archivo. Introduce un archivo válido o ejecuta el programa sin argumentos en caso de que no quieras cargar un archivo." << RESET << endl;
+      char *c = new char[0];
+      cin >> c;
+
+      cargada = Cargar(c, jugador1, jugador2, tablero);
+
+    } while (!cargada);
+
+
   }
   else if (argc == 1) {
 
     cout << "\n";
-    cout << BOLDWHITE << "Bienvenido a ConectaN!" << endl;
-    cout << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << endl;
+    cout << BOLDWHITE << "Bienvenido a ConectaN!" << RESET << endl;
+    cout << BOLDWHITE << "Primero es necesario configurar la partida. ¡Responde a las siguientes preguntas!" << RESET << endl;
 
     do {
 
-      cout << "¿Cuántas filas quieres que tenga el tablero? ";
+      cout << BOLDWHITE << "¿Cuántas filas quieres que tenga el tablero? " << RESET;
       cin >> f;
 
     } while (f < 1);
 
     do {
 
-      cout << "¿Cuántas columnas quieres que tenga el tablero? ";
+      cout << BOLDWHITE << "¿Cuántas columnas quieres que tenga el tablero? " << RESET;
       cin >> c;
 
     } while (c < 1);
 
     do {
 
-      cout << "¿Cuál será el número de fichas a alinear? ";
+      cout << BOLDWHITE << "¿Cuál será el número de fichas a alinear? " << RESET;
       cin >> o;
 
     } while (o > f &&  o > c);
 
     do {
 
-      cout << "¿Cuál será el número de fichas a insertar por turno? ";
+      cout << BOLDWHITE << "¿Cuál será el número de fichas a insertar por turno? " << RESET;
       cin >> t;
 
     } while (t < 1 && t > o - 2);
 
-    cout << "Jugador 1, ¿cúal es tu nombre? ";
+    cout << BOLDWHITE << "Jugador 1, ¿cúal es tu nombre? " << RESET;
     cin >> nombre1;
-    cout << "Jugador 2, ¿cuál es tu nombre? ";
+    cout << BOLDWHITE << "Jugador 2, ¿cuál es tu nombre? " << RESET;
     cin >> nombre2;
-    cout << "¡Todo listo! ¡Disfruta de ConectaN!" << endl;
+    cout << BOLDWHITE << "¡Todo listo! ¡Disfruta de ConectaN!" << RESET << endl;
     cout << "\n" << endl;
     cout << RESET << endl;
 
@@ -153,9 +182,19 @@ int main(int argc, char const *argv[]) {
   else
     cout << "Error. El programa se ejecuta sin parámetros o bien con el nombre del archivo de partida a cargar." << RESET << endl;
 
+// FLUJO PRINCIPAL DEL JUEGO.
+// Hay dos do-while. El primero ejecuta el programa hasta que el usuario diga
+// que no quiere jugar más partidas.
+// El segundo se encarga de que en cada partida, hasta que alguien gane la
+// partida o haya empate, se va pidiendo a cada jugador que introduzca una
+// ficha.
 do {
 
-  cout << "¡Comienza la partida!" << endl;
+  switch (argc) {
+    case 2: cout << "¡Continúa la partida!" << endl;
+            break;
+    default: cout << "¡Comienza la partida!" << endl;
+  }
 
   do {
 
@@ -199,7 +238,7 @@ do {
   if (tablero.PartidaFinalizada() == 2){
     cout << BOLDYELLOW << "Se ha producido un empate :S\n" << RESET << endl;
     tablero.VaciarTablero();
-    }
+  }
   else {
 
     tablero.PrettyPrint();
@@ -238,9 +277,11 @@ do {
   char partida;
 
   do {
+    
     cout << "¿Otra? Insert coin: (S/N): ";
     cin >> partida;
     partida = toupper(partida);
+
   } while (partida != 'S' && partida != 'N');
 
   if (partida == 'S')

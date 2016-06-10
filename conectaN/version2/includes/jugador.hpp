@@ -4,6 +4,11 @@
 #include "tablero.hpp"
 #include <stdlib.h>
 
+/*
+  Clase Jugador. La información de cada jugador se almacena aquí. Además,
+  implementa la selección de columna.
+*/
+
 class Jugador {
 
   private:

@@ -5,7 +5,7 @@
 #include <ostream>
 
 /*
-  Matriz del tablero mediante memoria estática
+  Matriz del tablero mediante memoria dinámica.
 */
 
 class Matriz {

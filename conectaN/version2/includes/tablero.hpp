@@ -3,7 +3,7 @@
 #define tablero_h
 
 /*
-  Clase Tablero que se encarga de interactuar con Matriz para almacenar los datos del juego
+  Clase Tablero que se encarga de interactuar con Matriz para almacenar los datos del juego.
 */
 
 #include "matriz.hpp"
@@ -108,7 +108,7 @@ class Tablero {
     inline void LeerMatrizTablero(istream &is) {
       is >> tablero;
     }
-    
+
     inline void EscribirMatrizTablero(ostream &os) const {
       os << tablero;
     }

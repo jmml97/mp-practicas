@@ -1,7 +1,3 @@
-/*
-  Clase Tablero que se encarga de interactuar con Matriz para almacenar los datos del juego
-*/
-
 #include <iostream>
 #include "tablero.hpp"
 

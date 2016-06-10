@@ -22,7 +22,7 @@ Matriz::Matriz(int f, int c) {
 
 }
 
-Matriz::Matriz(const Matriz &m) {      // Constructor copia
+Matriz::Matriz(const Matriz &m) {
 
   int fils = m.GetFilas();
   int cols = m.GetColumnas();
@@ -47,7 +47,7 @@ Matriz::~Matriz() {
 
 }
 
-Matriz& Matriz::operator=(const Matriz &m){    // Operador asignación
+Matriz& Matriz::operator=(const Matriz &m){
 
   if (&m != this) {
 
@@ -87,7 +87,7 @@ int Matriz::GetUsadas() {
     return contador;
 }
 
-// Operadores de E/S
+// OEPRADORES DE E/S
 
 ostream& operator<<(ostream &os, const Matriz &m) {
 

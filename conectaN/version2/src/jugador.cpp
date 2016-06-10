@@ -106,7 +106,7 @@ void Jugador::MuestraResultados() const {
 
 }
 
-// Operadores de E/S
+// OPERADORES DE E/S
 
 ostream& operator<<(ostream &os, const Jugador &j) {
 
